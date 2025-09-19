@@ -562,9 +562,6 @@ export class FinancialAnalysisEngine {
       timestamp: new Date()
     };
   }
-}
-
-export const analysisEngine = FinancialAnalysisEngine.getInstance();
 
   private generateFinancialInsights(data: any): string[] {
     return [
@@ -627,4 +624,4 @@ export const analysisEngine = FinancialAnalysisEngine.getInstance();
   }
 }
 
-
+export const analysisEngine = FinancialAnalysisEngine.getInstance();
