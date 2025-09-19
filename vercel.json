@@ -1,12 +1,4 @@
 {
-  "name": "finclick-ai-platform",
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
-    }
-  ],
   "installCommand": "npm install --legacy-peer-deps",
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
@@ -16,8 +8,5 @@
       "maxDuration": 30
     }
   },
-  "regions": ["iad1"],
-  "github": {
-    "silent": false
-  }
+  "regions": ["iad1"]
 }
