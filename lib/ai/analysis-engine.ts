@@ -564,10 +564,7 @@ export class FinancialAnalysisEngine {
   }
 }
 
-export const analysisEngine = FinancialAnalysisEngine.getInstance();.generateChartData(request.type),
-      metrics: this.calculateMetrics(request.data),
-    }
-  }
+export const analysisEngine = FinancialAnalysisEngine.getInstance();
 
   private generateFinancialInsights(data: any): string[] {
     return [
@@ -630,4 +627,4 @@ export const analysisEngine = FinancialAnalysisEngine.getInstance();.generateCha
   }
 }
 
-export const analysisEngine = AnalysisEngine.getInstance()
+

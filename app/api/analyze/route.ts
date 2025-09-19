@@ -1,6 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createGroq } from "@ai-sdk/groq"
-import { generateObject } from "ai"
+import Groq from "groq-sdk"
 import { z } from "zod"
 
 // Schema for financial analysis results
