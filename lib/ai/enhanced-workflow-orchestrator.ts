@@ -2,7 +2,7 @@
 // Coordinates the execution of all AI agents for comprehensive financial analysis
 // Implements all 180+ financial analysis types as specified in the prompt
 
-import { AnalysisType, ALL_ANALYSIS_DEFINITIONS } from '@/lib/analysis-definitions';
+import { ALL_ANALYSIS_DEFINITIONS } from '@/lib/analysis-definitions';
 import { 
   IngestionAgent, 
   StructuringAgent, 
@@ -281,7 +281,7 @@ export class EnhancedFinancialAnalysisWorkflow {
               break;
               
             case 'reportingAgent':
-              await this.reportingAgent.execute({ analysisResults, executiveSummary });
+              await this.reportingAgent.execute({ analysisResults });
               break;
               
             case 'complianceAgent':
@@ -301,7 +301,7 @@ export class EnhancedFinancialAnalysisWorkflow {
         };
         
         // Add small delay for realistic progress
-        await this.delay(200);
+        await this.sleep(200);
       }
 
       // Determine number of analyses based on type
@@ -386,7 +386,7 @@ export class EnhancedFinancialAnalysisWorkflow {
     const results: DetailedAnalysisResult[] = [];
     
     // Filter analysis types based on selection
-    let analysesToRun: AnalysisType[] = [];
+    let analysesToRun: any[] = [];
     
     if (options.analysisSubtypes && options.analysisSubtypes.length > 0) {
       // Run only selected subtypes
@@ -406,7 +406,7 @@ export class EnhancedFinancialAnalysisWorkflow {
     // Execute each analysis
     for (const analysis of analysesToRun) {
       try {
-        const result = await this.analysisAgent.executeSingleAnalysis(analysis);
+        const result = await this.analysisAgent.execute(analysis);
         results.push(this.convertToDetailedResult(analysis, result));
       } catch (error) {
         console.error(`Failed to execute analysis ${analysis.id}:`, error);
@@ -431,9 +431,9 @@ export class EnhancedFinancialAnalysisWorkflow {
   }
 
   // Convert analysis result to detailed result format
-  private convertToDetailedResult(analysis: AnalysisType, result: any): DetailedAnalysisResult {
+  private convertToDetailedResult(analysis: any, result: any): DetailedAnalysisResult {
     // Generate a random value for demonstration
-    const randomValue = this.generateRandomValue(0.5, 3.5);
+    const randomValue = Math.random() * (3.5 - 0.5) + 0.5;
     
     // Determine status based on value
     let status: 'ممتاز' | 'جيد جداً' | 'جيد' | 'مقبول' | 'ضعيف' = 'مقبول';
@@ -461,16 +461,16 @@ export class EnhancedFinancialAnalysisWorkflow {
       status: status,
       description: analysis.description.ar,
       calculationMethod: analysis.calculationMethod.ar,
-      industryBenchmark: this.generateRandomValue(0.8, 3.2),
-      peerComparison: this.generateRandomValue(0.7, 3.0),
+      industryBenchmark: Math.random() * (3.2 - 0.8) + 0.8,
+      peerComparison: Math.random() * (3.0 - 0.7) + 0.7,
       historicalTrend: [
-        this.generateRandomValue(1.0, 3.0),
-        this.generateRandomValue(1.2, 3.2),
-        this.generateRandomValue(1.1, 3.1),
-        this.generateRandomValue(1.3, 3.3),
-        this.generateRandomValue(1.4, 3.4)
+        Math.random() * (3.0 - 1.0) + 1.0,
+        Math.random() * (3.2 - 1.2) + 1.2,
+        Math.random() * (3.1 - 1.1) + 1.1,
+        Math.random() * (3.3 - 1.3) + 1.3,
+        Math.random() * (3.4 - 1.4) + 1.4
       ],
-      forecast: this.generateRandomValue(1.2, 3.8),
+      forecast: Math.random() * (3.8 - 1.2) + 1.2,
       riskLevel: riskLevel,
       recommendations: [
         'تحسين الأداء في هذا المؤشر',
@@ -510,7 +510,7 @@ export class EnhancedFinancialAnalysisWorkflow {
       profitability: avg(profitabilityMetrics),
       leverage: avg(leverageMetrics),
       activity: avg(activityMetrics),
-      growth: this.generateRandomValue(0.03, 0.15) // Simulated growth rate
+      growth: Math.random() * (0.15 - 0.03) + 0.03 // Simulated growth rate
     };
     
     // Determine overall rating based on key metrics
@@ -687,4 +687,16 @@ export class EnhancedFinancialAnalysisWorkflow {
       'modeling_simulation': 'النمذجة والمحاكاة',
       'statistical_quantitative': 'التحليل الإحصائي والكمي',
       'forecasting_credit': 'نماذج التنبؤ والتصنيف الائتماني',
-      '
+      'risk_analysis': 'تحليل المخاطر الكمي',
+      'portfolio_investment': 'تحليل المحافظ والاستثمار',
+      'ma_analysis': 'تحليل الاندماج والاستحواذ',
+      'detection_forecasting': 'تقنيات الكشف والتنبؤ الكمي',
+      'time_series': 'تحليل السلاسل الزمنية الإحصائي'
+    }
+  }
+
+  // Helper method for async delay
+  private sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+}
