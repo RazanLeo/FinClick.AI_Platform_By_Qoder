@@ -8,6 +8,12 @@ VERCEL_*.md
 IMMEDIATE_DEPLOY_GUIDE.md
 upload-*.sh
 create-package.sh
+pnpm-lock.yaml
+.pnpm-debug.log*
+node_modules
+.next
+.env*.local
+.DS_Store
 *.log
 *.zip
 FinClick.AI_Platform_Production/
