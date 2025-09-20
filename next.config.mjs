@@ -9,6 +9,12 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
+  // Ensure proper build optimization
+  swcMinify: true,
+  reactStrictMode: true,
 }
 
 export default nextConfig
