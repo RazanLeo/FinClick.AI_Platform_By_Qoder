@@ -377,13 +377,13 @@ export function StockTicker() {
       {/* Scrolling Ticker */}
       <div className="animate-marquee flex gap-6 whitespace-nowrap">
         {indices.concat(indices).map((index: StockIndex, i: number) => (
-          <div key={i} className="flex items-center gap-3 text-sm bg-gray-900 px-4 py-2 rounded-lg border border-gray-700 hover:border-[#B48500] transition-colors min-w-max">
+          <div key={i} className="flex items-center gap-3 text-sm bg-black px-4 py-2 rounded-lg border border-[#B48500] hover:border-[#FFD700] transition-colors min-w-max">
             {/* Index Info */}
             <div className="flex flex-col">
               <span className="font-bold text-[#B48500] text-xs">
                 {index.nameAr} • {index.name}
               </span>
-              <span className="text-gray-400 text-xs">
+              <span className="text-[#8B6914] text-xs">
                 {index.symbol} • {index.currency}
               </span>
             </div>
@@ -407,7 +407,7 @@ export function StockTicker() {
             </div>
             
             {/* Market */}
-            <div className="text-xs text-gray-500 hidden lg:block">
+            <div className="text-xs text-[#8B6914] hidden lg:block">
               {index.marketAr}
             </div>
           </div>
@@ -416,7 +416,7 @@ export function StockTicker() {
       
       {/* Last Update */}
       <div className="text-center mt-2">
-        <span className="text-xs text-gray-500">
+        <span className="text-xs text-[#8B6914]">
           آخر تحديث: {new Date().toLocaleTimeString('ar-SA')} • Last Update: {new Date().toLocaleTimeString('en-US')}
         </span>
       </div>

@@ -1,7 +1,5 @@
 "use client"
 
-"use client"
-
 import type React from "react"
 
 import Image from "next/image"
@@ -106,7 +104,7 @@ export function Header() {
                 alt="FinClick.AI Logo"
                 width={60}
                 height={60}
-                className="cursor-pointer animate-pulse-gold"
+                className="cursor-pointer finclick-logo"
                 onClick={goToHomePage}
               />
             </div>
@@ -233,22 +231,7 @@ export function Header() {
             </div>
 
             <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-[#B48500] hover:bg-[#B48500] hover:text-black"
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              >
-                <ChevronUp className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-[#B48500] hover:bg-[#B48500] hover:text-black"
-                onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
-              >
-                <ChevronDown className="w-4 h-4" />
-              </Button>
+              <LanguageSwitcher />
             </div>
           </div>
         </nav>

@@ -1,7 +1,5 @@
 "use client"
 
-"use client"
-
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Globe } from "lucide-react"
@@ -115,53 +113,86 @@ export function LanguageSwitcher() {
     if (heroText2) {
       heroText2.textContent = content[lang].heroText2
     }
+    
+    // Update page direction and styling
+    applyLanguageChanges(lang)
+  }
+  
+  const applyLanguageChanges = (lang: "ar" | "en") => {
+    // Apply direction changes
+    document.documentElement.lang = lang
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr"
+    
+    // Update body classes
+    document.body.className = document.body.className.replace(/lang-(ar|en)/g, '')
+    document.body.className += ` lang-${lang}`
+    
+    // Update HTML classes for RTL/LTR
+    document.documentElement.className = document.documentElement.className.replace(/dir-(rtl|ltr)/g, '')
+    document.documentElement.className += ` dir-${lang === "ar" ? "rtl" : "ltr"}`
+    
+    // Apply font changes based on language
+    const fontClass = lang === "ar" ? "font-arabic" : "font-latin"
+    document.body.className = document.body.className.replace(/font-(arabic|latin)/g, '')
+    document.body.className += ` ${fontClass}`
+    
+    // Force re-render of flex directions and text alignments
+    const flexElements = document.querySelectorAll('.flex, .grid')
+    flexElements.forEach(el => {
+      el.classList.remove('flex-row-reverse', 'flex-row')
+      if (lang === 'ar') {
+        el.classList.add('flex-row-reverse')
+      } else {
+        el.classList.add('flex-row')
+      }
+    })
+    
+    // Update text alignment classes
+    const textElements = document.querySelectorAll('[class*="text-"]')
+    textElements.forEach(el => {
+      el.classList.remove('text-right', 'text-left')
+      el.classList.add(lang === 'ar' ? 'text-right' : 'text-left')
+    })
   }
 
   const toggleLanguage = () => {
     const newLang = language === "ar" ? "en" : "ar"
     setLanguage(newLang)
 
-    document.documentElement.lang = newLang
-    document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr"
-
     // Store language preference
     localStorage.setItem("preferred-language", newLang)
 
-    // Update body class for styling
-    document.body.className = document.body.className.replace(/lang-\w+/g, "")
-    document.body.className += ` lang-${newLang}`
-
-    // Update content
+    // Update content and apply changes
     updateContent(newLang)
 
     // Show language change notification
     const notification = document.createElement("div")
-    notification.className = "fixed top-4 right-4 bg-[#B48500] text-black px-4 py-2 rounded-lg z-50 font-semibold"
+    notification.className = "fixed top-4 right-4 bg-[#B48500] text-black px-4 py-2 rounded-lg z-50 font-semibold transition-all duration-300"
     notification.textContent = newLang === "ar" ? "تم تغيير اللغة إلى العربية" : "Language changed to English"
     document.body.appendChild(notification)
 
     setTimeout(() => {
       notification.remove()
-    }, 2000)
+    }, 3000)
 
-    // Reload page to apply all changes properly
+    // Apply immediate direction changes without reload
     setTimeout(() => {
-      if (typeof window !== 'undefined') {
-        window.location.reload()
-      }
-    }, 1000)
+      applyLanguageChanges(newLang)
+    }, 100)
   }
 
   useEffect(() => {
-    // Load saved language preference
+    // Load saved language preference on mount
     const savedLang = localStorage.getItem("preferred-language") as "ar" | "en" | null
     if (savedLang && savedLang !== language) {
       setLanguage(savedLang)
-      document.documentElement.lang = savedLang
-      document.documentElement.dir = savedLang === "ar" ? "rtl" : "ltr"
-      document.body.className += ` lang-${savedLang}`
       updateContent(savedLang)
     }
+  }, [])
+  
+  useEffect(() => {
+    // Apply language changes whenever language state changes
+    applyLanguageChanges(language)
   }, [language])
 
   return (

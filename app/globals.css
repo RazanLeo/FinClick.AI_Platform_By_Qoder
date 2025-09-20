@@ -37,6 +37,77 @@ a {
   --background-end-rgb: 0, 0, 0;
 }
 
+/* Language Support CSS */
+.lang-ar {
+  direction: rtl;
+  text-align: right;
+}
+
+.lang-en {
+  direction: ltr;
+  text-align: left;
+}
+
+.dir-rtl {
+  direction: rtl;
+}
+
+.dir-ltr {
+  direction: ltr;
+}
+
+/* Font Support */
+.font-arabic {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', sans-serif;
+}
+
+.font-latin {
+  font-family: 'Inter', 'Roboto', sans-serif;
+}
+
+/* RTL/LTR specific adjustments */
+.lang-ar .flex {
+  flex-direction: row-reverse;
+}
+
+.lang-en .flex {
+  flex-direction: row;
+}
+
+.lang-ar .text-left {
+  text-align: right !important;
+}
+
+.lang-en .text-right {
+  text-align: left !important;
+}
+
+/* Margin and padding adjustments for RTL */
+.lang-ar .ml-auto {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.lang-ar .mr-auto {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.lang-ar .pl-4 {
+  padding-left: 0;
+  padding-right: 1rem;
+}
+
+.lang-ar .pr-4 {
+  padding-right: 0;
+  padding-left: 1rem;
+}
+
+/* Language transition effects */
+.language-transition {
+  transition: all 0.3s ease-in-out;
+}
+
 /* FinClick.AI Custom Styles */
 .animate-pulse-gold {
   animation: pulse-gold 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -53,6 +124,80 @@ a {
     transform: scale(1.02);
     filter: drop-shadow(0 0 20px #FFD700);
   }
+}
+
+/* Golden Coin Logo Styling */
+.finclick-logo {
+  background: transparent !important;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 
+              0 0 40px rgba(255, 215, 0, 0.2),
+              inset 0 0 20px rgba(255, 215, 0, 0.1);
+  transition: all 0.3s ease;
+  filter: brightness(1.1) contrast(1.2) hue-rotate(15deg);
+}
+
+.finclick-logo:hover {
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 
+              0 0 60px rgba(255, 215, 0, 0.3),
+              inset 0 0 30px rgba(255, 215, 0, 0.2);
+  filter: brightness(1.3) contrast(1.3) hue-rotate(10deg);
+}
+
+/* Remove any background/border from images */
+img[alt*="FinClick"], img[alt*="Logo"] {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
+/* Fix hover effects for icons and buttons */
+.hover-stable {
+  transition: all 0.3s ease !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.hover-stable:hover {
+  transform: scale(1.05) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Ensure buttons and icons don't disappear on hover */
+button, .cursor-pointer, a {
+  transition: all 0.3s ease !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+button:hover, .cursor-pointer:hover, a:hover {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Fix specific icon hover issues */
+.lucide, .lucide-react, svg {
+  transition: all 0.3s ease !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.lucide:hover, .lucide-react:hover, svg:hover {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Prevent any element from disappearing on hover */
+* {
+  transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease, background-color 0.3s ease !important;
+}
+
+*:hover {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .animate-glow {
