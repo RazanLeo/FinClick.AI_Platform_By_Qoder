@@ -26,97 +26,52 @@ export function HeroSection() {
         background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6))`
       }}
     >
-      {/* Background Image with Parallax Effect */}
+      {/* Clean Background without logo */}
       <div 
         className="absolute inset-0 w-full h-full"
         style={{
-          transform: `translate(${mousePosition.x * -0.01}px, ${mousePosition.y * -0.01}px) scale(1.05)`,
-          transition: 'transform 0.1s ease-out',
+          background: 'linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%)',
           zIndex: 1
         }}
-      >
-        <Image
-          src="/Hero_Section_Background.JPG"
-          alt="FinClick.AI Hero Background"
-          fill
-          className="object-cover"
-          priority
-          quality={90}
-        />
-      </div>
-      
-      {/* Interactive Overlay */}
-      <div 
-        className="absolute inset-0 bg-gradient-to-br from-black/50 via-transparent to-black/70"
-        style={{ zIndex: 2 }}
       />
       
-      {/* Animated Golden Particles */}
-      <div className="absolute inset-0" style={{ zIndex: 3 }}>
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-[#FFD700] rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
-              opacity: 0.3 + Math.random() * 0.4
-            }}
-          />
-        ))}
-      </div>
+      {/* Clean overlay */}
+      <div 
+        className="absolute inset-0 bg-gradient-to-br from-black/30 via-transparent to-black/50"
+        style={{ zIndex: 2 }}
+      />
 
       <div className="container mx-auto px-4 relative" style={{ zIndex: 10 }}>
         <div className="text-center max-w-4xl mx-auto">
-          {/* Remove the duplicate logo since the background already contains it */}
+          {/* Small FinClick Logo */}
+          <div className="mb-8">
+            <Image
+              src="/images/finclick-logo.png"
+              alt="FinClick.AI Logo"
+              width={80}
+              height={80}
+              className="mx-auto finclick-logo"
+            />
+          </div>
           
-          <div className="mt-20"> {/* Better positioning below background logo */}
-            <h1 
-              className="text-5xl md:text-7xl font-bold text-[#B48500] mb-4 transition-all duration-300 hover:text-[#FFD700] hover:drop-shadow-lg cursor-default"
-              style={{
-                textShadow: '0 0 20px rgba(180, 133, 0, 0.5)',
-                animation: 'pulse-gold 2s ease-in-out infinite alternate'
-              }}
-            >
+          <div> {/* Content positioned below small logo */}
+            <h1 className="text-5xl md:text-7xl font-bold text-[#B48500] mb-6">
               FinClick.AI
             </h1>
 
-            <p 
-              className="text-xl md:text-2xl text-[#B48500] mb-6 font-semibold transition-all duration-300 hover:text-[#FFD700] cursor-default"
-              style={{
-                textShadow: '0 0 15px rgba(180, 133, 0, 0.3)'
-              }}
-            >
+            <p className="text-xl md:text-2xl text-[#B48500] mb-6 font-semibold">
               منصة التحليل المالي الذكية الثورية
             </p>
 
-            <p 
-              className="text-lg md:text-xl text-[#B48500] mb-8 opacity-90 transition-all duration-300 hover:opacity-100 hover:text-[#FFD700] cursor-default"
-              style={{
-                textShadow: '0 0 10px rgba(180, 133, 0, 0.2)'
-              }}
-            >
+            <p className="text-lg md:text-xl text-[#B48500] mb-8">
               Revolutionary Intelligent Financial Analysis Platform
             </p>
 
             <div className="max-w-3xl mx-auto mb-8">
-              <p 
-                className="text-base text-[#B48500] leading-relaxed mb-4 transition-all duration-300 hover:text-[#FFD700] cursor-default"
-                style={{
-                  textShadow: '0 0 8px rgba(180, 133, 0, 0.2)'
-                }}
-              >
+              <p className="text-base text-[#B48500] leading-relaxed mb-4">
                 ثورة ونقلة نوعية في عالم التحليل المالي - نظام يقلب الدنيا رأساً على عقب ويقلب كل الموازين
               </p>
-              <p 
-                className="text-base text-[#B48500] leading-relaxed transition-all duration-300 hover:text-[#FFD700] cursor-default" 
-                data-hero-text2
-                style={{
-                  textShadow: '0 0 8px rgba(180, 133, 0, 0.2)'
-                }}
-              >
+              <p className="text-base text-[#B48500] leading-relaxed">
                 تقديم 180+ نوع تحليل مالي كمي بالذكاء الاصطناعي في ثوانٍ معدودة
               </p>
             </div>
@@ -124,13 +79,8 @@ export function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button 
                 size="lg" 
-                className="bg-[#B48500] text-black hover:bg-[#FFD700] hover:scale-105 text-lg px-8 py-3 transition-all duration-300 transform hover:shadow-xl"
-                style={{
-                  boxShadow: '0 0 20px rgba(180, 133, 0, 0.3)',
-                  border: '2px solid #B48500'
-                }}
+                className="bg-[#B48500] text-black hover:bg-[#FFD700] text-lg px-8 py-3"
                 onClick={() => {
-                  // Navigate to dashboard
                   window.location.href = '/dashboard'
                 }}
               >
@@ -140,10 +90,7 @@ export function HeroSection() {
               <Button
                 size="lg"
                 variant="outline"
-                className="bg-transparent border-2 border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black hover:scale-105 text-lg px-8 py-3 transition-all duration-300 transform hover:shadow-xl"
-                style={{
-                  boxShadow: '0 0 15px rgba(180, 133, 0, 0.2)'
-                }}
+                className="bg-transparent border-2 border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black text-lg px-8 py-3"
                 onClick={() => {
                   const pricingSection = document.querySelector('[data-section="pricing"]')
                   if (pricingSection) {
@@ -158,56 +105,23 @@ export function HeroSection() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-2xl mx-auto">
-            <div 
-              className="text-center p-6 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-black/30 cursor-default"
-              style={{
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 215, 0, 0.2)'
-              }}
-            >
-              <div 
-                className="text-4xl font-bold text-[#FFD700] mb-2 transition-all duration-300 hover:text-white"
-                style={{
-                  textShadow: '0 0 15px rgba(255, 215, 0, 0.5)'
-                }}
-              >
+            <div className="text-center p-6 rounded-lg border border-[#B48500]/20">
+              <div className="text-4xl font-bold text-[#B48500] mb-2">
                 180+
               </div>
-              <div className="text-[#FFD700] transition-all duration-300 hover:text-white">نوع تحليل مالي</div>
+              <div className="text-[#B48500]">نوع تحليل مالي</div>
             </div>
-            <div 
-              className="text-center p-6 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-black/30 cursor-default"
-              style={{
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 215, 0, 0.2)'
-              }}
-            >
-              <div 
-                className="text-4xl font-bold text-[#FFD700] mb-2 transition-all duration-300 hover:text-white"
-                style={{
-                  textShadow: '0 0 15px rgba(255, 215, 0, 0.5)'
-                }}
-              >
+            <div className="text-center p-6 rounded-lg border border-[#B48500]/20">
+              <div className="text-4xl font-bold text-[#B48500] mb-2">
                 99%
               </div>
-              <div className="text-[#FFD700] transition-all duration-300 hover:text-white">دقة التحليل</div>
+              <div className="text-[#B48500]">دقة التحليل</div>
             </div>
-            <div 
-              className="text-center p-6 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-black/30 cursor-default"
-              style={{
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 215, 0, 0.2)'
-              }}
-            >
-              <div 
-                className="text-4xl font-bold text-[#FFD700] mb-2 transition-all duration-300 hover:text-white"
-                style={{
-                  textShadow: '0 0 15px rgba(255, 215, 0, 0.5)'
-                }}
-              >
+            <div className="text-center p-6 rounded-lg border border-[#B48500]/20">
+              <div className="text-4xl font-bold text-[#B48500] mb-2">
                 3
               </div>
-              <div className="text-[#FFD700] transition-all duration-300 hover:text-white">خطوات بسيطة</div>
+              <div className="text-[#B48500]">خطوات بسيطة</div>
             </div>
           </div>
         </div>
