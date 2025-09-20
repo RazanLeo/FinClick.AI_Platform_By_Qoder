@@ -252,7 +252,7 @@ function getGroqClient() {
       )
     }
     console.log("[v0] Creating Groq client with API key:", apiKey.substring(0, 10) + "...")
-    groqClient = createGroq({
+    groqClient = new Groq({
       apiKey: apiKey,
     })
   }
