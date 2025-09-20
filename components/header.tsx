@@ -57,7 +57,9 @@ export function Header() {
         document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
       } else {
         // Default to hero section if no match
-        window.scrollTo({ top: 0, behavior: "smooth" })
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: "smooth" })
+        }
       }
       setSearchQuery("") // Clear search after use
     }

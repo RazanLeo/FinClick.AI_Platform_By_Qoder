@@ -692,7 +692,8 @@ export class EnhancedFinancialAnalysisWorkflow {
       'ma_analysis': 'تحليل الاندماج والاستحواذ',
       'detection_forecasting': 'تقنيات الكشف والتنبؤ الكمي',
       'time_series': 'تحليل السلاسل الزمنية الإحصائي'
-    }
+    };
+    return names[subcategory] || subcategory;
   }
 
   // Helper method for async delay
@@ -700,3 +701,6 @@ export class EnhancedFinancialAnalysisWorkflow {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
+
+// Export the workflow instance
+export const enhancedFinancialAnalysisWorkflow = new EnhancedFinancialAnalysisWorkflow();

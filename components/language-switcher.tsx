@@ -144,7 +144,9 @@ export function LanguageSwitcher() {
 
     // Reload page to apply all changes properly
     setTimeout(() => {
-      window.location.reload()
+      if (typeof window !== 'undefined') {
+        window.location.reload()
+      }
     }, 1000)
   }
 
