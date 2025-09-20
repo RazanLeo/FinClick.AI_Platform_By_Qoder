@@ -1,83 +1,177 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+interface AnalysisRequest {
+  fileData: Array<{
+    name: string
+    type: string
+    data: string
+  }>
+  analysisTypes: string[]
+  analysisLevel: string
+  companyInfo: {
+    companyName: string
+    sector: string
+    activity: string
+    legalEntity: string
+    yearsOfAnalysis: number
+    comparisonLevel: string
+  }
+}
+
+interface AnalysisResultItem {
+  id: string
+  name: string
+  nameEn: string
+  nameAr: string
+  category: 'classical' | 'applied' | 'advanced'
+  subcategory: string
+  value: number | string | object
+  status: 'ممتاز' | 'جيد جداً' | 'جيد' | 'مقبول' | 'ضعيف'
+  description: string
+  calculationMethod: string
+  industryBenchmark?: number
+  peerComparison?: number
+  riskLevel?: 'منخفض' | 'متوسط' | 'مرتفع' | 'عالي جداً'
+  recommendations?: string[]
+}
+
 export async function POST(request: NextRequest) {
   try {
-    console.log('[v0] Starting analysis request')
-
-    const body = await request.json()
-    console.log('[v0] Request body received:', JSON.stringify(body, null, 2))
-
-    const { fileData, analysisTypes, analysisLevel, companyInfo } = body
-
-    if (!fileData || !analysisTypes || !analysisLevel) {
-      console.error('[v0] Missing required parameters:', {
-        fileData: !!fileData,
-        analysisTypes: !!analysisTypes,
-        analysisLevel: !!analysisLevel,
-      })
-      return NextResponse.json({ error: 'Missing required parameters' }, { status: 400 })
-    }
-
-    // Mock analysis result for deployment testing
-    const mockAnalysisResult = {
-      summary: 'تحليل مالي شامل للبيانات المقدمة',
+    const data: AnalysisRequest = await request.json()
+    
+    // Simulate processing time
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    
+    // Generate mock analysis results
+    const detailedAnalysis: AnalysisResultItem[] = [
+      {
+        id: 'liquidity_01',
+        name: 'Current Ratio',
+        nameEn: 'Current Ratio',
+        nameAr: 'نسبة السيولة الجارية',
+        category: 'classical',
+        subcategory: 'liquidity',
+        value: 2.4,
+        status: 'جيد',
+        description: 'يقيس قدرة الشركة على الوفاء بالتزاماتها قصيرة الأجل',
+        calculationMethod: 'الأصول المتداولة ÷ الخصوم المتداولة',
+        industryBenchmark: 2.1,
+        peerComparison: 2.2,
+        riskLevel: 'منخفض',
+        recommendations: ['الحفاظ على المستوى الحالي للسيولة', 'مراقبة التدفق النقدي']
+      },
+      {
+        id: 'profitability_01',
+        name: 'Net Profit Margin',
+        nameEn: 'Net Profit Margin',
+        nameAr: 'هامش صافي الربح',
+        category: 'classical',
+        subcategory: 'profitability',
+        value: 0.15,
+        status: 'جيد جداً',
+        description: 'يظهر نسبة صافي الربح من إجمالي الإيرادات',
+        calculationMethod: 'صافي الربح ÷ صافي الإيرادات',
+        industryBenchmark: 0.12,
+        peerComparison: 0.13,
+        riskLevel: 'منخفض',
+        recommendations: ['استمرار تحسين الكفاءة التشغيلية', 'تطوير استراتيجيات زيادة الربحية']
+      },
+      {
+        id: 'leverage_01',
+        name: 'Debt to Equity Ratio',
+        nameEn: 'Debt to Equity Ratio',
+        nameAr: 'نسبة الدين إلى حقوق الملكية',
+        category: 'classical',
+        subcategory: 'leverage',
+        value: 0.6,
+        status: 'مقبول',
+        description: 'يقيس مدى اعتماد الشركة على الديون مقارنة بحقوق الملكية',
+        calculationMethod: 'إجمالي الديون ÷ حقوق الملكية',
+        industryBenchmark: 0.5,
+        peerComparison: 0.55,
+        riskLevel: 'متوسط',
+        recommendations: ['إعادة هيكلة الديون', 'تحسين هيكل رأس المال']
+      },
+      {
+        id: 'activity_01',
+        name: 'Asset Turnover',
+        nameEn: 'Asset Turnover',
+        nameAr: 'معدل دوران الأصول',
+        category: 'classical',
+        subcategory: 'activity',
+        value: 1.8,
+        status: 'جيد',
+        description: 'يقيس كفاءة الشركة في استخدام أصولها لتوليد الإيرادات',
+        calculationMethod: 'صافي الإيرادات ÷ متوسط إجمالي الأصول',
+        industryBenchmark: 1.6,
+        peerComparison: 1.7,
+        riskLevel: 'منخفض',
+        recommendations: ['تحسين استخدام الأصول', 'زيادة الكفاءة التشغيلية']
+      },
+      {
+        id: 'growth_01',
+        name: 'Revenue Growth Rate',
+        nameEn: 'Revenue Growth Rate',
+        nameAr: 'معدل نمو الإيرادات',
+        category: 'applied',
+        subcategory: 'growth',
+        value: 0.12,
+        status: 'جيد',
+        description: 'يقيس معدل نمو الإيرادات مقارنة بالفترة السابقة',
+        calculationMethod: '(الإيرادات الحالية - الإيرادات السابقة) ÷ الإيرادات السابقة',
+        industryBenchmark: 0.10,
+        peerComparison: 0.11,
+        riskLevel: 'منخفض',
+        recommendations: ['تطوير استراتيجيات النمو', 'التوسع في الأسواق الجديدة']
+      }
+    ]
+    
+    const response = {
+      success: true,
+      timestamp: new Date().toISOString(),
+      companyName: data.companyInfo.companyName,
+      analysisType: data.analysisLevel,
+      detailedAnalysis,
+      summary: {
+        overallScore: 75,
+        overallRating: 'جيد',
+        keyStrengths: [
+          'مستوى سيولة جيد',
+          'هامش ربح مقبول',
+          'كفاءة في استخدام الأصول'
+        ],
+        keyWeaknesses: [
+          'نسبة دين مرتفعة نسبياً',
+          'معدل نمو محدود'
+        ],
+        riskFactors: [
+          'مخاطر السيولة',
+          'مخاطر الائتمان'
+        ]
+      },
       keyFindings: [
-        'قوة في المؤشرات المالية الرئيسية',
-        'نمو مستقر في الإيرادات',
-        'إدارة جيدة للمخاطر'
+        'الشركة تحافظ على مستوى سيولة جيد يمكنها من الوفاء بالتزاماتها قصيرة الأجل',
+        'هامش الربح يظهر كفاءة جيدة في إدارة التكاليف',
+        'نسبة الدين تحتاج إلى مراجعة لتحسين هيكل رأس المال'
       ],
       recommendations: [
-        'مواصلة استراتيجية النمو الحالية',
-        'تعزيز مراقبة التدفق النقدي',
-        'تطوير قنوات جديدة للإيرادات'
+        'تحسين إدارة النقدية لزيادة السيولة',
+        'مراجعة هيكل الديون وخفض نسبة الاعتماد على التمويل الخارجي',
+        'تطوير استراتيجيات لزيادة معدل النمو',
+        'تحسين كفاءة استخدام الأصول'
       ],
       riskLevel: 'متوسط',
-      score: 78,
-      detailedAnalysis: [
-        {
-          id: 'prof_001',
-          name: 'تحليل هامش الربح الإجمالي',
-          nameEn: 'Gross Profit Margin Analysis',
-          category: 'التصنيف الأساسي',
-          subcategory: 'الربحية',
-          value: 45.5,
-          formula: '(الإيرادات - تكلفة البضاعة المباعة) / الإيرادات * 100',
-          interpretation: 'يشير إلى قدرة جيدة على توليد الربح من العمليات الأساسية',
-          benchmark: '40-50% لقطاع الخدمات',
-          status: 'جيد',
-          description: 'تحليل هامش الربح الإجمالي يقيس نسبة الربح المحقق من كل وحدة نقدية من المبيعات',
-          calculation: '(الإيرادات 1,000,000 - تكلفة البضاعة 545,000) / 1,000,000 * 100 = 45.5%',
-          recommendations: [
-            'مراجعة استراتيجية التسعير',
-            'تحسين العمليات التشغيلية'
-          ],
-          riskLevel: 'منخفض',
-          confidence: 85
-        }
-      ],
-      metadata: {
-        analysisCount: 1,
-        analysisLevel,
-        analysisTypes,
-        selectedAnalyses: ['Gross Profit Margin Analysis'],
-        timestamp: new Date().toISOString(),
-        model: 'mock-analysis',
-        companyInfo,
-      },
+      score: 75,
+      processingTime: '2.3 seconds'
     }
-
-    console.log('[v0] Returning mock analysis result')
-    return NextResponse.json(mockAnalysisResult)
+    
+    return NextResponse.json(response)
+    
   } catch (error) {
-    console.error('[v0] Analysis error details:', error)
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
-    console.error('[v0] Error message:', errorMessage)
-
+    console.error('Analysis API error:', error)
     return NextResponse.json(
-      {
-        error: `Analysis error: ${errorMessage}`,
-      },
-      { status: 500 },
+      { error: 'Failed to process analysis', details: error },
+      { status: 500 }
     )
   }
 }

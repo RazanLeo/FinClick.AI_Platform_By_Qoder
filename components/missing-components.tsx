@@ -8,23 +8,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { X, Globe, Languages, TrendingUp, Users, Building, BarChart3, PieChart, LineChart } from "lucide-react"
 
-// Language Switcher Component
-export function LanguageSwitcher() {
-  const [currentLang, setCurrentLang] = useState("ar")
-
-  return (
-    <Button
-      variant="ghost"
-      size="sm"
-      onClick={() => setCurrentLang(currentLang === "ar" ? "en" : "ar")}
-      className="text-[#B48500] hover:bg-[#B48500] hover:text-black"
-    >
-      <Languages className="w-4 h-4 mr-2" />
-      {currentLang === "ar" ? "EN" : "عربي"}
-    </Button>
-  )
-}
-
 // Stock Ticker Component
 export function StockTicker() {
   const stocks = [

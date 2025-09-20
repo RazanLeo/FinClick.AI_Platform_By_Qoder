@@ -40,12 +40,10 @@ a {
 /* Language Support CSS */
 .lang-ar {
   direction: rtl;
-  text-align: right;
 }
 
 .lang-en {
   direction: ltr;
-  text-align: left;
 }
 
 .dir-rtl {
@@ -65,7 +63,7 @@ a {
   font-family: 'Inter', 'Roboto', sans-serif;
 }
 
-/* RTL/LTR specific adjustments */
+/* RTL/LTR specific adjustments - only for specific elements, not all */
 .lang-ar .flex {
   flex-direction: row-reverse;
 }
@@ -74,13 +72,14 @@ a {
   flex-direction: row;
 }
 
-.lang-ar .text-left {
+/* Remove the global text alignment forcing - preserve existing text-center classes */
+/* .lang-ar .text-left {
   text-align: right !important;
 }
 
 .lang-en .text-right {
   text-align: left !important;
-}
+} */
 
 /* Margin and padding adjustments for RTL */
 .lang-ar .ml-auto {
@@ -153,44 +152,34 @@ img[alt*="FinClick"], img[alt*="Logo"] {
   outline: none !important;
 }
 
-/* Fix hover effects for icons and buttons */
-.hover-stable {
+/* Fix hover effects for icons and buttons - COMPREHENSIVE FIX */
+.hover-stable, button, .cursor-pointer, a, svg, .lucide, .lucide-react {
   transition: all 0.3s ease !important;
   opacity: 1 !important;
   visibility: visible !important;
+  display: inherit !important;
 }
 
-.hover-stable:hover {
+.hover-stable:hover, button:hover, .cursor-pointer:hover, a:hover, svg:hover, .lucide:hover, .lucide-react:hover {
   transform: scale(1.05) !important;
   opacity: 1 !important;
   visibility: visible !important;
+  display: inherit !important;
 }
 
-/* Ensure buttons and icons don't disappear on hover */
-button, .cursor-pointer, a {
+/* Ensure all interactive elements remain visible */
+[role="button"], .clickable, .interactive {
   transition: all 0.3s ease !important;
   opacity: 1 !important;
   visibility: visible !important;
 }
 
-button:hover, .cursor-pointer:hover, a:hover {
+[role="button"]:hover, .clickable:hover, .interactive:hover {
   opacity: 1 !important;
   visibility: visible !important;
 }
 
-/* Fix specific icon hover issues */
-.lucide, .lucide-react, svg {
-  transition: all 0.3s ease !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.lucide:hover, .lucide-react:hover, svg:hover {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-/* Prevent any element from disappearing on hover */
+/* Prevent any element from disappearing on hover - ULTIMATE FIX */
 * {
   transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease, background-color 0.3s ease !important;
 }
@@ -198,6 +187,49 @@ button:hover, .cursor-pointer:hover, a:hover {
 *:hover {
   opacity: 1 !important;
   visibility: visible !important;
+  display: inherit !important;
+}
+
+/* Specific fixes for header icons and navigation */
+header button, header a, header svg, nav button, nav a, nav svg {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+}
+
+header button:hover, header a:hover, header svg:hover, nav button:hover, nav a:hover, nav svg:hover {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+}
+
+/* Additional fixes for Lucide icons specifically */
+.lucide-home, .lucide-bar-chart-3, .lucide-building, .lucide-trending-up, .lucide-star, .lucide-credit-card, .lucide-play-circle, .lucide-phone, .lucide-bell, .lucide-search {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: inline !important;
+}
+
+.lucide-home:hover, .lucide-bar-chart-3:hover, .lucide-building:hover, .lucide-trending-up:hover, .lucide-star:hover, .lucide-credit-card:hover, .lucide-play-circle:hover, .lucide-phone:hover, .lucide-bell:hover, .lucide-search:hover {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: inline !important;
+}
+
+/* Force visibility for all icons in navigation */
+header .flex.items-center.gap-2 svg,
+nav .flex.items-center.gap-2 svg {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: inline-block !important;
+  pointer-events: auto !important;
+}
+
+header .flex.items-center.gap-2:hover svg,
+nav .flex.items-center.gap-2:hover svg {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: inline-block !important;
 }
 
 .animate-glow {
@@ -230,4 +262,26 @@ button:hover, .cursor-pointer:hover, a:hover {
   100% {
     transform: translateX(-100%);
   }
+}
+
+/* CRITICAL HOVER FIX - Add to end to override everything */
+button, a, svg, .lucide {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+button:hover, a:hover, svg:hover, .lucide:hover {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Force display for all interactive elements */
+button *, a *, [role="button"] * {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+button:hover *, a:hover *, [role="button"]:hover * {
+  opacity: 1 !important;
+  visibility: visible !important;
 }

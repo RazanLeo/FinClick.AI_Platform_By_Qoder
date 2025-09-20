@@ -136,9 +136,9 @@ export function LanguageSwitcher() {
     document.body.className = document.body.className.replace(/font-(arabic|latin)/g, '')
     document.body.className += ` ${fontClass}`
     
-    // Force re-render of flex directions and text alignments
-    const flexElements = document.querySelectorAll('.flex, .grid')
-    flexElements.forEach(el => {
+    // Force re-render of flex directions for navigation only
+    const navElements = document.querySelectorAll('nav .flex, header .flex')
+    navElements.forEach(el => {
       el.classList.remove('flex-row-reverse', 'flex-row')
       if (lang === 'ar') {
         el.classList.add('flex-row-reverse')
@@ -147,12 +147,7 @@ export function LanguageSwitcher() {
       }
     })
     
-    // Update text alignment classes
-    const textElements = document.querySelectorAll('[class*="text-"]')
-    textElements.forEach(el => {
-      el.classList.remove('text-right', 'text-left')
-      el.classList.add(lang === 'ar' ? 'text-right' : 'text-left')
-    })
+    // DO NOT update text alignment classes - preserve existing text-center classes
   }
 
   const toggleLanguage = () => {
