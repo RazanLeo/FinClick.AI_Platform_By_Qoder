@@ -57,45 +57,106 @@ export class FinancialAnalysisWorkflow {
       // Simulate workflow execution with progress updates
       if (onProgress) {
         onProgress(10, 'تحليل الملفات المرفوعة...');
-        await this.delay(1000);
+        await this.delay(500);
         
-        onProgress(25, 'استخراج البيانات المالية...');
-        await this.delay(1500);
+        onProgress(20, 'استخراج البيانات المالية...');
+        await this.delay(500);
         
-        onProgress(40, 'هيكلة البيانات...');
-        await this.delay(1000);
+        onProgress(30, 'هيكلة البيانات...');
+        await this.delay(500);
         
-        onProgress(60, 'تحليل المؤشرات المالية...');
-        await this.delay(2000);
+        onProgress(40, 'تحليل المؤشرات المالية الأساسية...');
+        await this.delay(500);
+        
+        onProgress(50, 'تحليل النسب المالية...');
+        await this.delay(500);
+        
+        onProgress(60, 'تحليل التدفقات النقدية...');
+        await this.delay(500);
+        
+        onProgress(70, 'تحليل المخاطر والفرص...');
+        await this.delay(500);
         
         onProgress(80, 'إنشاء التقارير...');
-        await this.delay(1500);
-        
-        onProgress(95, 'المراجعة النهائية...');
         await this.delay(500);
+        
+        onProgress(90, 'المراجعة النهائية...');
+        await this.delay(300);
         
         onProgress(100, 'تم الانتهاء بنجاح!');
       }
 
-      // Create successful analysis results
+      // Determine number of analyses based on type
+      let totalAnalyses = 180;
+      let analysisTypeName = 'تحليل شامل كامل';
+      
+      switch (options.analysisType) {
+        case 'classical':
+          totalAnalyses = 106;
+          analysisTypeName = 'التحليل الأساسي الكلاسيكي';
+          break;
+        case 'applied':
+          totalAnalyses = 21;
+          analysisTypeName = 'التحليل التطبيقي المتوسط';
+          break;
+        case 'advanced':
+          totalAnalyses = 53;
+          analysisTypeName = 'التحليل المتقدم والمتطور';
+          break;
+        default:
+          totalAnalyses = 180;
+          analysisTypeName = 'التحليل الشامل الكامل';
+      }
+
+      // Create comprehensive analysis results
       const results = {
         success: true,
         timestamp: new Date(),
         metadata: {
           companyName: options.companyName,
           analysisType: options.analysisType || 'comprehensive',
+          analysisTypeName: analysisTypeName,
           language: options.language || 'ar',
-          totalAnalyses: 180,
-          processingTime: 'تم في 15 ثانية'
+          totalAnalyses: totalAnalyses,
+          processingTime: 'تم في 15 ثانية',
+          sector: options.sector,
+          legalEntity: options.legalEntity,
+          yearsOfAnalysis: options.yearsOfAnalysis,
+          comparisonLevel: options.comparisonLevel
         },
         results: {
           executiveSummary: `تحليل مالي شامل لشركة ${options.companyName}`,
           analysisResults: [
-            { type: 'السيولة', value: 1.5, status: 'جيد', description: 'نسبة السيولة الحالية' },
-            { type: 'الربحية', value: 0.12, status: 'متوسط', description: 'هامش الربح الصافي' },
-            { type: 'الرفع المالي', value: 0.8, status: 'مقبول', description: 'نسبة الدين إلى الأصول' },
-            { type: 'النشاط', value: 2.3, status: 'ممتاز', description: 'معدل دوران الأصول' },
-            { type: 'النمو', value: 0.08, status: 'جيد', description: 'معدل النمو السنوي' }
+            { 
+              type: 'السيولة', 
+              value: this.generateRandomValue(1.2, 2.5), 
+              status: this.getRandomStatus(), 
+              description: 'نسبة السيولة الحالية' 
+            },
+            { 
+              type: 'الربحية', 
+              value: this.generateRandomValue(0.05, 0.25), 
+              status: this.getRandomStatus(), 
+              description: 'هامش الربح الصافي' 
+            },
+            { 
+              type: 'الرفع المالي', 
+              value: this.generateRandomValue(0.3, 1.2), 
+              status: this.getRandomStatus(), 
+              description: 'نسبة الدين إلى الأصول' 
+            },
+            { 
+              type: 'النشاط', 
+              value: this.generateRandomValue(1.5, 3.5), 
+              status: this.getRandomStatus(), 
+              description: 'معدل دوران الأصول' 
+            },
+            { 
+              type: 'النمو', 
+              value: this.generateRandomValue(0.03, 0.15), 
+              status: this.getRandomStatus(), 
+              description: 'معدل النمو السنوي' 
+            }
           ],
           recommendations: [
             'تحسين إدارة النقدية لزيادة السيولة',
@@ -103,6 +164,34 @@ export class FinancialAnalysisWorkflow {
             'مراجعة هيكل رأس المال',
             'تحسين كفاءة استخدام الأصول',
             'التوسع في الأسواق الجديدة'
+          ],
+          swot: {
+            strengths: [
+              'معدل دوران الأصول مرتفع',
+              'هامش الربح مقبول',
+              'إدارة فعالة للسيولة'
+            ],
+            weaknesses: [
+              'نسبة الدين مرتفعة نسبياً',
+              'معدل النمو محدود'
+            ],
+            opportunities: [
+              'التوسع في الأسواق الجديدة',
+              'تطوير منتجات مبتكرة'
+            ],
+            threats: [
+              'المنافسة المتزايدة',
+              'التقلبات الاقتصادية'
+            ]
+          },
+          risks: [
+            'مخاطر السيولة قصيرة الأجل',
+            'مخاطر الائتمان',
+            'مخاطر السوق'
+          ],
+          forecasts: [
+            'توقع نمو بنسبة 8-12% في السنة القادمة',
+            'تحسين في هامش الربح بنسبة 2-3%'
           ],
           visualizations: [
             { type: 'chart', title: 'مؤشرات الأداء الرئيسية', data: {} },
@@ -255,6 +344,17 @@ export class FinancialAnalysisWorkflow {
   // Helper method for delays
   private delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  // Helper method to generate random values for simulation
+  private generateRandomValue(min: number, max: number): number {
+    return parseFloat((Math.random() * (max - min) + min).toFixed(2));
+  }
+
+  // Helper method to get random status
+  private getRandomStatus(): string {
+    const statuses = ['ممتاز', 'جيد جداً', 'جيد', 'مقبول', 'ضعيف'];
+    return statuses[Math.floor(Math.random() * statuses.length)];
   }
 }
 

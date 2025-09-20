@@ -381,6 +381,9 @@ export function FreeToolsSection() {
                   نسبة السعر للأرباح
                 </Button>
               </div>
+              <div className="mt-4 text-center text-sm text-[#8B6914]">
+                <p>جميع الحاسبات المالية مجانية لتجربة قدرات النظام</p>
+              </div>
 
               {selectedTool === "fair-price" && (
                 <div className="space-y-3 p-4 border border-[#B48500] rounded">

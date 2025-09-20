@@ -1,167 +1,174 @@
 "use client"
 
-import { useState, useCallback } from "react"
-import { useDropzone } from "react-dropzone"
+import React, { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
-import { Upload, File, X, CheckCircle, AlertCircle, FileText, ImageIcon, FileSpreadsheet } from "lucide-react"
+import { Upload, FileText, X, CheckCircle } from "lucide-react"
+import { toast } from "sonner"
 
 interface UploadedFile {
-  id: string
   name: string
   size: number
   type: string
-  status: "uploading" | "completed" | "error"
-  progress: number
+  lastModified: number
+  file: File
 }
 
 interface FileUploadProps {
-  onFilesUploaded: (files: UploadedFile[]) => void
-  maxFiles?: number
+  onFilesUpload: (files: UploadedFile[]) => void
+  onFileRemove: (fileName: string) => void
+  uploadedFiles: UploadedFile[]
 }
 
-export function FileUpload({ onFilesUploaded, maxFiles = 10 }: FileUploadProps) {
-  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([])
+export function FileUpload({ onFilesUpload, onFileRemove, uploadedFiles }: FileUploadProps) {
+  const [isDragging, setIsDragging] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const newFiles: UploadedFile[] = acceptedFiles.map((file) => ({
-        id: Math.random().toString(36).substr(2, 9),
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragging(true)
+  }
+
+  const handleDragLeave = () => {
+    setIsDragging(false)
+  }
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragging(false)
+    
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const files = Array.from(e.dataTransfer.files) as unknown as File[]
+      handleFiles(files)
+    }
+  }
+
+  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const files = Array.from(e.target.files) as unknown as File[]
+      handleFiles(files)
+    }
+  }
+
+  const handleFiles = (files: File[]) => {
+    // Validate file types
+    const validFiles = files.filter(file => {
+      const validTypes = [
+        'application/pdf',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/msword',
+        'image/jpeg',
+        'image/png'
+      ]
+      
+      return validTypes.includes(file.type)
+    })
+    
+    if (validFiles.length !== files.length) {
+      toast.error("بعض الملفات غير مدعومة. يرجى رفع ملفات PDF, Excel, Word, أو الصور فقط.")
+    }
+    
+    if (validFiles.length > 0) {
+      // Convert files to our format
+      const fileObjects = validFiles.map(file => ({
         name: file.name,
         size: file.size,
         type: file.type,
-        status: "uploading",
-        progress: 0,
+        lastModified: file.lastModified,
+        file: file
       }))
-
-      setUploadedFiles((prev) => [...prev, ...newFiles])
-
-      // Simulate upload progress
-      newFiles.forEach((file) => {
-        const interval = setInterval(() => {
-          setUploadedFiles((prev) =>
-            prev.map((f) => {
-              if (f.id === file.id) {
-                const newProgress = f.progress + Math.random() * 30
-                if (newProgress >= 100) {
-                  clearInterval(interval)
-                  return { ...f, progress: 100, status: "completed" }
-                }
-                return { ...f, progress: newProgress }
-              }
-              return f
-            }),
-          )
-        }, 200)
-      })
-
-      onFilesUploaded([...uploadedFiles, ...newFiles])
-    },
-    [uploadedFiles, onFilesUploaded],
-  )
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      "application/pdf": [".pdf"],
-      "application/vnd.ms-excel": [".xls"],
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
-      "application/msword": [".doc"],
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
-      "image/*": [".png", ".jpg", ".jpeg", ".gif", ".bmp"],
-    },
-    maxFiles: maxFiles - uploadedFiles.length,
-    maxSize: 50 * 1024 * 1024, // 50MB
-  })
-
-  const removeFile = (fileId: string) => {
-    setUploadedFiles((prev) => prev.filter((f) => f.id !== fileId))
+      
+      onFilesUpload(fileObjects)
+    }
   }
 
-  const getFileIcon = (type: string) => {
-    if (type.includes("pdf")) return <FileText className="w-6 h-6 text-red-500" />
-    if (type.includes("sheet") || type.includes("excel")) return <FileSpreadsheet className="w-6 h-6 text-green-500" />
-    if (type.includes("word")) return <FileText className="w-6 h-6 text-blue-500" />
-    if (type.includes("image")) return <ImageIcon className="w-6 h-6 text-purple-500" />
-    return <File className="w-6 h-6 text-[#B48500]" />
+  const triggerFileInput = () => {
+    fileInputRef.current?.click()
   }
 
-  const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return "0 Bytes"
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes'
     const k = 1024
-    const sizes = ["Bytes", "KB", "MB", "GB"]
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
     const i = Math.floor(Math.log(bytes) / Math.log(k))
-    return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
   return (
-    <Card className="bg-black border-[#B48500]">
-      <CardHeader>
-        <CardTitle className="text-[#B48500] flex items-center gap-2">
-          <Upload className="w-5 h-5" />
-          إرفاق المستندات المالية
-        </CardTitle>
-        <p className="text-[#8B6914] text-sm">
-          ارفع القوائم المالية أو موازين المراجعة أو الموازنات التقديرية (PDF, Excel, Word, صور)
-        </p>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Upload Area */}
-        <div
-          {...getRootProps()}
-          className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-all ${
-            isDragActive
-              ? "border-[#B48500] bg-[#B48500]/10"
-              : "border-[#8B6914] hover:border-[#B48500] hover:bg-[#B48500]/5"
-          }`}
-        >
-          <input {...getInputProps()} />
-          <Upload className="w-12 h-12 text-[#B48500] mx-auto mb-4" />
-          {isDragActive ? (
-            <p className="text-[#B48500]">اسحب الملفات هنا...</p>
-          ) : (
-            <div>
-              <p className="text-[#B48500] mb-2">اسحب الملفات هنا أو انقر للاختيار</p>
-              <p className="text-[#8B6914] text-sm">
-                يمكنك رفع حتى {maxFiles} ملفات (PDF, Excel, Word, صور) - حد أقصى 50MB لكل ملف
-              </p>
-            </div>
-          )}
-        </div>
+    <div className="space-y-6">
+      {/* Upload Area */}
+      <Card 
+        className={`border-2 border-dashed ${
+          isDragging ? 'border-[#B48500] bg-[#B48500]/5' : 'border-[#8B6914]'
+        } rounded-lg transition-colors`}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
+        <CardContent className="p-8 text-center">
+          <Upload className="w-12 h-12 mx-auto text-[#8B6914] mb-4" />
+          <h3 className="text-lg font-medium text-[#B48500] mb-2">
+            اسحب وأفلت الملفات هنا
+          </h3>
+          <p className="text-sm text-[#8B6914] mb-4">
+            أو انقر على الزر أدناه لاختيار الملفات
+          </p>
+          
+          <Button
+            onClick={triggerFileInput}
+            className="bg-[#B48500] text-black hover:bg-[#8B6914]"
+          >
+            <Upload className="w-4 h-4 mr-2" />
+            اختيار الملفات
+          </Button>
+          
+          <input
+            ref={fileInputRef}
+            type="file"
+            multiple
+            accept=".pdf,.xlsx,.xls,.docx,.doc,.jpg,.jpeg,.png"
+            onChange={handleFileInput}
+            className="hidden"
+          />
+          
+          <p className="text-xs text-[#8B6914] mt-4">
+            يدعم ملفات PDF, Excel, Word, وصور JPG/PNG
+          </p>
+        </CardContent>
+      </Card>
 
-        {/* File List */}
-        {uploadedFiles.length > 0 && (
-          <div className="space-y-3">
-            <h4 className="text-[#B48500] font-semibold">الملفات المرفوعة ({uploadedFiles.length})</h4>
-            <div className="space-y-2 max-h-60 overflow-y-auto">
-              {uploadedFiles.map((file) => (
-                <div
-                  key={file.id}
-                  className="flex items-center gap-3 p-3 bg-[#1a1a1a] rounded-lg border border-[#8B6914]"
+      {/* Uploaded Files List */}
+      {uploadedFiles.length > 0 && (
+        <Card className="bg-black border-[#B48500]">
+          <CardHeader>
+            <CardTitle className="text-[#B48500]">الملفات المرفوعة</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {uploadedFiles.map((file, index) => (
+                <div 
+                  key={`${file.name}-${index}`} 
+                  className="flex items-center justify-between p-3 bg-[#B48500]/5 rounded border border-[#B48500]/20"
                 >
-                  {getFileIcon(file.type)}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[#B48500] text-sm font-medium truncate">{file.name}</p>
-                    <p className="text-[#8B6914] text-xs">{formatFileSize(file.size)}</p>
-                    {file.status === "uploading" && (
-                      <Progress value={file.progress} className="mt-1 h-1 bg-[#8B6914]" />
-                    )}
+                  <div className="flex items-center">
+                    <FileText className="w-5 h-5 text-[#B48500] mr-3" />
+                    <div>
+                      <p className="font-medium text-sm">{file.name}</p>
+                      <p className="text-xs text-[#8B6914]">
+                        {formatFileSize(file.size)}
+                      </p>
+                    </div>
                   </div>
+                  
                   <div className="flex items-center gap-2">
-                    {file.status === "completed" && <CheckCircle className="w-5 h-5 text-green-500" />}
-                    {file.status === "error" && <AlertCircle className="w-5 h-5 text-red-500" />}
-                    {file.status === "uploading" && (
-                      <Badge variant="secondary" className="bg-[#B48500] text-black">
-                        {Math.round(file.progress)}%
-                      </Badge>
-                    )}
+                    <CheckCircle className="w-5 h-5 text-green-500" />
                     <Button
+                      onClick={() => onFileRemove(file.name)}
                       variant="ghost"
                       size="sm"
-                      onClick={() => removeFile(file.id)}
-                      className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                      className="text-[#B48500] hover:bg-[#B48500] hover:text-black"
                     >
                       <X className="w-4 h-4" />
                     </Button>
@@ -169,20 +176,13 @@ export function FileUpload({ onFilesUploaded, maxFiles = 10 }: FileUploadProps) 
                 </div>
               ))}
             </div>
-          </div>
-        )}
-
-        {/* Upload Stats */}
-        <div className="flex justify-between text-sm text-[#8B6914] pt-2 border-t border-[#8B6914]">
-          <span>
-            الملفات المرفوعة: {uploadedFiles.length}/{maxFiles}
-          </span>
-          <span>
-            المكتملة: {uploadedFiles.filter((f) => f.status === "completed").length} | الأخطاء:{" "}
-            {uploadedFiles.filter((f) => f.status === "error").length}
-          </span>
-        </div>
-      </CardContent>
-    </Card>
+            
+            <div className="mt-4 text-sm text-[#8B6914]">
+              <p>{uploadedFiles.length} ملف مرفوع</p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </div>
   )
 }

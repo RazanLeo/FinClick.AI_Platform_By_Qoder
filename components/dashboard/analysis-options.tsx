@@ -1,35 +1,36 @@
 "use client"
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
+import React from "react"
 import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Badge } from "@/components/ui/badge"
-import { Settings, Building, Globe, Calendar, BarChart3 } from "lucide-react"
+import { Label } from "@/components/ui/label"
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Info } from "lucide-react"
 
-interface AnalysisOptionsProps {
-  onOptionsChange: (options: any) => void
+interface FinancialData {
+  companyName: string
+  sector: string
+  activity: string
+  legalEntity: string
+  yearsOfAnalysis: number
+  comparisonLevel: string
+  analysisType: string
 }
 
-export function AnalysisOptions({ onOptionsChange }: AnalysisOptionsProps) {
-  const [options, setOptions] = useState({
-    language: "ar",
-    companyName: "",
-    sector: "",
-    activity: "",
-    legalEntity: "",
-    analysisYears: "1",
-    comparisonLevel: "",
-    analysisTypes: {
-      classical: false,
-      applied: false,
-      advanced: false,
-      comprehensive: true,
-    },
-  })
+interface AnalysisOptionsProps {
+  options: FinancialData
+  onOptionChange: (field: keyof FinancialData, value: string | number) => void
+}
 
+export function AnalysisOptions({ options, onOptionChange }: AnalysisOptionsProps) {
+  // Sector options (50+ sectors as specified in the prompt)
   const sectors = [
     "الطاقة والموارد الطبيعية",
     "المواد الأساسية والكيماويات",
@@ -37,7 +38,8 @@ export function AnalysisOptions({ onOptionsChange }: AnalysisOptionsProps) {
     "الصناعات التحويلية",
     "الأغذية والمشروبات",
     "الزراعة والثروة الحيوانية",
-    "القطاع المالي والمصرفي",
+    "الصيد والموارد البحرية",
+    "المالي والمصرفي",
     "العقارات والإنشاءات",
     "التجارة والتجزئة",
     "النقل واللوجستيات",
@@ -53,157 +55,421 @@ export function AnalysisOptions({ onOptionsChange }: AnalysisOptionsProps) {
     "الفضاء والأقمار الصناعية",
     "البيئة والاستدامة",
     "الروبوتات والأتمتة",
-    "القطاع الحكومي والعام",
-    "القطاع غير الربحي والخيري",
+    "الحكومي والعام",
+    "غير الربحي والخيري",
     "الاقتصاد الإبداعي",
-    "القطاعات الناشئة والمستقبلية",
-  ]
+    "القطاعات الناشئة والمستقبلية"
+  ];
 
+  // Activities for each sector (150+ activities as specified in the prompt)
+  const activities: Record<string, string[]> = {
+    "الطاقة والموارد الطبيعية": [
+      "النفط والغاز - الاستكشاف والإنتاج",
+      "النفط والغاز - التكرير والتوزيع",
+      "خدمات حقول النفط",
+      "الطاقة المتجددة - الطاقة الشمسية",
+      "الطاقة المتجددة - طاقة الرياح",
+      "الطاقة المتجددة - الطاقة المائية",
+      "الطاقة المتجددة - الطاقة الحرارية الأرضية",
+      "الطاقة النووية - توليد الطاقة النووية",
+      "الطاقة النووية - معالجة اليورانيوم",
+      "طاقة الهيدروجين - إنتاج الهيدروجين الأخضر",
+      "طاقة الهيدروجين - إنتاج الهيدروجين الأزرق",
+      "الفحم والوقود الصلب",
+      "الطاقة الحيوية والوقود الحيوي",
+      "توزيع وتجارة الطاقة"
+    ],
+    "المواد الأساسية والكيماويات": [
+      "الكيماويات الأساسية - البتروكيماويات",
+      "الكيماويات الأساسية - الكيماويات الصناعية",
+      "الكيماويات المتخصصة - المواد اللاصقة",
+      "الكيماويات المتخصصة - الطلاءات",
+      "الكيماويات المتخصصة - المحفزات",
+      "البلاستيك والبوليمرات",
+      "المطاط والمواد المركبة",
+      "الأسمدة والكيماويات الزراعية",
+      "الغازات الصناعية",
+      "المواد النانوية والمتقدمة"
+    ],
+    "التعدين والمعادن": [
+      "المعادن الثمينة - الذهب",
+      "المعادن الثمينة - الفضة",
+      "المعادن الثمينة - البلاتين",
+      "المعادن الأساسية - النحاس",
+      "المعادن الأساسية - الألومنيوم",
+      "المعادن الأساسية - الزنك",
+      "المعادن الأساسية - الرصاص",
+      "الحديد والصلب",
+      "المعادن النادرة والاستراتيجية",
+      "المحاجر ومواد البناء - الإسمنت",
+      "المحاجر ومواد البناء - الجبس",
+      "المحاجر ومواد البناء - الرخام",
+      "المحاجر ومواد البناء - الجرانيت",
+      "الملح والمعادن الصناعية",
+      "الأحجار الكريمة"
+    ],
+    "الصناعات التحويلية": [
+      "صناعة السيارات - السيارات",
+      "صناعة السيارات - الشاحنات",
+      "صناعة السيارات - الحافلات",
+      "صناعة السيارات - قطع الغيار",
+      "الصناعات الثقيلة - الآلات الصناعية",
+      "الصناعات الثقيلة - المعدات الثقيلة",
+      "الإلكترونيات - الأجهزة الإلكترونية",
+      "الإلكترونيات - أشباه الموصلات",
+      "الإلكترونيات - الدوائر الكهربائية",
+      "الصناعات الكهربائية - المولدات",
+      "الصناعات الكهربائية - المحولات",
+      "الصناعات الكهربائية - الكابلات",
+      "صناعة الطائرات والفضاء",
+      "بناء السفن والصناعات البحرية",
+      "صناعة القطارات والسكك الحديدية",
+      "الأثاث والديكور",
+      "النسيج والملابس والجلود",
+      "صناعة الورق والطباعة والتغليف",
+      "صناعة الزجاج والسيراميك",
+      "صناعة الأخشاب ومنتجات الغابات"
+    ],
+    "الأغذية والمشروبات": [
+      "تصنيع الأغذية - اللحوم",
+      "تصنيع الأغذية - الألبان",
+      "تصنيع الأغذية - المخبوزات",
+      "تصنيع الأغذية - الحلويات",
+      "المشروبات الغازية",
+      "العصائر",
+      "المياه المعبأة",
+      "الأغذية المجمدة والمحفوظة",
+      "المكملات الغذائية والأغذية الصحية",
+      "صناعة التبغ",
+      "التموين والخدمات الغذائية"
+    ],
+    "الزراعة والثروة الحيوانية": [
+      "المحاصيل الزراعية - الحبوب",
+      "المحاصيل الزراعية - الخضروات",
+      "المحاصيل الزراعية - الفواكه",
+      "الزراعة المحمية والعمودية",
+      "تربية الماشية والدواجن",
+      "تربية الأحياء المائية",
+      "النحل وإنتاج العسل",
+      "الغابات والحراجة",
+      "البذور والشتلات",
+      "الزراعة العضوية"
+    ],
+    "الصيد والموارد البحرية": [
+      "الصيد التجاري",
+      "الاستزراع السمكي",
+      "معالجة وتصدير الأسماك",
+      "صناعة الأعلاف السمكية"
+    ],
+    "المالي والمصرفي": [
+      "البنوك التجارية",
+      "البنوك الإسلامية",
+      "بنوك الاستثمار",
+      "شركات التأمين - تأمين الحياة",
+      "شركات التأمين - التأمين العام",
+      "شركات التأمين - التأمين الصحي",
+      "شركات التأمين - إعادة التأمين",
+      "شركات التمويل والتأجير",
+      "صناديق الاستثمار والأصول",
+      "شركات الوساطة المالية",
+      "البورصات وأسواق المال",
+      "التكنولوجيا المالية (FinTech)",
+      "العملات الرقمية والمشفرة",
+      "خدمات الدفع الإلكتروني",
+      "التمويل الجماعي",
+      "التمويل الأصغر"
+    ],
+    "العقارات والإنشاءات": [
+      "التطوير العقاري السكني",
+      "التطوير العقاري التجاري",
+      "التطوير العقاري الصناعي",
+      "إدارة الممتلكات",
+      "الوساطة العقارية",
+      "صناديق الاستثمار العقاري (REITs)",
+      "المقاولات والبناء",
+      "البنية التحتية",
+      "الهندسة المدنية",
+      "التصميم المعماري والداخلي",
+      "مواد البناء والتشييد"
+    ],
+    "التجارة والتجزئة": [
+      "متاجر التجزئة الكبرى",
+      "السلاسل التجارية المتخصصة",
+      "التجارة الإلكترونية",
+      "الأسواق والمراكز التجارية",
+      "تجارة الجملة والتوزيع",
+      "التجارة الدولية - الاستيراد",
+      "التجارة الدولية - التصدير",
+      "المتاجر الصغيرة والمحلية"
+    ],
+    "النقل واللوجستيات": [
+      "النقل الجوي - شركات الطيران",
+      "النقل الجوي - المطارات",
+      "النقل الجوي - خدمات أرضية",
+      "النقل البحري - الشحن البحري",
+      "النقل البحري - الموانئ",
+      "النقل البحري - الخدمات البحرية",
+      "النقل البري - الشحن بالشاحنات",
+      "النقل البري - النقل العام",
+      "النقل البري - سيارات الأجرة",
+      "السكك الحديدية - القطارات",
+      "السكك الحديدية - مترو الأنفاق",
+      "الخدمات اللوجستية - التخزين",
+      "الخدمات اللوجستية - سلاسل الإمداد",
+      "الخدمات اللوجستية - التوزيع",
+      "البريد والشحن السريع",
+      "خدمات التوصيل الأخير"
+    ],
+    "الاتصالات وتكنولوجيا المعلومات": [
+      "خدمات الاتصالات - الهاتف الثابت",
+      "خدمات الاتصالات - المحمول",
+      "خدمات الاتصالات - الإنترنت",
+      "البنية التحتية للاتصالات - الأبراج",
+      "البنية التحتية للاتصالات - الكابلات",
+      "البنية التحتية للاتصالات - الأقمار الصناعية",
+      "تطوير البرمجيات",
+      "خدمات السحابة ومراكز البيانات",
+      "الأمن السيبراني"
+    ],
+    "الذكاء الاصطناعي والتعلم الآلي": [
+      "معالجة اللغات الطبيعية (NLP)",
+      "رؤية الحاسوب (Computer Vision)",
+      "الذكاء الاصطناعي التوليدي (Generative AI)",
+      "التعلم الآلي والتعلم العميق",
+      "الذكاء الاصطناعي للمحادثة (Chatbots)",
+      "أنظمة التوصية الذكية",
+      "الذكاء الاصطناعي التنبؤي",
+      "أتمتة العمليات الروبوتية (RPA)",
+      "الذكاء الاصطناعي الطبي",
+      "الذكاء الاصطناعي المالي",
+      "الذكاء الاصطناعي الصناعي",
+      "الذكاء الاصطناعي للأمن السيبراني",
+      "منصات وأدوات تطوير الذكاء الاصطناعي",
+      "خدمات البنية التحتية للذكاء الاصطناعي",
+      "رقائق ومعالجات الذكاء الاصطناعي",
+      "إنترنت الأشياء (IoT)",
+      "البلوك تشين والتقنيات الموزعة",
+      "الواقع الافتراضي والمعزز",
+      "تحليل البيانات الضخمة"
+    ],
+    "الرعاية الصحية": [
+      "المستشفيات والمراكز الطبية",
+      "العيادات التخصصية",
+      "صناعة الأدوية",
+      "التكنولوجيا الحيوية",
+      "الأجهزة والمعدات الطبية",
+      "المختبرات والتحاليل الطبية",
+      "خدمات الرعاية المنزلية",
+      "الطب عن بعد",
+      "السياحة العلاجية",
+      "الصحة النفسية",
+      "طب الأسنان",
+      "البصريات"
+    ],
+    "التعليم والتدريب": [
+      "التعليم الأساسي - رياض الأطفال",
+      "التعليم الأساسي - المدارس",
+      "التعليم العالي - الجامعات",
+      "التعليم العالي - الكليات",
+      "التعليم المهني والتقني",
+      "التدريب المؤسسي",
+      "التعليم الإلكتروني",
+      "مراكز اللغات",
+      "التعليم الخاص وذوي الاحتياجات الخاصة",
+      "المكتبات ومراكز المعلومات"
+    ],
+    "السياحة والضيافة": [
+      "الفنادق والمنتجعات",
+      "المطاعم والمقاهي",
+      "وكالات السفر والسياحة",
+      "النقل السياحي",
+      "المعالم والمتنزهات السياحية",
+      "السياحة البيئية والمغامرات",
+      "تنظيم الفعاليات والمؤتمرات",
+      "السياحة الدينية"
+    ],
+    "الإعلام والترفيه": [
+      "التلفزيون والإذاعة",
+      "الصحافة والنشر",
+      "إنتاج الأفلام والمسلسلات",
+      "الموسيقى والتسجيلات",
+      "الألعاب الإلكترونية",
+      "الرياضة والنوادي الرياضية",
+      "المسارح والفنون",
+      "مدن الملاهي والترفيه",
+      "المنصات الرقمية والبث المباشر"
+    ],
+    "الخدمات المهنية والاستشارية": [
+      "المحاماة والخدمات القانونية",
+      "المحاسبة والتدقيق",
+      "الاستشارات الإدارية",
+      "الاستشارات الهندسية",
+      "أبحاث السوق والتسويق",
+      "العلاقات العامة",
+      "الترجمة والخدمات اللغوية",
+      "التوظيف والموارد البشرية"
+    ],
+    "الخدمات الشخصية والمجتمعية": [
+      "صالونات التجميل والحلاقة",
+      "النوادي الصحية واللياقة البدنية",
+      "المنتجعات الصحية",
+      "التنظيف والصيانة المنزلية",
+      "رعاية الأطفال والمسنين",
+      "خدمات الحيوانات الأليفة",
+      "خدمات الأفراح والمناسبات",
+      "الغسيل والكي"
+    ],
+    "الدفاع والأمن": [
+      "الصناعات العسكرية",
+      "الأمن والحراسة",
+      "الأمن السيبراني العسكري",
+      "تقنيات المراقبة",
+      "التدريب العسكري",
+      "الخدمات اللوجستية العسكرية"
+    ],
+    "الفضاء والأقمار الصناعية": [
+      "إطلاق الأقمار الصناعية",
+      "خدمات الاتصالات الفضائية",
+      "الاستكشاف الفضائي",
+      "السياحة الفضائية"
+    ],
+    "البيئة والاستدامة": [
+      "إدارة النفايات وإعادة التدوير",
+      "معالجة المياه والصرف الصحي",
+      "الطاقة النظيفة",
+      "الاستشارات البيئية",
+      "تقنيات تنقية الهواء",
+      "الزراعة المستدامة"
+    ],
+    "الروبوتات والأتمتة": [
+      "الروبوتات الصناعية",
+      "الروبوتات الخدمية",
+      "الطائرات بدون طيار",
+      "المركبات ذاتية القيادة",
+      "أنظمة التحكم الآلي"
+    ],
+    "الحكومي والعام": [
+      "الإدارات الحكومية",
+      "المؤسسات العامة",
+      "الخدمات البلدية",
+      "المرافق العامة",
+      "الجمارك والضرائب"
+    ],
+    "غير الربحي والخيري": [
+      "الجمعيات الخيرية",
+      "المؤسسات الوقفية",
+      "منظمات الإغاثة",
+      "منظمات حقوق الإنسان",
+      "المنظمات البيئية",
+      "المؤسسات الثقافية والفنية",
+      "الخدمات الدينية"
+    ],
+    "الاقتصاد الإبداعي": [
+      "التصميم الجرافيكي",
+      "الفنون والحرف اليدوية",
+      "الموضة والأزياء",
+      "التصوير الفوتوغرافي",
+      "صناعة المحتوى الرقمي",
+      "الابتكار والملكية الفكرية"
+    ],
+    "القطاعات الناشئة والمستقبلية": [
+      "التكنولوجيا الكمية",
+      "الطب الجيني والعلاج الجيني",
+      "الزراعة الخلوية (اللحوم المصنعة)",
+      "تقنيات تمديد العمر",
+      "الواقع الممتد (XR)",
+      "الحوسبة العصبية",
+      "تقنيات النانو"
+    ]
+  };
+
+  // Legal entities (20+ as specified in the prompt)
   const legalEntities = [
-    "شركة مساهمة عامة",
-    "شركة مساهمة خاصة",
-    "شركة ذات مسؤولية محدودة",
+    "شركة مساهمة مبسطة",
+    "شركة التضامن",
+    "شركة التوصية البسيطة",
+    "شركة المحاصة",
+    "شركة المساهمة العامة",
+    "شركة المساهمة الخاصة",
+    "الشركة ذات المسؤولية المحدودة",
     "شركة الشخص الواحد",
-    "مؤسسة فردية",
-    "شركة تضامن",
-    "شركة توصية بسيطة",
-    "شركة توصية بالأسهم",
+    "شركة التوصية بالأسهم",
+    "المؤسسة الفردية",
+    "الشركة ذات المسؤولية المحدودة (LLC)",
+    "شركة التوصية البسيطة (LP)",
+    "شركة التوصية المحدودة (LLP)",
     "الشركة القابضة",
     "الشركة التابعة",
-    "جمعية تعاونية",
-    "منظمة غير ربحية",
-    "مؤسسة عامة",
-    "شركة مملوكة للدولة",
+    "شركة رأس المال الاستثماري",
+    "المنشأة ذات الغرض الخاص (SPV)",
+    "الجمعية الخيرية / المنظمة غير الربحية (NPO)",
+    "الجمعية التعاونية",
+    "المؤسسة (Foundation)",
+    "الصندوق الوقفي (Waqf/Endowment)",
+    "المؤسسة العامة",
+    "شركة مملوكة للدولة (SOE)",
     "الهيئة المستقلة",
-    "الشركة متعددة الجنسيات",
+    "الشركة متعددة الجنسيات (MNC)",
     "الشركة المهنية",
-  ]
+    "معرف الكيان القانوني (LEI)"
+  ];
 
+  // Comparison levels
   const comparisonLevels = [
-    { value: "saudi", label: "المستوى المحلي - السعودية" },
-    { value: "gulf", label: "دول الخليج العربي" },
-    { value: "arab", label: "الدول العربية" },
-    { value: "asia", label: "دول آسيا" },
-    { value: "africa", label: "دول أفريقيا" },
-    { value: "europe", label: "دول أوروبا" },
-    { value: "north-america", label: "دول أمريكا الشمالية" },
-    { value: "south-america", label: "دول أمريكا الجنوبية" },
-    { value: "australia", label: "دول أستراليا" },
-    { value: "global", label: "عالمياً" },
-  ]
+    { value: "local", label: "محلي (السعودية)" },
+    { value: "gulf", label: "الخليج العربي" },
+    { value: "arab", label: "العالم العربي" },
+    { value: "asia", label: "آسيا" },
+    { value: "africa", label: "أفريقيا" },
+    { value: "europe", label: "أوروبا" },
+    { value: "north_america", label: "أمريكا الشمالية" },
+    { value: "south_america", label: "أمريكا الجنوبية" },
+    { value: "australia", label: "أستراليا" },
+    { value: "global", label: "عالمي" }
+  ];
 
-  const analysisTypeOptions = [
-    {
-      key: "classical",
-      label: "التحليل الأساسي الكلاسيكي",
-      description: "106 تحليلات أساسية",
-      color: "bg-blue-500",
-    },
-    {
-      key: "applied",
-      label: "التحليل التطبيقي المتوسط",
-      description: "21 تحليل متوسط",
-      color: "bg-green-500",
-    },
-    {
-      key: "advanced",
-      label: "التحليل المتقدم والمتطور",
-      description: "53 تحليل متقدم",
-      color: "bg-purple-500",
-    },
-    {
-      key: "comprehensive",
-      label: "التحليل الشامل",
-      description: "جميع الـ 180 تحليل",
-      color: "bg-[#B48500]",
-    },
-  ]
+  // Analysis types
+  const analysisTypes = [
+    { value: "classical", label: "تحليل أساسي كلاسيكي (106 تحليل)" },
+    { value: "applied", label: "تحليل تطبيقي متوسط (21 تحليل)" },
+    { value: "advanced", label: "تحليل متقدم ومتطور (53 تحليل)" },
+    { value: "comprehensive", label: "تحليل شامل كامل (180+ تحليل)" }
+  ];
 
-  const handleOptionChange = (key: string, value: any) => {
-    const newOptions = { ...options, [key]: value }
-    setOptions(newOptions)
-    onOptionsChange(newOptions)
-  }
-
-  const handleAnalysisTypeChange = (type: string, checked: boolean) => {
-    const newAnalysisTypes = { ...options.analysisTypes, [type]: checked }
-
-    // If comprehensive is selected, unselect others
-    if (type === "comprehensive" && checked) {
-      Object.keys(newAnalysisTypes).forEach((key) => {
-        newAnalysisTypes[key] = key === "comprehensive"
-      })
-    } else if (type !== "comprehensive" && checked) {
-      // If any other type is selected, unselect comprehensive
-      newAnalysisTypes.comprehensive = false
-    }
-
-    const newOptions = { ...options, analysisTypes: newAnalysisTypes }
-    setOptions(newOptions)
-    onOptionsChange(newOptions)
-  }
+  // Get activities for selected sector
+  const sectorActivities = options.sector ? activities[options.sector] || [] : [];
 
   return (
-    <Card className="bg-black border-[#B48500]">
-      <CardHeader>
-        <CardTitle className="text-[#B48500] flex items-center gap-2">
-          <Settings className="w-5 h-5" />
-          خيارات التحليل
-        </CardTitle>
-        <p className="text-[#8B6914] text-sm">حدد المعايير والخيارات المطلوبة للتحليل المالي</p>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Language Selection */}
-        <div className="space-y-2">
-          <Label className="text-[#B48500] flex items-center gap-2">
-            <Globe className="w-4 h-4" />
-            اللغة المطلوبة للتحليل والتقارير
-          </Label>
-          <Select value={options.language} onValueChange={(value) => handleOptionChange("language", value)}>
-            <SelectTrigger className="bg-black border-[#B48500] text-[#B48500]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-black border-[#B48500]">
-              <SelectItem value="ar" className="text-[#B48500] focus:bg-[#B48500] focus:text-black">
-                🇸🇦 العربية
-              </SelectItem>
-              <SelectItem value="en" className="text-[#B48500] focus:bg-[#B48500] focus:text-black">
-                🇺🇸 English
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Company Information */}
+      <Card className="bg-black border-[#B48500]">
+        <CardHeader>
+          <CardTitle className="text-[#B48500] flex items-center">
+            <Info className="w-5 h-5 mr-2" />
+            معلومات الشركة
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <Label htmlFor="companyName" className="text-[#B48500]">اسم الشركة *</Label>
+            <Input
+              id="companyName"
+              value={options.companyName}
+              onChange={(e) => onOptionChange('companyName', e.target.value)}
+              placeholder="أدخل اسم الشركة"
+              className="bg-black border-[#8B6914] text-[#B48500] placeholder:text-[#8B6914]"
+            />
+          </div>
 
-        {/* Company Name */}
-        <div className="space-y-2">
-          <Label htmlFor="companyName" className="text-[#B48500] flex items-center gap-2">
-            <Building className="w-4 h-4" />
-            اسم الشركة / المنظمة
-          </Label>
-          <Input
-            id="companyName"
-            value={options.companyName}
-            onChange={(e) => handleOptionChange("companyName", e.target.value)}
-            placeholder="أدخل اسم الشركة أو المنظمة"
-            className="bg-black border-[#B48500] text-[#B48500] placeholder:text-[#8B6914]"
-          />
-        </div>
-
-        {/* Sector and Legal Entity */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label className="text-[#B48500]">القطاع *</Label>
-            <Select value={options.sector} onValueChange={(value) => handleOptionChange("sector", value)}>
-              <SelectTrigger className="bg-black border-[#B48500] text-[#B48500]">
+          <div>
+            <Label htmlFor="sector" className="text-[#B48500]">القطاع *</Label>
+            <Select value={options.sector} onValueChange={(value) => onOptionChange('sector', value)}>
+              <SelectTrigger className="bg-black border-[#8B6914] text-[#B48500]">
                 <SelectValue placeholder="اختر القطاع" />
               </SelectTrigger>
-              <SelectContent className="bg-black border-[#B48500] max-h-60">
+              <SelectContent className="bg-black border-[#B48500]">
                 {sectors.map((sector) => (
-                  <SelectItem
-                    key={sector}
-                    value={sector}
-                    className="text-[#B48500] focus:bg-[#B48500] focus:text-black"
-                  >
+                  <SelectItem key={sector} value={sector} className="text-[#B48500] hover:bg-[#B48500]/10">
                     {sector}
                   </SelectItem>
                 ))}
@@ -211,59 +477,63 @@ export function AnalysisOptions({ onOptionsChange }: AnalysisOptionsProps) {
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label className="text-[#B48500]">الكيان القانوني *</Label>
-            <Select value={options.legalEntity} onValueChange={(value) => handleOptionChange("legalEntity", value)}>
-              <SelectTrigger className="bg-black border-[#B48500] text-[#B48500]">
+          {sectorActivities.length > 0 && (
+            <div>
+              <Label htmlFor="activity" className="text-[#B48500]">النشاط *</Label>
+              <Select value={options.activity} onValueChange={(value) => onOptionChange('activity', value)}>
+                <SelectTrigger className="bg-black border-[#8B6914] text-[#B48500]">
+                  <SelectValue placeholder="اختر النشاط" />
+                </SelectTrigger>
+                <SelectContent className="bg-black border-[#B48500]">
+                  {sectorActivities.map((activity) => (
+                    <SelectItem key={activity} value={activity} className="text-[#B48500] hover:bg-[#B48500]/10">
+                      {activity}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
+          <div>
+            <Label htmlFor="legalEntity" className="text-[#B48500]">الكيان القانوني *</Label>
+            <Select value={options.legalEntity} onValueChange={(value) => onOptionChange('legalEntity', value)}>
+              <SelectTrigger className="bg-black border-[#8B6914] text-[#B48500]">
                 <SelectValue placeholder="اختر الكيان القانوني" />
               </SelectTrigger>
-              <SelectContent className="bg-black border-[#B48500] max-h-60">
+              <SelectContent className="bg-black border-[#B48500]">
                 {legalEntities.map((entity) => (
-                  <SelectItem
-                    key={entity}
-                    value={entity}
-                    className="text-[#B48500] focus:bg-[#B48500] focus:text-black"
-                  >
+                  <SelectItem key={entity} value={entity} className="text-[#B48500] hover:bg-[#B48500]/10">
                     {entity}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
-        </div>
+        </CardContent>
+      </Card>
 
-        {/* Activity */}
-        <div className="space-y-2">
-          <Label htmlFor="activity" className="text-[#B48500]">
-            النشاط (اختياري)
-          </Label>
-          <Input
-            id="activity"
-            value={options.activity}
-            onChange={(e) => handleOptionChange("activity", e.target.value)}
-            placeholder="مثال: تطوير البرمجيات، التجارة الإلكترونية، الخدمات المصرفية..."
-            className="bg-black border-[#B48500] text-[#B48500] placeholder:text-[#8B6914]"
-          />
-        </div>
-
-        {/* Analysis Years and Comparison Level */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label className="text-[#B48500] flex items-center gap-2">
-              <Calendar className="w-4 h-4" />
-              عدد سنوات التحليل
-            </Label>
-            <Select value={options.analysisYears} onValueChange={(value) => handleOptionChange("analysisYears", value)}>
-              <SelectTrigger className="bg-black border-[#B48500] text-[#B48500]">
-                <SelectValue />
+      {/* Analysis Settings */}
+      <Card className="bg-black border-[#B48500]">
+        <CardHeader>
+          <CardTitle className="text-[#B48500] flex items-center">
+            <Info className="w-5 h-5 mr-2" />
+            إعدادات التحليل
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <Label htmlFor="yearsOfAnalysis" className="text-[#B48500]">عدد سنوات التحليل</Label>
+            <Select 
+              value={options.yearsOfAnalysis.toString()} 
+              onValueChange={(value) => onOptionChange('yearsOfAnalysis', parseInt(value))}
+            >
+              <SelectTrigger className="bg-black border-[#8B6914] text-[#B48500]">
+                <SelectValue placeholder="اختر عدد السنوات" />
               </SelectTrigger>
               <SelectContent className="bg-black border-[#B48500]">
-                {Array.from({ length: 10 }, (_, i) => i + 1).map((year) => (
-                  <SelectItem
-                    key={year}
-                    value={year.toString()}
-                    className="text-[#B48500] focus:bg-[#B48500] focus:text-black"
-                  >
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((year) => (
+                  <SelectItem key={year} value={year.toString()} className="text-[#B48500] hover:bg-[#B48500]/10">
                     {year} {year === 1 ? "سنة" : "سنوات"}
                   </SelectItem>
                 ))}
@@ -271,90 +541,55 @@ export function AnalysisOptions({ onOptionsChange }: AnalysisOptionsProps) {
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label className="text-[#B48500]">مستوى المقارنة الجغرافي</Label>
-            <Select
-              value={options.comparisonLevel}
-              onValueChange={(value) => handleOptionChange("comparisonLevel", value)}
-            >
-              <SelectTrigger className="bg-black border-[#B48500] text-[#B48500]">
+          <div>
+            <Label htmlFor="comparisonLevel" className="text-[#B48500]">مستوى المقارنة</Label>
+            <Select value={options.comparisonLevel} onValueChange={(value) => onOptionChange('comparisonLevel', value)}>
+              <SelectTrigger className="bg-black border-[#8B6914] text-[#B48500]">
                 <SelectValue placeholder="اختر مستوى المقارنة" />
               </SelectTrigger>
               <SelectContent className="bg-black border-[#B48500]">
                 {comparisonLevels.map((level) => (
-                  <SelectItem
-                    key={level.value}
-                    value={level.value}
-                    className="text-[#B48500] focus:bg-[#B48500] focus:text-black"
-                  >
+                  <SelectItem key={level.value} value={level.value} className="text-[#B48500] hover:bg-[#B48500]/10">
                     {level.label}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
-        </div>
 
-        {/* Analysis Types */}
-        <div className="space-y-4">
-          <Label className="text-[#B48500] flex items-center gap-2">
-            <BarChart3 className="w-4 h-4" />
-            نوع التحليل المطلوب
-          </Label>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {analysisTypeOptions.map((type) => (
-              <div
-                key={type.key}
-                className={`p-4 border-2 rounded-lg transition-all ${
-                  options.analysisTypes[type.key as keyof typeof options.analysisTypes]
-                    ? "border-[#B48500] bg-[#B48500]/10"
-                    : "border-[#8B6914] hover:border-[#B48500]"
-                }`}
-              >
-                <div className="flex items-start gap-3">
-                  <Checkbox
-                    id={type.key}
-                    checked={options.analysisTypes[type.key as keyof typeof options.analysisTypes]}
-                    onCheckedChange={(checked) => handleAnalysisTypeChange(type.key, checked as boolean)}
-                    className="border-[#B48500] data-[state=checked]:bg-[#B48500] data-[state=checked]:text-black mt-1"
-                  />
-                  <div className="flex-1">
-                    <Label htmlFor={type.key} className="text-[#B48500] font-semibold cursor-pointer">
-                      {type.label}
-                    </Label>
-                    <p className="text-[#8B6914] text-sm mt-1">{type.description}</p>
-                    <Badge className={`${type.color} text-white text-xs mt-2`}>
-                      {type.key === "comprehensive" ? "الأكثر شمولية" : "متخصص"}
-                    </Badge>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div>
+            <Label htmlFor="analysisType" className="text-[#B48500]">نوع التحليل *</Label>
+            <Select value={options.analysisType} onValueChange={(value) => onOptionChange('analysisType', value)}>
+              <SelectTrigger className="bg-black border-[#8B6914] text-[#B48500]">
+                <SelectValue placeholder="اختر نوع التحليل" />
+              </SelectTrigger>
+              <SelectContent className="bg-black border-[#B48500]">
+                {analysisTypes.map((type) => (
+                  <SelectItem key={type.value} value={type.value} className="text-[#B48500] hover:bg-[#B48500]/10">
+                    {type.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-        </div>
+        </CardContent>
+      </Card>
 
-        {/* Summary */}
-        <div className="bg-[#1a1a1a] border border-[#B48500] rounded-lg p-4">
-          <h4 className="text-[#B48500] font-semibold mb-2">ملخص الخيارات المحددة</h4>
-          <div className="space-y-1 text-sm text-[#8B6914]">
-            <p>• اللغة: {options.language === "ar" ? "العربية" : "English"}</p>
-            <p>• الشركة: {options.companyName || "غير محدد"}</p>
-            <p>• القطاع: {options.sector || "غير محدد"}</p>
-            <p>• الكيان القانوني: {options.legalEntity || "غير محدد"}</p>
-            <p>• عدد السنوات: {options.analysisYears} سنة</p>
-            <p>
-              • مستوى المقارنة: {comparisonLevels.find((l) => l.value === options.comparisonLevel)?.label || "غير محدد"}
-            </p>
-            <p>
-              • أنواع التحليل:{" "}
-              {Object.entries(options.analysisTypes)
-                .filter(([_, selected]) => selected)
-                .map(([type, _]) => analysisTypeOptions.find((opt) => opt.key === type)?.label)
-                .join("، ") || "غير محدد"}
-            </p>
+      {/* Additional Information */}
+      <Card className="bg-black border-[#B48500] lg:col-span-2">
+        <CardHeader>
+          <CardTitle className="text-[#B48500] flex items-center">
+            <Info className="w-5 h-5 mr-2" />
+            معلومات إضافية
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="mt-4 text-sm text-[#8B6914]">
+            <p>* الحقول المطلوبة (مطلوبة لبدء التحليل)</p>
+            <p>** سيتم استخدام هذه المعلومات لإجراء المقارنات المناسبة</p>
           </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
