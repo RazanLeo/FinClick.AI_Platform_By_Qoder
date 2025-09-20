@@ -1,4 +1,3 @@
-import { Header } from "@/components/header"
 "use client"
 
 import { Header } from "@/components/header"
