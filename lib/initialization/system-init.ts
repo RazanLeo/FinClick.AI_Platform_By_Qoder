@@ -39,6 +39,13 @@ export class SystemInitializer {
       return this.systemStatus
     }
 
+    // Skip initialization during build time (static generation)
+    if (typeof window === 'undefined' && !process.env.VERCEL_ENV) {
+      console.log('🚀 Skipping initialization during build time')
+      this.isInitialized = true
+      return this.systemStatus
+    }
+
     console.log('🚀 Initializing FinClick.AI Platform...')
 
     // Initialize databases
@@ -231,8 +238,8 @@ export class SystemInitializer {
 // Export singleton instance
 export const systemInitializer = SystemInitializer.getInstance()
 
-// Auto-initialize in production
-if (typeof window === 'undefined' && process.env.NODE_ENV === 'production') {
+// Auto-initialize in production runtime only (not during build)
+if (typeof window === 'undefined' && process.env.VERCEL_ENV === 'production') {
   systemInitializer.initialize().catch(error => {
     console.error('❌ System initialization failed:', error)
   })

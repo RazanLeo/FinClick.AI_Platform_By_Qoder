@@ -1,4 +1,7 @@
 import { Header } from "@/components/header"
+"use client"
+
+import { Header } from "@/components/header"
 import { StockTicker } from "@/components/stock-ticker"
 import { HeroSection } from "@/components/hero-section"
 import { FeaturesSection } from "@/components/features-section"
@@ -67,7 +70,11 @@ export default function HomePage() {
       {/* Floating Action Button for Quick Access */}
       <div className="fixed bottom-6 left-6 z-50">
         <button 
-          onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+          onClick={() => {
+            if (typeof window !== 'undefined') {
+              document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
+            }
+          }}
           className="bg-[#B48500] hover:bg-[#8B6914] text-black p-4 rounded-full shadow-lg transform hover:scale-110 transition-all duration-300 animate-pulse"
           title="اكتشف المميزات"
         >
