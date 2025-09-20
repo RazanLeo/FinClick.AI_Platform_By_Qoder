@@ -1,0 +1,12 @@
+# Vercel Ignore
+.git
+.gitignore
+README.md
+DEPLOYMENT_FIXES.md
+FINAL_SOLUTION.md
+VERCEL_NOTICE.md
+upload-fresh.sh
+*.log
+node_modules
+.next
+.env.local
