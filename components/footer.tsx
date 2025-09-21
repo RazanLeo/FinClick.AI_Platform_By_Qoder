@@ -431,7 +431,7 @@ export function Footer() {
             <div className="space-y-6">
               <div className="flex items-center gap-4">
                 <Image
-                  src="/FinClick.AILogo_cropped.png"
+                  src="/images/finclick-logo.png"
                   alt="FinClick.AI Logo"
                   width={120}
                   height={120}

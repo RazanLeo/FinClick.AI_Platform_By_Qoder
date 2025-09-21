@@ -7,7 +7,8 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Eye, EyeOff, User, Shield, Users, LogIn } from "lucide-react"
+import { Eye, EyeOff, User, Shield, Users, LogIn, Home } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 interface LoginFormProps {
   onLogin: (userType: "user" | "admin" | "guest", credentials: any) => void
@@ -17,6 +18,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const router = useRouter()
 
   // Form states for different account types
   const [userCredentials, setUserCredentials] = useState({
@@ -67,6 +69,17 @@ export function LoginForm({ onLogin }: LoginFormProps) {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      {/* زر العودة للصفحة الرئيسية */}
+      <Button
+        onClick={() => router.push('/')}
+        variant="outline"
+        size="sm"
+        className="fixed top-4 right-4 z-50 bg-black border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black transition-all duration-300"
+      >
+        <Home className="w-4 h-4 ml-2" />
+        العودة للصفحة الرئيسية
+      </Button>
+      
       <Card className="w-full max-w-md bg-black border-[#B48500] shadow-2xl">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 w-16 h-16 bg-[#B48500] rounded-full flex items-center justify-center">

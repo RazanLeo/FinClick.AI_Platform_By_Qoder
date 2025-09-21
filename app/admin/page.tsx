@@ -7,6 +7,9 @@ import { StockTicker } from "@/components/stock-ticker"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
+// Force dynamic rendering to avoid build-time errors
+export const dynamic = 'force-dynamic'
+
 export default function AdminPage() {
   const { user, isLoading } = useAuth()
   const router = useRouter()

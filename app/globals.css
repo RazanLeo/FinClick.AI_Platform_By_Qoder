@@ -122,3 +122,200 @@ img[alt*="FinClick"], img[alt*="Logo"] {
     transform: translateX(-100%);
   }
 }
+
+@keyframes subtle-glow {
+  0% {
+    filter: drop-shadow(0 4px 8px rgba(180, 133, 0, 0.3));
+  }
+  100% {
+    filter: drop-shadow(0 4px 12px rgba(180, 133, 0, 0.5)) drop-shadow(0 0 20px rgba(180, 133, 0, 0.2));
+  }
+}
+
+/* Language Support and RTL/LTR Styling */
+
+/* Arabic (RTL) Language Support */
+.lang-ar, [dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+.lang-ar .flex, [dir="rtl"] .flex {
+  flex-direction: row-reverse;
+}
+
+.lang-ar .text-left, [dir="rtl"] .text-left {
+  text-align: right;
+}
+
+.lang-ar .text-right, [dir="rtl"] .text-right {
+  text-align: left;
+}
+
+.lang-ar .ml-auto, [dir="rtl"] .ml-auto {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.lang-ar .mr-auto, [dir="rtl"] .mr-auto {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.lang-ar .pl-4, [dir="rtl"] .pl-4 {
+  padding-left: 0;
+  padding-right: 1rem;
+}
+
+.lang-ar .pr-4, [dir="rtl"] .pr-4 {
+  padding-right: 0;
+  padding-left: 1rem;
+}
+
+.lang-ar .border-l, [dir="rtl"] .border-l {
+  border-left: none;
+  border-right: 1px solid;
+}
+
+.lang-ar .border-r, [dir="rtl"] .border-r {
+  border-right: none;
+  border-left: 1px solid;
+}
+
+/* English (LTR) Language Support */
+.lang-en, [dir="ltr"] {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Font Support */
+.font-arabic {
+  font-family: 'Tajawal', 'Cairo', 'Amiri', 'Noto Sans Arabic', system-ui, -apple-system, sans-serif;
+}
+
+.font-latin {
+  font-family: 'Inter', 'Roboto', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+}
+
+/* Better Arabic text rendering */
+.lang-ar * {
+  font-feature-settings: "liga" 1, "calt" 1, "kern" 1;
+  text-rendering: optimizeLegibility;
+}
+
+/* Form Controls RTL Support */
+.lang-ar input[type="text"],
+.lang-ar input[type="email"],
+.lang-ar input[type="password"],
+.lang-ar textarea,
+[dir="rtl"] input[type="text"],
+[dir="rtl"] input[type="email"],
+[dir="rtl"] input[type="password"],
+[dir="rtl"] textarea {
+  text-align: right;
+}
+
+.lang-ar input[type="search"],
+[dir="rtl"] input[type="search"] {
+  text-align: right;
+  padding-right: 2.5rem;
+  padding-left: 1rem;
+}
+
+/* Search Icon Position for RTL */
+.lang-ar .search-icon,
+[dir="rtl"] .search-icon {
+  right: auto;
+  left: 0.75rem;
+}
+
+/* Navigation and Menu RTL Support */
+.lang-ar .navbar-nav,
+[dir="rtl"] .navbar-nav {
+  flex-direction: row-reverse;
+}
+
+.lang-ar .dropdown-menu,
+[dir="rtl"] .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
+/* Grid and Layout RTL Support */
+.lang-ar .grid,
+[dir="rtl"] .grid {
+  direction: rtl;
+}
+
+.lang-ar .justify-start,
+[dir="rtl"] .justify-start {
+  justify-content: flex-end;
+}
+
+.lang-ar .justify-end,
+[dir="rtl"] .justify-end {
+  justify-content: flex-start;
+}
+
+/* Button and Link RTL Support */
+.lang-ar .btn-group,
+[dir="rtl"] .btn-group {
+  flex-direction: row-reverse;
+}
+
+.lang-ar .breadcrumb,
+[dir="rtl"] .breadcrumb {
+  flex-direction: row-reverse;
+}
+
+/* Table RTL Support */
+.lang-ar table,
+[dir="rtl"] table {
+  direction: rtl;
+}
+
+.lang-ar th,
+.lang-ar td,
+[dir="rtl"] th,
+[dir="rtl"] td {
+  text-align: right;
+}
+
+/* Modal and Dialog RTL Support */
+.lang-ar .modal-header,
+.lang-ar .modal-footer,
+[dir="rtl"] .modal-header,
+[dir="rtl"] .modal-footer {
+  flex-direction: row-reverse;
+}
+
+/* Custom CSS Variables for RTL/LTR Support */
+:root {
+  --text-align: left;
+  --flex-direction: row;
+  --border-radius-start: 0.375rem 0 0 0.375rem;
+  --border-radius-end: 0 0.375rem 0.375rem 0;
+}
+
+[dir="rtl"] {
+  --text-align: right;
+  --flex-direction: row-reverse;
+  --border-radius-start: 0 0.375rem 0.375rem 0;
+  --border-radius-end: 0.375rem 0 0 0.375rem;
+}
+
+/* Smooth transitions for language switching */
+* {
+  transition: direction 0.3s ease, text-align 0.3s ease;
+}
+
+/* Override conflicting Tailwind classes for RTL */
+.rtl-override {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+.ltr-override {
+  direction: ltr !important;
+  text-align: left !important;
+}

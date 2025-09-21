@@ -59,11 +59,6 @@ export function FreeToolsSection() {
   const [selectedTool, setSelectedTool] = useState<string | null>(null)
   const [marketSentiment, setMarketSentiment] = useState(65)
   const [currentDate, setCurrentDate] = useState(new Date())
-  const [chatMessage, setChatMessage] = useState("")
-  const [chatHistory, setChatHistory] = useState<Array<{type: 'user' | 'bot', message: string}>>([{
-    type: 'bot',
-    message: 'مرحباً! أنا مساعدك المالي الذكي. يمكنني مساعدتك في تحليل الأسهم وفهم المؤشرات الاقتصادية. كيف يمكنني مساعدتك اليوم؟'
-  }])
   
   // Calculator states
   const [calculatorInputs, setCalculatorInputs] = useState<CalculatorInputs>({
@@ -94,7 +89,6 @@ export function FreeToolsSection() {
       return
     }
     
-    // Using PEG ratio method: Fair Price = EPS * (Growth Rate + 8)
     const fairPrice = eps * (growthRate + 8)
     const recommendation = growthRate > 15 ? 'شراء قوي' : growthRate > 10 ? 'شراء' : growthRate > 5 ? 'محايد' : 'بيع'
     
@@ -152,7 +146,6 @@ export function FreeToolsSection() {
     
     setChatInputs(prev => ({ ...prev, isLoading: true }))
     
-    // Add user message
     const userMessage = chatInputs.question
     setChatInputs(prev => ({
       ...prev,
@@ -160,28 +153,25 @@ export function FreeToolsSection() {
       question: ''
     }))
     
-    // Simulate AI processing time
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    await new Promise(resolve => setTimeout(resolve, 2000))
     
-    // Generate contextual AI response based on question content
     let response = ''
     const question = userMessage.toLowerCase()
     
     if (question.includes('سهم') || question.includes('أسهم') || question.includes('stock')) {
-      response = 'بناءً على تحليلي المتقدم للبيانات المالية، أنصح بدراسة المؤشرات المالية الأساسية مثل نسبة السعر للأرباح ونمو الإيرادات. كما يجب مراعاة الوضع الاقتصادي العام وقطاع الشركة قبل اتخاذ قرار الاستثمار.'
+      response = 'بناءً على تحليلي المتقدم للبيانات المالية، أنصح بدراسة المؤشرات المالية الأساسية مثل نسبة السعر للأرباح ونمو الإيرادات. كما يجب مراعاة الوضع الاقتصادي العام وقطاع الشركة قبل اتخاذ قرار الاستثمار. يمكنني تقديم تحليل شامل لأي سهم تريد دراسته.'
     } else if (question.includes('تحليل') || question.includes('تقييم') || question.includes('analysis')) {
-      response = 'للحصول على تحليل شامل، أستخدم خوارزميات متطورة تدرس 15+ مؤشر مالي بما في ذلك التحليل الفني والأساسي. ننصح بالتركيز على القطاعات ذات النمو المستدام والشركات ذات الميزانيات القوية.'
+      response = 'للحصول على تحليل شامل، أستخدم خوارزميات متطورة تدرس 180+ مؤشر مالي بما في ذلك التحليل الفني والأساسي. ننصح بالتركيز على القطاعات ذات النمو المستدام والشركات ذات الميزانيات القوية. منصة FinClick.AI تقدم تحليلاً شاملاً في ثوانٍ معدودة.'
     } else if (question.includes('استثمار') || question.includes('محفظة') || question.includes('investment')) {
-      response = 'لبناء محفظة استثمارية متوازنة، أنصح بتنويع الاستثمارات عبر 3-5 قطاعات مختلفة. احرص على ألا تتجاوز استثماراتك في قطاع واحد 30% من إجمالي المحفظة، وراجع أداء المحفظة شهرياً.'
+      response = 'لبناء محفظة استثمارية متوازنة، أنصح بتنويع الاستثمارات عبر 3-5 قطاعات مختلفة. احرص على ألا تتجاوز استثماراتك في قطاع واحد 30% من إجمالي المحفظة، وراجع أداء المحفظة شهرياً. مع منصة FinClick.AI يمكنك مراقبة أداء محفظتك بشكل آني.'
     } else if (question.includes('مخاطر') || question.includes('خسارة') || question.includes('risk')) {
-      response = 'إدارة المخاطر أساس الاستثمار الناجح. أنصح بوضع حد أقصى للخسارة (Stop Loss) عند 8-10% من قيمة الاستثمار، وتجنب الاستثمار بأموال قد تحتاجها خلال السنتين القادمتين.'
+      response = 'إدارة المخاطر أساس الاستثمار الناجح. أنصح بوضع حد أقصى للخسارة (Stop Loss) عند 8-10% من قيمة الاستثمار، وتجنب الاستثمار بأموال قد تحتاجها خلال السنتين القادمتين. منصة FinClick.AI تقدم تقييماً شاملاً للمخاطر مع التوصيات.'
     } else if (question.includes('سوق') || question.includes('اقتصاد') || question.includes('market')) {
-      response = 'الأسواق المالية متقلبة بطبيعتها. حالياً نشهد تحسناً في المؤشرات الاقتصادية مع نمو متوقع 4.2% للاقتصاد السعودي. أنصح بالتركيز على الشركات ذات النماذج التجارية المستدامة والنمو المتسق.'
+      response = 'الأسواق المالية متقلبة بطبيعتها. حالياً نشهد تحسناً في المؤشرات الاقتصادية مع نمو متوقع 4.2% للاقتصاد السعودي. أنصح بالتركيز على الشركات ذات النماذج التجارية المستدامة والنمو المتسق. مع منصة FinClick.AI يمكنك متابعة الاتجاهات في الوقت الحقيقي.'
     } else {
-      response = 'شكراً لسؤالك. كمساعد مالي ذكي، أستطيع تقديم تحليلات مخصصة للأسهم ونصائح استثمارية مبنية على البيانات. لمساعدتك بشكل أفضل، يمكنك سؤالي عن تحليل سهم معين، أو استراتيجيات الاستثمار، أو إدارة المخاطر.'
+      response = 'شكراً لسؤالك. كمساعد مالي ذكي، أستطيع تقديم تحليلات مخصصة للأسهم ونصائح استثمارية مبنية على البيانات. لمساعدتك بشكل أفضل، يمكنك سؤالي عن تحليل سهم معين، أو استراتيجيات الاستثمار، أو إدارة المخاطر. للحصول على تحليل شامل وفوري، يمكنك استخدام منصة FinClick.AI الكاملة.'
     }
     
-    // Add AI response
     setChatInputs(prev => ({
       ...prev,
       messages: [...prev.messages, { type: 'bot', content: response }],
@@ -190,6 +180,7 @@ export function FreeToolsSection() {
     
     toast.success('تم إرسال الإجابة بنجاح')
   }
+
   const [economicEvents, setEconomicEvents] = useState<EconomicEvent[]>([
     {
       time: "15:30",
@@ -209,67 +200,7 @@ export function FreeToolsSection() {
       forecast: "5.50%",
       previous: "5.50%",
       impact: "neutral",
-    },
-    {
-      time: "13:30",
-      currency: "USD",
-      event: "طلبات إعانة البطالة الأولية",
-      importance: "medium",
-      actual: "220K",
-      forecast: "225K",
-      previous: "218K",
-      impact: "positive",
-    },
-    {
-      time: "12:00",
-      currency: "SAR",
-      event: "بيانات التضخم السعودي",
-      importance: "medium",
-      actual: "2.1%",
-      forecast: "2.0%",
-      previous: "1.9%",
-      impact: "negative",
-    },
-    {
-      time: "11:00",
-      currency: "EUR",
-      event: "مؤشر مديري المشتريات الألماني للتصنيع",
-      importance: "medium",
-      actual: "45.2",
-      forecast: "45.5",
-      previous: "44.8",
-      impact: "negative",
-    },
-    {
-      time: "10:30",
-      currency: "GBP",
-      event: "مبيعات التجزئة البريطانية",
-      importance: "low",
-      actual: "0.3%",
-      forecast: "0.2%",
-      previous: "-0.1%",
-      impact: "positive",
-    },
-    {
-      time: "09:30",
-      currency: "JPY",
-      event: "مؤشر أسعار المنتجين الياباني",
-      importance: "low",
-      actual: "0.8%",
-      forecast: "0.7%",
-      previous: "0.6%",
-      impact: "neutral",
-    },
-    {
-      time: "08:00",
-      currency: "CNY",
-      event: "الناتج المحلي الإجمالي الصيني",
-      importance: "high",
-      actual: "5.2%",
-      forecast: "5.0%",
-      previous: "4.9%",
-      impact: "positive",
-    },
+    }
   ])
 
   const [financialNews, setFinancialNews] = useState([
@@ -282,75 +213,17 @@ export function FreeToolsSection() {
       title: "أرامكو تعلن عن أرباح فصلية قياسية بقيمة 32.6 مليار ريال",
       time: new Date(Date.now() - 300000).toLocaleTimeString("ar-SA", { hour: "2-digit", minute: "2-digit" }),
       impact: "positive",
-    },
-    {
-      title: "صندوق الاستثمارات العامة يستحوذ على حصة في شركة تقنية عالمية",
-      time: new Date(Date.now() - 600000).toLocaleTimeString("ar-SA", { hour: "2-digit", minute: "2-digit" }),
-      impact: "positive",
-    },
-    {
-      title: "البنك المركزي السعودي يبقي على أسعار الفائدة دون تغيير",
-      time: new Date(Date.now() - 900000).toLocaleTimeString("ar-SA", { hour: "2-digit", minute: "2-digit" }),
-      impact: "neutral",
-    },
-    {
-      title: "تحديث توقعات النمو الاقتصادي السعودي إلى 4.2%",
-      time: new Date(Date.now() - 1200000).toLocaleTimeString("ar-SA", { hour: "2-digit", minute: "2-digit" }),
-      impact: "positive",
-    },
+    }
   ])
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Update current date and time
       setCurrentDate(new Date())
-
-      // Simulate live market sentiment changes
       setMarketSentiment((prev) => {
         const change = (Math.random() - 0.5) * 3
         return Math.max(0, Math.min(100, prev + change))
       })
-
-      // Simulate real-time economic data updates
-      setEconomicEvents((prev) =>
-        prev.map((event) => {
-          if (event.actual && Math.random() < 0.3) {
-            // 30% chance to update
-            const baseValue = Number.parseFloat(event.actual.replace(/[^\d.-]/g, ""))
-            const variation = (Math.random() - 0.5) * 0.2
-            const newValue = (baseValue + variation).toFixed(1)
-
-            return {
-              ...event,
-              actual: newValue + (event.actual.includes("%") ? "%" : event.actual.includes("K") ? "K" : ""),
-              impact: Math.random() > 0.5 ? "positive" : "negative",
-            }
-          }
-          return event
-        }),
-      )
-
-      // Add new financial news occasionally
-      if (Math.random() < 0.1) {
-        // 10% chance to add news
-        const newNews = [
-          "تحديث: مؤشر السوق السعودي يسجل مستويات جديدة",
-          "عاجل: إعلان نتائج مالية إيجابية لشركة كبرى",
-          "البنوك السعودية تحقق أرباحاً قوية في الربع الحالي",
-          "قطاع البتروكيماويات يشهد نمواً ملحوظاً",
-          "استثمارات جديدة في قطاع التقنية المالية",
-        ]
-
-        setFinancialNews((prev) => [
-          {
-            title: newNews[Math.floor(Math.random() * newNews.length)],
-            time: new Date().toLocaleTimeString("ar-SA", { hour: "2-digit", minute: "2-digit" }),
-            impact: Math.random() > 0.3 ? "positive" : "neutral",
-          },
-          ...prev.slice(0, 4), // Keep only 5 news items
-        ])
-      }
-    }, 15000) // Update every 15 seconds
+    }, 15000)
 
     return () => clearInterval(interval)
   }, [])
@@ -396,7 +269,7 @@ export function FreeToolsSection() {
   }
 
   return (
-    <section id="free-tools" className="py-20 bg-gradient-to-b from-black to-[#0a0a0a]">
+    <section id="free-tools" data-section="free-tools" className="py-20 bg-gradient-to-b from-black to-[#0a0a0a]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold text-[#B48500] mb-6">الأدوات المجانية</h2>
@@ -406,111 +279,44 @@ export function FreeToolsSection() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {/* Enhanced Economic Calendar */}
+          {/* Economic Calendar */}
           <Card className="bg-black border-[#B48500] hover:border-[#8B6914] transition-colors">
             <CardHeader className="text-center">
               <Calendar className="w-12 h-12 text-[#B48500] mx-auto mb-2" />
               <CardTitle className="text-lg text-[#B48500]">التقويم الاقتصادي المباشر</CardTitle>
-              <p className="text-sm text-[#8B6914]">
-                {currentDate.toLocaleDateString("ar-SA", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </p>
             </CardHeader>
             <CardContent>
               <div className="space-y-2 max-h-96 overflow-y-auto">
-                {/* Header */}
-                <div className="grid grid-cols-12 gap-1 text-xs font-semibold text-[#B48500] border-b border-[#B48500] pb-2 sticky top-0 bg-black">
-                  <div className="col-span-2">الوقت</div>
-                  <div className="col-span-1">العملة</div>
-                  <div className="col-span-1">الأهمية</div>
-                  <div className="col-span-4">الحدث الاقتصادي</div>
-                  <div className="col-span-1">الفعلي</div>
-                  <div className="col-span-1">المتوقع</div>
-                  <div className="col-span-2">السابق</div>
-                </div>
-
-                {/* Events */}
                 {economicEvents.map((event, index) => (
-                  <div
-                    key={index}
-                    className="grid grid-cols-12 gap-1 text-xs text-[#8B6914] hover:bg-[#1a1a1a] p-2 rounded transition-colors"
-                  >
-                    <div className="col-span-2 text-[#B48500] font-mono font-bold">{event.time}</div>
-                    <div className="col-span-1">
-                      <span className="px-1 py-0.5 bg-[#B48500] text-black rounded text-xs font-bold">
-                        {event.currency}
-                      </span>
+                  <div key={index} className="p-2 hover:bg-[#1a1a1a] rounded transition-colors">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[#B48500] font-bold">{event.time}</span>
+                      <span className="text-[#8B6914]">{event.currency}</span>
                     </div>
-                    <div className="col-span-1">
-                      <div className="flex">
-                        {[1, 2, 3].map((level) => (
-                          <div
-                            key={level}
-                            className={`w-1.5 h-1.5 mr-0.5 rounded-full ${
-                              level <= (event.importance === "high" ? 3 : event.importance === "medium" ? 2 : 1)
-                                ? "bg-red-500"
-                                : "bg-gray-600"
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    <div className="col-span-4 text-[#B48500] text-xs leading-tight">{event.event}</div>
-                    <div className={`col-span-1 font-bold ${getImpactColor(event.impact)}`}>{event.actual || "-"}</div>
-                    <div className="col-span-1 text-yellow-400">{event.forecast || "-"}</div>
-                    <div className="col-span-2 text-gray-400">{event.previous || "-"}</div>
+                    <p className="text-[#B48500] text-sm">{event.event}</p>
                   </div>
                 ))}
-              </div>
-              <div className="mt-4 text-xs text-[#8B6914] text-center border-t border-[#B48500] pt-2 flex items-center justify-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                بيانات حية مباشرة • تحديث كل 15 ثانية
               </div>
             </CardContent>
           </Card>
 
-          {/* Enhanced Financial News */}
+          {/* Financial News */}
           <Card className="bg-black border-[#B48500] hover:border-[#8B6914] transition-colors">
             <CardHeader className="text-center">
               <Newspaper className="w-12 h-12 text-[#B48500] mx-auto mb-2" />
               <CardTitle className="text-lg text-[#B48500]">الأخبار المالية العاجلة</CardTitle>
-              <p className="text-sm text-[#8B6914]">آخر التطورات في الأسواق المالية</p>
             </CardHeader>
             <CardContent>
               <div className="space-y-3 max-h-96 overflow-y-auto">
                 {financialNews.map((news, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start gap-3 p-3 hover:bg-[#1a1a1a] rounded transition-colors border-l-2 border-[#B48500]"
-                  >
-                    <div className="text-lg flex-shrink-0 mt-1">{getNewsImpactIcon(news.impact)}</div>
-                    <div className="flex-1">
-                      <p className="text-sm text-[#B48500] leading-relaxed font-medium">{news.title}</p>
-                      <div className="flex items-center gap-2 mt-2">
-                        <p className="text-xs text-[#8B6914]">{news.time}</p>
-                        <span
-                          className={`text-xs px-2 py-1 rounded ${
-                            news.impact === "positive"
-                              ? "bg-green-900 text-green-300"
-                              : news.impact === "negative"
-                                ? "bg-red-900 text-red-300"
-                                : "bg-gray-900 text-gray-300"
-                          }`}
-                        >
-                          {news.impact === "positive" ? "إيجابي" : news.impact === "negative" ? "سلبي" : "محايد"}
-                        </span>
-                      </div>
+                  <div key={index} className="flex items-start gap-3 p-3 hover:bg-[#1a1a1a] rounded transition-colors">
+                    <div className="text-lg">{getNewsImpactIcon(news.impact)}</div>
+                    <div>
+                      <p className="text-sm text-[#B48500] leading-relaxed">{news.title}</p>
+                      <p className="text-xs text-[#8B6914]">{news.time}</p>
                     </div>
                   </div>
                 ))}
-              </div>
-              <div className="mt-4 text-xs text-[#8B6914] text-center border-t border-[#B48500] pt-2 flex items-center justify-center gap-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                تحديث مباشر كل دقيقة
               </div>
             </CardContent>
           </Card>
@@ -544,60 +350,30 @@ export function FreeToolsSection() {
                   نسبة السعر للأرباح
                 </button>
               </div>
-              <div className="mt-4 text-center text-sm text-[#8B6914]">
-                <p>جميع الحاسبات المالية مجانية لتجربة قدرات النظام</p>
-              </div>
 
               {selectedTool === "fair-price" && (
-                <div className="space-y-4 p-4 border border-[#B48500] rounded">
+                <div className="space-y-3 p-4 border border-[#B48500] rounded">
                   <h4 className="text-[#B48500] font-semibold">حاسبة السعر العادل للسهم</h4>
-                  
-                  {/* الطريقة الأولى: رمز الشركة */}
-                  <div className="mb-4">
-                    <h5 className="text-[#B48500] text-sm mb-2">الطريقة الأولى: إدخال رمز الشركة</h5>
-                    <div className="flex gap-2">
-                      <Input 
-                        placeholder="رمز الشركة (مثل: 2222)" 
-                        className="bg-black border-[#B48500] text-[#B48500] flex-1"
-                      />
-                      <Button 
-                        className="bg-[#B48500] text-black hover:bg-[#8B6914] px-6"
-                        onClick={() => {
-                          toast.success('تم جلب بيانات الشركة - ربحية السهم: 2.45 ريال')
-                        }}
-                      >
-                        جلب البيانات
-                      </Button>
-                    </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Input 
+                      placeholder="ربحية السهم (ريال)" 
+                      className="bg-black border-[#B48500] text-[#B48500]"
+                      value={calculatorInputs.fairPrice.eps}
+                      onChange={(e) => setCalculatorInputs(prev => ({
+                        ...prev,
+                        fairPrice: { ...prev.fairPrice, eps: e.target.value }
+                      }))}
+                    />
+                    <Input 
+                      placeholder="معدل النمو المتوقع (%)" 
+                      className="bg-black border-[#B48500] text-[#B48500]"
+                      value={calculatorInputs.fairPrice.growthRate}
+                      onChange={(e) => setCalculatorInputs(prev => ({
+                        ...prev,
+                        fairPrice: { ...prev.fairPrice, growthRate: e.target.value }
+                      }))}
+                    />
                   </div>
-                  
-                  <div className="text-center text-[#8B6914] text-sm mb-4">أو</div>
-                  
-                  {/* الطريقة الثانية: إدخال يدوي */}
-                  <div>
-                    <h5 className="text-[#B48500] text-sm mb-2">الطريقة الثانية: إدخال يدوي</h5>
-                    <div className="grid grid-cols-2 gap-2">
-                      <Input 
-                        placeholder="ربحية السهم (ريال)" 
-                        className="bg-black border-[#B48500] text-[#B48500]"
-                        value={calculatorInputs.fairPrice.eps}
-                        onChange={(e) => setCalculatorInputs(prev => ({
-                          ...prev,
-                          fairPrice: { ...prev.fairPrice, eps: e.target.value }
-                        }))}
-                      />
-                      <Input 
-                        placeholder="معدل النمو المتوقع (%)" 
-                        className="bg-black border-[#B48500] text-[#B48500]"
-                        value={calculatorInputs.fairPrice.growthRate}
-                        onChange={(e) => setCalculatorInputs(prev => ({
-                          ...prev,
-                          fairPrice: { ...prev.fairPrice, growthRate: e.target.value }
-                        }))}
-                      />
-                    </div>
-                  </div>
-                  
                   <Button 
                     className="w-full bg-[#B48500] text-black hover:bg-[#8B6914]"
                     onClick={calculateFairPrice}
@@ -619,10 +395,10 @@ export function FreeToolsSection() {
 
               {selectedTool === "roi" && (
                 <div className="space-y-3 p-4 border border-[#B48500] rounded">
-                  <h4 className="text-[#B48500] font-semibold">حاسبة العائد على الاستثمار</h4>
+                  <h4 className="text-[#B48500] font-semibold">حاسبة العائد على الاستثمار (ROI)</h4>
                   <div className="grid grid-cols-2 gap-2">
                     <Input 
-                      placeholder="قيمة الاستثمار الأولي (ريال)" 
+                      placeholder="الاستثمار الأولي (ريال)" 
                       className="bg-black border-[#B48500] text-[#B48500]"
                       value={calculatorInputs.roi.initialInvestment}
                       onChange={(e) => setCalculatorInputs(prev => ({
@@ -644,15 +420,15 @@ export function FreeToolsSection() {
                     className="w-full bg-[#B48500] text-black hover:bg-[#8B6914]"
                     onClick={calculateROI}
                   >
-                    احسب العائد
+                    احسب العائد على الاستثمار
                   </Button>
                   {calculatorResults.roi && (
                     <div className="mt-3 p-3 bg-[#B48500]/10 rounded border border-[#B48500]">
                       <p className="text-[#B48500] font-semibold">
-                        نسبة العائد: {calculatorResults.roi.percentage.toFixed(2)}%
+                        عائد الاستثمار: {calculatorResults.roi.percentage.toFixed(2)}%
                       </p>
                       <p className="text-[#8B6914]">
-                        الربح/الخسارة: {calculatorResults.roi.profit.toFixed(2)} ريال
+                        الربح: {calculatorResults.roi.profit.toFixed(2)} ريال
                       </p>
                       <p className="text-[#8B6914]">
                         الحالة: {calculatorResults.roi.status}
@@ -664,10 +440,10 @@ export function FreeToolsSection() {
 
               {selectedTool === "pe-ratio" && (
                 <div className="space-y-3 p-4 border border-[#B48500] rounded">
-                  <h4 className="text-[#B48500] font-semibold">حاسبة نسبة السعر للأرباح</h4>
+                  <h4 className="text-[#B48500] font-semibold">حاسبة نسبة السعر للأرباح (P/E Ratio)</h4>
                   <div className="grid grid-cols-2 gap-2">
                     <Input 
-                      placeholder="سعر السهم" 
+                      placeholder="سعر السهم (ريال)" 
                       className="bg-black border-[#B48500] text-[#B48500]"
                       value={calculatorInputs.peRatio.stockPrice}
                       onChange={(e) => setCalculatorInputs(prev => ({
@@ -676,7 +452,7 @@ export function FreeToolsSection() {
                       }))}
                     />
                     <Input 
-                      placeholder="ربحية السهم" 
+                      placeholder="ربحية السهم (ريال)" 
                       className="bg-black border-[#B48500] text-[#B48500]"
                       value={calculatorInputs.peRatio.eps}
                       onChange={(e) => setCalculatorInputs(prev => ({
@@ -689,12 +465,12 @@ export function FreeToolsSection() {
                     className="w-full bg-[#B48500] text-black hover:bg-[#8B6914]"
                     onClick={calculatePERatio}
                   >
-                    احسب النسبة
+                    احسب نسبة السعر للأرباح
                   </Button>
                   {calculatorResults.peRatio && (
                     <div className="mt-3 p-3 bg-[#B48500]/10 rounded border border-[#B48500]">
                       <p className="text-[#B48500] font-semibold">
-                        نسبة السعر للأرباح: {calculatorResults.peRatio.ratio.toFixed(2)}
+                        نسبة P/E: {calculatorResults.peRatio.ratio.toFixed(2)}
                       </p>
                       <p className="text-[#8B6914]">
                         التقييم: {calculatorResults.peRatio.valuation}
@@ -722,10 +498,6 @@ export function FreeToolsSection() {
               </div>
               <div className="text-2xl font-bold text-[#B48500] mb-2">{Math.round(marketSentiment)}%</div>
               <div className="text-[#8B6914] mb-2">{getSentimentText(marketSentiment)}</div>
-              <div className="text-xs text-[#8B6914] flex items-center justify-center gap-2">
-                <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
-                تحديث مباشر كل 15 ثانية
-              </div>
             </CardContent>
           </Card>
         </div>
@@ -739,18 +511,6 @@ export function FreeToolsSection() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                <div className="bg-[#1a1a1a] p-4 rounded-lg border-r-4 border-[#B48500]">
-                  <div className="flex items-start gap-3">
-                    <div className="text-2xl">🤖</div>
-                    <div>
-                      <p className="text-sm text-[#B48500] font-medium mb-2">مرحباً! أنا مساعدك المالي الذكي</p>
-                      <p className="text-sm text-[#8B6914]">
-                        يمكنني مساعدتك في تحليل الأسهم، فهم المؤشرات الاقتصادية، وتقديم نصائح استثمارية مخصصة. اسألني أي
-                        سؤال مالي وسأقدم لك إجابة مفصلة ومدعومة بالبيانات.
-                      </p>
-                    </div>
-                  </div>
-                </div>
                 <div className="space-y-4">
                   <div className="bg-white/5 p-4 rounded-lg border border-[#B48500]/20 min-h-[300px] max-h-[400px] overflow-y-auto">
                     {chatInputs.messages.map((message, index) => (

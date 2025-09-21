@@ -37,17 +37,6 @@ export default function DashboardPage() {
       <Header />
       <StockTicker />
       
-      {/* زر العودة للصفحة الرئيسية */}
-      <div className="container mx-auto px-4 py-4">
-        <Button
-          onClick={() => router.push('/')}
-          className="bg-[#B48500] text-black hover:bg-[#8B6914] mb-6"
-        >
-          <Home className="w-4 h-4 ml-2" />
-          العودة للصفحة الرئيسية
-        </Button>
-      </div>
-      
       {user.type === "admin" ? <AdminDashboard /> : <UserDashboard />}
     </div>
   )

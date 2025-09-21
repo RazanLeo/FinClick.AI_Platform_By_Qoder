@@ -27,11 +27,17 @@ export function HeroSection() {
         {/* الشعار الجديد المقصوص بحجم كبير جداً */}
         <div className="mb-8">
           <Image
-            src="/FinClick.AILogo_cropped.png"
+            src="/images/finclick-logo.png"
             alt="FinClick.AI Logo"
             width={300}
             height={300}
-            className="mx-auto"
+            className="mx-auto rounded-full"
+            style={{
+              clipPath: 'circle(48.5% at 50% 50%)',
+              objectFit: 'contain',
+              objectPosition: '50% 50%',
+              filter: 'drop-shadow(0 4px 8px rgba(180, 133, 0, 0.3))'
+            }}
           />
         </div>
         
