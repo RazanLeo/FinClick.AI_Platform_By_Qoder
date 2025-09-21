@@ -27,6 +27,8 @@ export interface AnalysisType {
   outputType: 'ratio' | 'percentage' | 'amount' | 'days' | 'times' | 'index' | 'score' | 'probability';
   industrySpecific: boolean;
   complexity: 'basic' | 'intermediate' | 'advanced';
+  benchmarkAvailable: boolean;
+  forecastable: boolean;
 }
 
 export interface AnalysisCategory {

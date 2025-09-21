@@ -33,7 +33,7 @@ export const STRUCTURAL_ANALYSES: AnalysisType[] = [
     outputType: 'percentage',
     industrySpecific: false,
     complexity: 'basic',
-    benchmarkAvailable: true,
+
     forecastable: false
   },
   
@@ -63,7 +63,7 @@ export const STRUCTURAL_ANALYSES: AnalysisType[] = [
     outputType: 'percentage',
     industrySpecific: false,
     complexity: 'basic',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -93,7 +93,7 @@ export const STRUCTURAL_ANALYSES: AnalysisType[] = [
     outputType: 'percentage',
     industrySpecific: false,
     complexity: 'intermediate',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -123,7 +123,7 @@ export const STRUCTURAL_ANALYSES: AnalysisType[] = [
     outputType: 'index',
     industrySpecific: false,
     complexity: 'intermediate',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -153,7 +153,7 @@ export const STRUCTURAL_ANALYSES: AnalysisType[] = [
     outputType: 'index',
     industrySpecific: true,
     complexity: 'intermediate',
-    benchmarkAvailable: true,
+
     forecastable: false
   },
 
@@ -183,7 +183,7 @@ export const STRUCTURAL_ANALYSES: AnalysisType[] = [
     outputType: 'amount',
     industrySpecific: false,
     complexity: 'intermediate',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -213,7 +213,7 @@ export const STRUCTURAL_ANALYSES: AnalysisType[] = [
     outputType: 'percentage',
     industrySpecific: false,
     complexity: 'basic',
-    benchmarkAvailable: true,
+
     forecastable: false
   },
 
@@ -243,7 +243,7 @@ export const STRUCTURAL_ANALYSES: AnalysisType[] = [
     outputType: 'index',
     industrySpecific: false,
     complexity: 'intermediate',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -303,7 +303,7 @@ export const STRUCTURAL_ANALYSES: AnalysisType[] = [
     outputType: 'percentage',
     industrySpecific: false,
     complexity: 'intermediate',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -363,7 +363,7 @@ export const STRUCTURAL_ANALYSES: AnalysisType[] = [
     outputType: 'amount',
     industrySpecific: false,
     complexity: 'basic',
-    benchmarkAvailable: true,
+
     forecastable: false
   },
 
@@ -393,7 +393,7 @@ export const STRUCTURAL_ANALYSES: AnalysisType[] = [
     outputType: 'percentage',
     industrySpecific: true,
     complexity: 'intermediate',
-    benchmarkAvailable: true,
+
     forecastable: false
   }
 ];
@@ -426,7 +426,7 @@ export const LIQUIDITY_RATIOS: AnalysisType[] = [
     outputType: 'ratio',
     industrySpecific: true,
     complexity: 'basic',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -456,7 +456,7 @@ export const LIQUIDITY_RATIOS: AnalysisType[] = [
     outputType: 'ratio',
     industrySpecific: true,
     complexity: 'basic',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -486,7 +486,7 @@ export const LIQUIDITY_RATIOS: AnalysisType[] = [
     outputType: 'ratio',
     industrySpecific: true,
     complexity: 'basic',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -516,7 +516,7 @@ export const LIQUIDITY_RATIOS: AnalysisType[] = [
     outputType: 'ratio',
     industrySpecific: true,
     complexity: 'intermediate',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -546,7 +546,7 @@ export const LIQUIDITY_RATIOS: AnalysisType[] = [
     outputType: 'ratio',
     industrySpecific: true,
     complexity: 'intermediate',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -576,7 +576,7 @@ export const LIQUIDITY_RATIOS: AnalysisType[] = [
     outputType: 'days',
     industrySpecific: true,
     complexity: 'advanced',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -606,7 +606,7 @@ export const LIQUIDITY_RATIOS: AnalysisType[] = [
     outputType: 'ratio',
     industrySpecific: true,
     complexity: 'intermediate',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -636,7 +636,7 @@ export const LIQUIDITY_RATIOS: AnalysisType[] = [
     outputType: 'ratio',
     industrySpecific: true,
     complexity: 'basic',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -666,7 +666,7 @@ export const LIQUIDITY_RATIOS: AnalysisType[] = [
     outputType: 'ratio',
     industrySpecific: true,
     complexity: 'intermediate',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -696,7 +696,7 @@ export const LIQUIDITY_RATIOS: AnalysisType[] = [
     outputType: 'index',
     industrySpecific: true,
     complexity: 'advanced',
-    benchmarkAvailable: true,
+
     forecastable: true
   }
 ];
@@ -729,7 +729,7 @@ export const ACTIVITY_RATIOS: AnalysisType[] = [
     outputType: 'times',
     industrySpecific: true,
     complexity: 'basic',
-    benchmarkAvailable: true,
+
     forecastable: true
   },
 
@@ -752,4 +752,12 @@ export const ACTIVITY_RATIOS: AnalysisType[] = [
       ar: 'عدد الأيام الأقل يشير إلى دوران مخزون أسرع وإدارة أفضل للتدفق النقدي'
     },
     calculationMethod: {
-      en: '365 / Inventory Turnover Ratio'
+      en: '365 / Inventory Turnover Ratio',
+      ar: '365 ÷ معدل دوران المخزون'
+    },
+    requiredData: ['cost_of_goods_sold', 'inventory'],
+    outputType: 'days',
+    industrySpecific: false,
+    complexity: 'basic'
+  }
+]

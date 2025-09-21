@@ -17,7 +17,7 @@ export const pathnames = {
 } as const;
 
 export const { Link, redirect, usePathname, useRouter } =
-  createSharedPathnamesNavigation({ locales, pathnames });
+  createSharedPathnamesNavigation({ locales });
 
 // Translation messages
 export const messages = {
@@ -466,3 +466,8 @@ export const messages = {
         title: 'Annual Plan',
         price: '54,000 SAR',
         originalPrice: '60,000 SAR',
+        period: 'annual'
+      }
+    }
+  }
+}
