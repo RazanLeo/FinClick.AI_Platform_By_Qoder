@@ -556,8 +556,8 @@ export function Footer() {
                   كتيب استخدام FinClick.AI
                 </button>
                 <button
-                  onClick={() => scrollToSection("faq")}
-                  className="flex items-center gap-2 text-[#8B6914] hover:text-[#B48500] transition-colors text-sm w-full text-right"
+                  onClick={() => openModal("comingSoon")}
+                  className="flex items-center gap-2 text-[#8B6914] hover:text-[#B48500] transition-colors text-sm w-full text-right hover:bg-transparent"
                 >
                   <HelpCircle className="w-4 h-4" />
                   الأسئلة الشائعة
@@ -628,24 +628,24 @@ export function Footer() {
           <div className="text-center mb-8">
             <h4 className="text-lg font-semibold text-[#B48500] mb-4">تابعنا على</h4>
             <div className="flex justify-center gap-4">
-              <Button variant="ghost" size="sm" className="text-[#B48500] hover:bg-[#B48500] hover:text-black">
+              <button className="text-[#B48500] hover:text-[#FFD700] transition-colors p-2 hover:bg-transparent">
                 📱 سناب شات
-              </Button>
-              <Button variant="ghost" size="sm" className="text-[#B48500] hover:bg-[#B48500] hover:text-black">
+              </button>
+              <button className="text-[#B48500] hover:text-[#FFD700] transition-colors p-2 hover:bg-transparent">
                 📷 إنستغرام
-              </Button>
-              <Button variant="ghost" size="sm" className="text-[#B48500] hover:bg-[#B48500] hover:text-black">
+              </button>
+              <button className="text-[#B48500] hover:text-[#FFD700] transition-colors p-2 hover:bg-transparent">
                 🎵 تيك توك
-              </Button>
-              <Button variant="ghost" size="sm" className="text-[#B48500] hover:bg-[#B48500] hover:text-black">
+              </button>
+              <button className="text-[#B48500] hover:text-[#FFD700] transition-colors p-2 hover:bg-transparent">
                 📱 تلغرام
-              </Button>
-              <Button variant="ghost" size="sm" className="text-[#B48500] hover:bg-[#B48500] hover:text-black">
+              </button>
+              <button className="text-[#B48500] hover:text-[#FFD700] transition-colors p-2 hover:bg-transparent">
                 🐦 تويتر
-              </Button>
-              <Button variant="ghost" size="sm" className="text-[#B48500] hover:bg-[#B48500] hover:text-black">
+              </button>
+              <button className="text-[#B48500] hover:text-[#FFD700] transition-colors p-2 hover:bg-transparent">
                 💼 لينكدن
-              </Button>
+              </button>
             </div>
           </div>
 

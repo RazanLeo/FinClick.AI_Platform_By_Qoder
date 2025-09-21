@@ -108,9 +108,17 @@ export function PricingSection() {
 
                   <div className="mb-6">
                     {plan.originalPrice && (
-                      <div className="text-lg text-[#8B6914] line-through mb-2">
-                        {plan.originalPrice} {plan.currency}
-                      </div>
+                      <>
+                        <div className="text-lg text-[#8B6914] line-through mb-2">
+                          {plan.originalPrice} {plan.currency}
+                        </div>
+                        {plan.discount && (
+                          <div className="space-y-2 mb-4">
+                            <Badge className="bg-green-500 text-white text-sm px-4 py-1">{plan.discountPercent}</Badge>
+                            <div className="text-green-400 font-semibold text-sm">{plan.discount}</div>
+                          </div>
+                        )}
+                      </>
                     )}
                     <div className="text-5xl font-bold text-[#B48500] mb-2">
                       {plan.price}
@@ -118,13 +126,6 @@ export function PricingSection() {
                     </div>
                     <div className="text-[#8B6914]">{plan.period}</div>
                   </div>
-
-                  {plan.discount && (
-                    <div className="space-y-2 mb-6">
-                      <Badge className="bg-green-500 text-white text-sm px-4 py-1">{plan.discountPercent}</Badge>
-                      <div className="text-green-400 font-semibold text-sm">{plan.discount}</div>
-                    </div>
-                  )}
                 </CardHeader>
 
                 <CardContent>

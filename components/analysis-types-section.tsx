@@ -241,21 +241,20 @@ export function AnalysisTypesSection() {
                 <Badge className={`${data.color} text-white text-lg px-4 py-2`}>{data.count} تحليل</Badge>
               </CardHeader>
               <CardContent>
-                <Button
-                  variant="outline"
-                  className="w-full border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black bg-transparent"
+                <button
+                  className="w-full border border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black bg-transparent p-3 rounded transition-colors"
                   onClick={() => setExpandedCategory(expandedCategory === category ? null : category)}
                 >
                   {expandedCategory === category ? (
                     <>
-                      إخفاء التفاصيل <ChevronUp className="w-4 h-4 mr-2" />
+                      إخفاء التفاصيل <ChevronUp className="w-4 h-4 mr-2 inline" />
                     </>
                   ) : (
                     <>
-                      عرض التفاصيل <ChevronDown className="w-4 h-4 mr-2" />
+                      عرض التفاصيل <ChevronDown className="w-4 h-4 mr-2 inline" />
                     </>
                   )}
-                </Button>
+                </button>
 
                 {expandedCategory === category && (
                   <div className="mt-6 space-y-4">

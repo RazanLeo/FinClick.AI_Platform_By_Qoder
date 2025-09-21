@@ -525,30 +525,24 @@ export function FreeToolsSection() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black bg-transparent"
+                <button
+                  className="border border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black bg-transparent p-2 rounded transition-colors"
                   onClick={() => setSelectedTool(selectedTool === "fair-price" ? null : "fair-price")}
                 >
                   السعر العادل
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black bg-transparent"
+                </button>
+                <button
+                  className="border border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black bg-transparent p-2 rounded transition-colors"
                   onClick={() => setSelectedTool(selectedTool === "roi" ? null : "roi")}
                 >
                   العائد على الاستثمار
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black bg-transparent"
+                </button>
+                <button
+                  className="border border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black bg-transparent p-2 rounded transition-colors"
                   onClick={() => setSelectedTool(selectedTool === "pe-ratio" ? null : "pe-ratio")}
                 >
                   نسبة السعر للأرباح
-                </Button>
+                </button>
               </div>
               <div className="mt-4 text-center text-sm text-[#8B6914]">
                 <p>جميع الحاسبات المالية مجانية لتجربة قدرات النظام</p>
