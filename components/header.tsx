@@ -100,11 +100,11 @@ export function Header() {
           <div className="flex items-center gap-4">
             <div className="relative">
               <Image
-                src="/images/finclick-logo.png"
+                src="/FinClick.AILogo_cropped.png"
                 alt="FinClick.AI Logo"
                 width={60}
                 height={60}
-                className="cursor-pointer finclick-logo"
+                className="cursor-pointer"
                 onClick={goToHomePage}
               />
             </div>

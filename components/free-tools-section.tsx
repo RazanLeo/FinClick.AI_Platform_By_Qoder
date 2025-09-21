@@ -74,7 +74,7 @@ export function FreeToolsSection() {
   
   const [calculatorResults, setCalculatorResults] = useState<CalculatorResults>({})
   
-  // Chat states
+  // Chat states with single welcome message
   const [chatInputs, setChatInputs] = useState<ChatInputs>({
     question: '',
     messages: [{

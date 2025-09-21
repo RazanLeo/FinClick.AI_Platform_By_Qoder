@@ -1,20 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Configure route segment
+export const runtime = 'nodejs'
+export const maxDuration = 60
+
+// Increase memory and handling limits
+export const dynamic = 'force-dynamic'
+export const preferredRegion = 'auto'
+
 interface AnalysisRequest {
-  fileData: Array<{
+  fileData?: Array<{
     name: string
     type: string
     data: string
   }>
-  analysisTypes: string[]
-  analysisLevel: string
-  companyInfo: {
-    companyName: string
-    sector: string
-    activity: string
-    legalEntity: string
-    yearsOfAnalysis: number
-    comparisonLevel: string
+  analysisTypes?: string[]
+  analysisLevel?: string
+  companyInfo?: {
+    companyName?: string
+    sector?: string
+    activity?: string
+    legalEntity?: string
+    yearsOfAnalysis?: number
+    comparisonLevel?: string
   }
 }
 
@@ -129,8 +137,8 @@ export async function POST(request: NextRequest) {
     const response = {
       success: true,
       timestamp: new Date().toISOString(),
-      companyName: data.companyInfo.companyName,
-      analysisType: data.analysisLevel,
+      companyName: data.companyInfo?.companyName || 'الشركة',
+      analysisType: data.analysisLevel || 'شامل',
       detailedAnalysis,
       summary: {
         overallScore: 75,
@@ -169,8 +177,17 @@ export async function POST(request: NextRequest) {
     
   } catch (error) {
     console.error('Analysis API error:', error)
+    
+    // Handle specific error types
+    if (error instanceof SyntaxError) {
+      return NextResponse.json(
+        { error: 'Invalid JSON format', message: 'تنسيق البيانات غير صحيح' },
+        { status: 400 }
+      )
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to process analysis', details: error },
+      { error: 'Failed to process analysis', message: 'فشل في معالجة التحليل. يرجى المحاولة مرة أخرى.', details: error },
       { status: 500 }
     )
   }

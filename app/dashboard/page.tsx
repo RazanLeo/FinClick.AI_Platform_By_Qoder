@@ -5,6 +5,8 @@ import { UserDashboard } from "@/components/dashboard/user-dashboard"
 import { AdminDashboard } from "@/components/dashboard/admin-dashboard"
 import { Header } from "@/components/header"
 import { StockTicker } from "@/components/stock-ticker"
+import { Button } from "@/components/ui/button"
+import { Home } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
@@ -34,6 +36,18 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-black">
       <Header />
       <StockTicker />
+      
+      {/* زر العودة للصفحة الرئيسية */}
+      <div className="container mx-auto px-4 py-4">
+        <Button
+          onClick={() => router.push('/')}
+          className="bg-[#B48500] text-black hover:bg-[#8B6914] mb-6"
+        >
+          <Home className="w-4 h-4 ml-2" />
+          العودة للصفحة الرئيسية
+        </Button>
+      </div>
+      
       {user.type === "admin" ? <AdminDashboard /> : <UserDashboard />}
     </div>
   )

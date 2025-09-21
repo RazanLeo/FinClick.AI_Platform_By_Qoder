@@ -24,44 +24,40 @@ export function HeroSection() {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
         
-        {/* الشعار الأصلي بحجم متوسط */}
+        {/* الشعار الجديد المقصوص بحجم كبير جداً */}
         <div className="mb-8">
           <Image
-            src="/images/finclick-logo.png"
+            src="/FinClick.AILogo_cropped.png"
             alt="FinClick.AI Logo"
-            width={120}
-            height={120}
+            width={300}
+            height={300}
             className="mx-auto"
-            style={{
-              filter: 'drop-shadow(0 0 20px rgba(0, 0, 0, 0.8))',
-              background: 'transparent'
-            }}
           />
         </div>
         
-        {/* المحتوى النصي تحت الشعار */}
+        {/* المحتوى النصي بخط أكبر وعريض */}
         <div>
         {/* Title */}
-        <h1 className="text-5xl md:text-7xl font-bold text-[#B48500] mb-6 text-center">
+        <h1 className="text-7xl md:text-9xl font-black text-[#B48500] mb-8 text-center">
           FinClick.AI
         </h1>
         
         {/* Arabic subtitle */}
-        <p className="text-xl md:text-2xl text-[#B48500] mb-6 font-semibold text-center">
+        <p className="text-3xl md:text-4xl text-[#B48500] mb-8 font-bold text-center">
           منصة التحليل المالي الذكية الثورية
         </p>
         
         {/* English subtitle */}
-        <p className="text-lg md:text-xl text-[#B48500] mb-8 text-center">
+        <p className="text-2xl md:text-3xl text-[#B48500] mb-10 text-center font-semibold">
           Revolutionary Intelligent Financial Analysis Platform
         </p>
         
         {/* Description */}
-        <div className="max-w-3xl mx-auto mb-8 text-center">
-          <p className="text-base text-[#B48500] mb-4 leading-relaxed">
+        <div className="max-w-4xl mx-auto mb-10 text-center">
+          <p className="text-xl text-[#B48500] mb-6 leading-relaxed font-bold">
             ثورة ونقلة نوعية في عالم التحليل المالي - نظام يقلب الدنيا رأساً على عقب ويقلب كل الموازين
           </p>
-          <p className="text-base text-[#B48500] leading-relaxed">
+          <p className="text-xl text-[#B48500] leading-relaxed font-bold">
             تقديم 180+ نوع تحليل مالي كمي بالذكاء الاصطناعي في ثوانٍ معدودة
           </p>
         </div>

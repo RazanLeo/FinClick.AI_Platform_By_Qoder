@@ -136,30 +136,18 @@ export function LanguageSwitcher() {
     document.body.className = document.body.className.replace(/font-(arabic|latin)/g, '')
     document.body.className += ` ${fontClass}`
     
-    // Force re-render of flex directions for navigation only
-    const navElements = document.querySelectorAll('nav .flex, header .flex')
-    navElements.forEach(el => {
-      el.classList.remove('flex-row-reverse', 'flex-row')
-      if (lang === 'ar') {
-        el.classList.add('flex-row-reverse')
-      } else {
-        el.classList.add('flex-row')
-      }
-    })
-    
-    // DO NOT update text alignment classes - preserve existing text-center classes
+    // Force reload to apply changes properly
+    setTimeout(() => {
+      window.location.reload()
+    }, 500)
   }
 
   const toggleLanguage = () => {
     const newLang = language === "ar" ? "en" : "ar"
-    setLanguage(newLang)
-
+    
     // Store language preference
     localStorage.setItem("preferred-language", newLang)
-
-    // Update content and apply changes
-    updateContent(newLang)
-
+    
     // Show language change notification
     const notification = document.createElement("div")
     notification.className = "fixed top-4 right-4 bg-[#B48500] text-black px-4 py-2 rounded-lg z-50 font-semibold transition-all duration-300"
@@ -168,12 +156,12 @@ export function LanguageSwitcher() {
 
     setTimeout(() => {
       notification.remove()
-    }, 3000)
-
-    // Apply immediate direction changes without reload
+    }, 2000)
+    
+    // Apply language changes with page reload for proper RTL/LTR support
     setTimeout(() => {
-      applyLanguageChanges(newLang)
-    }, 100)
+      window.location.reload()
+    }, 500)
   }
 
   useEffect(() => {
@@ -181,14 +169,8 @@ export function LanguageSwitcher() {
     const savedLang = localStorage.getItem("preferred-language") as "ar" | "en" | null
     if (savedLang && savedLang !== language) {
       setLanguage(savedLang)
-      updateContent(savedLang)
     }
   }, [])
-  
-  useEffect(() => {
-    // Apply language changes whenever language state changes
-    applyLanguageChanges(language)
-  }, [language])
 
   return (
     <Button
