@@ -25,6 +25,10 @@ export interface AgentState {
   notifications?: any[];
   userPreferences?: any;
   historicalAnalyses?: any[];
+  narrativeTexts?: any;
+  dataQuality?: any;
+  predictions?: any;
+  riskAssessment?: any;
 }
 
 // Base agent class
@@ -302,7 +306,7 @@ export class NarrativeAgent extends BaseAgent {
     console.log('🔄 NarrativeAgent: Generating narrative texts...');
     
     try {
-      const narrativeTexts = await this.generateNarrativeTexts(state.analysisResults);
+      const narrativeTexts = await this.generateNarrativeTexts(state.analysisResults || []);
       
       return {
         ...state,
@@ -769,6 +773,134 @@ export class MultiAgentSystem {
     return new MultiAgentSystem();
   }
   
+  static getAvailableAgents() {
+    return [
+      {
+        id: 'financial_analyst',
+        name: 'محلل مالي رئيسي',
+        specialty: 'تحليل القوائم المالية والأداء',
+        description: 'خبير في تحليل الميزانيات والنسب المالية',
+        model: 'GPT-4',
+        temperature: 0.3
+      },
+      {
+        id: 'risk_specialist',
+        name: 'أخصائي إدارة المخاطر',
+        specialty: 'تقييم وإدارة المخاطر المالية',
+        description: 'متخصص في تحليل المخاطر الائتمانية والتشغيلية',
+        model: 'Claude-3',
+        temperature: 0.2
+      },
+      {
+        id: 'investment_advisor',
+        name: 'مستشار استثماري',
+        specialty: 'استراتيجيات الاستثمار والتوصيات',
+        description: 'خبير في تقييم الفرص الاستثمارية',
+        model: 'Gemini-Pro',
+        temperature: 0.4
+      },
+      {
+        id: 'market_analyst',
+        name: 'محلل أسواق',
+        specialty: 'تحليل الأسواق والاتجاهات',
+        description: 'متخصص في تحليل اتجاهات السوق والمنافسين',
+        model: 'GPT-4',
+        temperature: 0.5
+      },
+      {
+        id: 'credit_analyst',
+        name: 'محلل ائتماني',
+        specialty: 'تقييم الجدارة الائتمانية',
+        description: 'خبير في تحليل القدرة على السداد والتصنيف الائتماني',
+        model: 'Claude-3',
+        temperature: 0.1
+      },
+      {
+        id: 'quantitative_analyst',
+        name: 'محلل كمي',
+        specialty: 'النمذجة المالية والتحليل الإحصائي',
+        description: 'متخصص في النماذج الرياضية والتحليل الكمي',
+        model: 'DeepSeek',
+        temperature: 0.2
+      },
+      {
+        id: 'strategy_consultant',
+        name: 'مستشار استراتيجي',
+        specialty: 'التخطيط الاستراتيجي والتطوير',
+        description: 'خبير في وضع الاستراتيجيات وخطط النمو',
+        model: 'Gemini-Pro',
+        temperature: 0.6
+      }
+    ];
+  }
+  
+  static async performCollaborativeAnalysis(
+    analysisTitle: string,
+    data: any,
+    selectedAgents: string[]
+  ): Promise<CollaborativeAnalysis> {
+    // Simulate collaborative analysis
+    const agents = this.getAvailableAgents().filter(agent => selectedAgents.includes(agent.id));
+    
+    const responses = agents.map(agent => ({
+      agentId: agent.id,
+      analysis: `تحليل ${agent.name}: بناءً على البيانات المالية المقدمة، أرى أن الشركة تتمتع بوضع مالي مستقر مع بعض التحديات في السيولة.`,
+      confidence: Math.floor(Math.random() * 20) + 80, // 80-100%
+      recommendations: [
+        'تحسين إدارة النقدية',
+        'مراجعة هيكل التمويل',
+        'تطوير استراتيجيات النمو'
+      ]
+    }));
+    
+    return {
+      agents,
+      confidenceScore: Math.floor(Math.random() * 10) + 85, // 85-95%
+      responses,
+      consensus: 'يتفق الخبراء على أن الشركة تتمتع بأساسيات مالية قوية مع ضرورة التركيز على تحسين السيولة وإدارة المخاطر.',
+      finalRecommendation: 'ننصح بتطبيق استراتيجية متوازنة تركز على تحسين التدفقات النقدية وتعزيز الوضع المالي للشركة.',
+      conflictingViews: [
+        'اختلاف في تقييم مستوى المخاطر بين محلل المخاطر والمحلل المالي',
+        'وجهات نظر متباينة حول توقيت التوسع'
+      ]
+    };
+  }
+  
+  static async performIntelligentAnalysis(
+    financialData: any,
+    analysisResults: any[]
+  ): Promise<IntelligentAnalysisResult> {
+    // Simulate intelligent analysis
+    return {
+      confidence: Math.floor(Math.random() * 10) + 85, // 85-95%
+      aiInsights: [
+        { title: 'تحليل الأنماط', confidence: 92 },
+        { title: 'التنبؤات', confidence: 88 },
+        { title: 'الرؤى الاستراتيجية', confidence: 90 }
+      ],
+      patternAnalysis: 'تحليل الأنماط يظهر اتجاهاً إيجابياً في الأداء المالي مع وجود تقلبات موسمية في التدفقات النقدية.',
+      predictions: 'التنبؤات تشير إلى نمو متوقع في الإيرادات بنسبة 15% خلال العام القادم مع تحسن في هوامش الربح.',
+      strategicInsights: 'الرؤى الاستراتيجية تؤكد على أهمية الاستثمار في التكنولوجيا وتطوير القدرات التنافسية.',
+      recommendations: {
+        shortTerm: [
+          'تحسين إدارة السيولة',
+          'مراجعة هيكل التكاليف',
+          'تطوير أنظمة المراقبة المالية'
+        ],
+        mediumTerm: [
+          'تنويع مصادر الإيرادات',
+          'تطوير المنتجات والخدمات',
+          'تعزيز الحضور في السوق'
+        ],
+        longTerm: [
+          'التوسع في أسواق جديدة',
+          'الاستثمار في التكنولوجيا المتقدمة',
+          'بناء شراكات استراتيجية'
+        ]
+      }
+    };
+  }
+  
   async analyze(files: any[], options: any): Promise<any> {
     let state: AgentState = {
       uploadedFiles: files,
@@ -792,7 +924,7 @@ export class MultiAgentSystem {
         }
         
         // Check for completion
-        if (state.currentAgent === 'Complete' || state.progress >= 100) {
+        if (state.currentAgent === 'Complete' || (state.progress && state.progress >= 100)) {
           break;
         }
       }
@@ -1038,4 +1170,35 @@ export class MultiAgentSystem {
     
     return analyses;
   }
+}
+
+// Export interface types for use in components
+export interface CollaborativeAnalysis {
+  agents: any[];
+  confidenceScore: number;
+  responses: {
+    agentId: string;
+    analysis: string;
+    confidence: number;
+    recommendations: string[];
+  }[];
+  consensus: string;
+  finalRecommendation: string;
+  conflictingViews: string[];
+}
+
+export interface IntelligentAnalysisResult {
+  confidence: number;
+  aiInsights: {
+    title: string;
+    confidence: number;
+  }[];
+  patternAnalysis: string;
+  predictions: string;
+  strategicInsights: string;
+  recommendations: {
+    shortTerm: string[];
+    mediumTerm: string[];
+    longTerm: string[];
+  };
 }
