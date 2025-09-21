@@ -1754,7 +1754,7 @@ export class AdvancedAnalysisEngine {
   }
 
   // دوال تفسير المخاطر الكمية
-  private static interpretValueAtRisk(var: any): string {
+  private static interpretValueAtRisk(varValue: any): string {
     return `أقصى خسارة محتملة بثقة 95% خلال فترة التحليل`
   }
 
@@ -1893,5 +1893,4 @@ export class AdvancedAnalysisEngine {
   private static interpretAIValue(value: any): string {
     return `نموذج الذكاء الاصطناعي يستخدم خوارزميات متقدمة للتنبؤ بالقيمة`
   }
-  \
 }

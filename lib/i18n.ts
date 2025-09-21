@@ -465,4 +465,4 @@ export const messages = {
       annual: {
         title: 'Annual Plan',
         price: '54,000 SAR',
-        originalPrice: '60,000
+        originalPrice: '60,000 SAR',

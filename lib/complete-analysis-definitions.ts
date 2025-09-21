@@ -752,4 +752,4 @@ export const ACTIVITY_RATIOS: AnalysisType[] = [
       ar: 'عدد الأيام الأقل يشير إلى دوران مخزون أسرع وإدارة أفضل للتدفق النقدي'
     },
     calculationMethod: {
-      en: '365
+      en: '365 / Inventory Turnover Ratio'

@@ -1949,3 +1949,5 @@ export class BasicAnalysisEngine {
     if (value > 0.2) return "نسبة نقدية جيدة"
     if (value > 0.1) return "نسبة نقدية مقبولة"
     return "نسبة نقدية منخفضة تحتاج تحسين"
+  }
+}
