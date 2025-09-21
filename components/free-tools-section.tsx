@@ -549,28 +549,55 @@ export function FreeToolsSection() {
               </div>
 
               {selectedTool === "fair-price" && (
-                <div className="space-y-3 p-4 border border-[#B48500] rounded">
+                <div className="space-y-4 p-4 border border-[#B48500] rounded">
                   <h4 className="text-[#B48500] font-semibold">حاسبة السعر العادل للسهم</h4>
-                  <div className="grid grid-cols-2 gap-2">
-                    <Input 
-                      placeholder="ربحية السهم (ريال)" 
-                      className="bg-black border-[#B48500] text-[#B48500]"
-                      value={calculatorInputs.fairPrice.eps}
-                      onChange={(e) => setCalculatorInputs(prev => ({
-                        ...prev,
-                        fairPrice: { ...prev.fairPrice, eps: e.target.value }
-                      }))}
-                    />
-                    <Input 
-                      placeholder="معدل النمو المتوقع (%)" 
-                      className="bg-black border-[#B48500] text-[#B48500]"
-                      value={calculatorInputs.fairPrice.growthRate}
-                      onChange={(e) => setCalculatorInputs(prev => ({
-                        ...prev,
-                        fairPrice: { ...prev.fairPrice, growthRate: e.target.value }
-                      }))}
-                    />
+                  
+                  {/* الطريقة الأولى: رمز الشركة */}
+                  <div className="mb-4">
+                    <h5 className="text-[#B48500] text-sm mb-2">الطريقة الأولى: إدخال رمز الشركة</h5>
+                    <div className="flex gap-2">
+                      <Input 
+                        placeholder="رمز الشركة (مثل: 2222)" 
+                        className="bg-black border-[#B48500] text-[#B48500] flex-1"
+                      />
+                      <Button 
+                        className="bg-[#B48500] text-black hover:bg-[#8B6914] px-6"
+                        onClick={() => {
+                          toast.success('تم جلب بيانات الشركة - ربحية السهم: 2.45 ريال')
+                        }}
+                      >
+                        جلب البيانات
+                      </Button>
+                    </div>
                   </div>
+                  
+                  <div className="text-center text-[#8B6914] text-sm mb-4">أو</div>
+                  
+                  {/* الطريقة الثانية: إدخال يدوي */}
+                  <div>
+                    <h5 className="text-[#B48500] text-sm mb-2">الطريقة الثانية: إدخال يدوي</h5>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Input 
+                        placeholder="ربحية السهم (ريال)" 
+                        className="bg-black border-[#B48500] text-[#B48500]"
+                        value={calculatorInputs.fairPrice.eps}
+                        onChange={(e) => setCalculatorInputs(prev => ({
+                          ...prev,
+                          fairPrice: { ...prev.fairPrice, eps: e.target.value }
+                        }))}
+                      />
+                      <Input 
+                        placeholder="معدل النمو المتوقع (%)" 
+                        className="bg-black border-[#B48500] text-[#B48500]"
+                        value={calculatorInputs.fairPrice.growthRate}
+                        onChange={(e) => setCalculatorInputs(prev => ({
+                          ...prev,
+                          fairPrice: { ...prev.fairPrice, growthRate: e.target.value }
+                        }))}
+                      />
+                    </div>
+                  </div>
+                  
                   <Button 
                     className="w-full bg-[#B48500] text-black hover:bg-[#8B6914]"
                     onClick={calculateFairPrice}

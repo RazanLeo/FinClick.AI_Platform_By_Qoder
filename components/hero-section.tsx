@@ -7,10 +7,10 @@ import { Sparkles, CreditCard } from "lucide-react"
 export function HeroSection() {
   return (
     <section className="relative py-20 min-h-screen flex items-center justify-center">
-      {/* Background with logo */}
+      {/* الخلفية الجديدة بدون شعار */}
       <div className="absolute inset-0">
         <Image
-          src="/Hero_Section_Background.JPG"
+          src="/Hero_Section_Background_Add_Logo.jpg"
           alt="FinClick Hero Background"
           fill
           className="object-cover"
@@ -18,14 +18,29 @@ export function HeroSection() {
         />
       </div>
       
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40"></div>
+      {/* طبقة شفافة خفيفة */}
+      <div className="absolute inset-0 bg-black/20"></div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
         
-        {/* Content positioned below background logo */}
-        <div className="mt-20">
+        {/* الشعار الأصلي بحجم متوسط */}
+        <div className="mb-8">
+          <Image
+            src="/images/finclick-logo.png"
+            alt="FinClick.AI Logo"
+            width={120}
+            height={120}
+            className="mx-auto"
+            style={{
+              filter: 'drop-shadow(0 0 20px rgba(0, 0, 0, 0.8))',
+              background: 'transparent'
+            }}
+          />
+        </div>
+        
+        {/* المحتوى النصي تحت الشعار */}
+        <div>
         {/* Title */}
         <h1 className="text-5xl md:text-7xl font-bold text-[#B48500] mb-6 text-center">
           FinClick.AI
