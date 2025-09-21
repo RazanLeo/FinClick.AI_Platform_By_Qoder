@@ -880,7 +880,7 @@ export function UserDashboard() {
                       <div>
                         <h3 className="text-lg font-semibold mb-3">التوصيات</h3>
                         <ul className="space-y-2">
-                          {analysisResults.results.recommendations.map((rec, index) => (
+                          {analysisResults.executiveSummary.strategicRecommendations.map((rec, index) => (
                             <li key={index} className="flex items-start">
                               <CheckCircle className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
                               <span>{rec}</span>
