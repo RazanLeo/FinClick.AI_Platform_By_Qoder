@@ -94,12 +94,12 @@ export function ReportGenerator({ reportData, onReportGenerated }: ReportGenerat
       ...reportData.basicAnalysis,
       ...reportData.appliedAnalysis,
       ...reportData.advancedAnalysis,
-    ].filter((a) => a.status === "excellent").length,
+    ].filter((a) => (a as any).status === "excellent").length,
     criticalResults: [
       ...reportData.basicAnalysis,
       ...reportData.appliedAnalysis,
       ...reportData.advancedAnalysis,
-    ].filter((a) => a.status === "critical").length,
+    ].filter((a) => (a as any).status === "critical").length,
     averageConfidence: Math.round(
       [...reportData.basicAnalysis, ...reportData.appliedAnalysis, ...reportData.advancedAnalysis].reduce(
         (sum, a) => sum + 85, // قيمة افتراضية للثقة

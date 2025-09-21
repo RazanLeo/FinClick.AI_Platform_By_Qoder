@@ -6,6 +6,7 @@ export interface AdvancedAnalysisResult {
   category: string;
   value: number | object;
   interpretation: string;
+  status: "excellent" | "good" | "average" | "poor" | "critical";
   riskLevel: "low" | "medium" | "high";
   methodology: string;
   confidence: number;
@@ -21,6 +22,7 @@ export class AdvancedAnalysisEngine {
       category: "التحليل المتقدم",
       value: 75,
       interpretation: "تفسير نموذجي للتحليل المتقدم",
+      status: "good",
       riskLevel: "medium",
       methodology: "منهجية التحليل المتقدم",
       confidence: 85,
