@@ -457,8 +457,8 @@ export class FinancialAnalysisEngine {
   }
 
   private hasHistoricalData(): boolean {
-    return this.financialData?.historicalData && 
-           this.financialData.historicalData.length > 1;
+    return !!(this.financialData?.historicalData && 
+             this.financialData.historicalData.length > 1);
   }
 
   private async interpretResult(
@@ -572,7 +572,7 @@ export class FinancialAnalysisEngine {
     ]
   }
 
-  private generateRecommendations(type: string, insights: string[]): string[] {
+  private generateRecommendationsForType(type: string, insights: string[]): string[] {
     const recommendations = {
       financial: ["تحسين إدارة رأس المال العامل", "زيادة الاستثمار في الأنشطة عالية العائد", "تنويع مصادر الإيرادات"],
       market: [
