@@ -79,6 +79,12 @@ export class MongoDBService {
 
 export const mongoService = MongoDBService.getInstance();
 
-export const initializeMongoDB = async (): Promise<void> => {
+// Export initialization function explicitly
+export async function initializeMongoDB(): Promise<void> {
   await mongoService.connect();
-};
+}
+
+// Alternative export for better IDE support
+export { initializeMongoDB as initializeMongoDatabase };
+
+export default mongoService;

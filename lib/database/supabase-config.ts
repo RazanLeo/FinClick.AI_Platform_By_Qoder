@@ -341,9 +341,9 @@ class SupabaseService {
   // Cleanup
   async cleanup(): Promise<void> {
     // Unsubscribe from all real-time subscriptions
-    for (const [id, channel] of this.subscriptions) {
+    this.subscriptions.forEach((channel, id) => {
       channel.unsubscribe()
-    }
+    })
     this.subscriptions.clear()
 
     console.log('Supabase cleanup completed')

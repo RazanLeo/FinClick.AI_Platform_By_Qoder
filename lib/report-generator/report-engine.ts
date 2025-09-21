@@ -579,13 +579,13 @@ export class ReportEngine {
       },
       {
         name: data.language === "ar" ? "متوسط الثقة" : "Average Confidence",
-        value: `${Math.round(allAnalyses.reduce((sum, a) => sum + a.confidence, 0) / allAnalyses.length)}%`,
+        value: `${Math.round(allAnalyses.reduce((sum, a) => sum + ((a as any).confidence || 0), 0) / allAnalyses.length)}%`,
         trend: "neutral",
       },
     ]
   }
 
-  private static generateCategorySummary(analyses: AnalysisResult[], isArabic: boolean): CategorySummary {
+  private static generateCategorySummary(analyses: (AnalysisResult | AdvancedAnalysisResult)[], isArabic: boolean): CategorySummary {
     const excellentCount = analyses.filter((a) => a.status === "excellent").length
     const goodCount = analyses.filter((a) => a.status === "good").length
     const averageCount = analyses.filter((a) => a.status === "average").length
@@ -616,23 +616,23 @@ export class ReportEngine {
         .filter((a) => a.status === "excellent" || a.status === "critical")
         .slice(0, 3)
         .map((a) => (isArabic ? a.interpretation : a.nameEn)),
-      averageConfidence: Math.round(analyses.reduce((sum, a) => sum + a.confidence, 0) / analyses.length),
+      averageConfidence: Math.round(analyses.reduce((sum, a) => sum + ((a as any).confidence || 0), 0) / analyses.length),
     }
   }
 
-  private static generateOverallAssessment(analyses: AnalysisResult[], isArabic: boolean): OverallAssessment {
+  private static generateOverallAssessment(analyses: (AnalysisResult | AdvancedAnalysisResult)[], isArabic: boolean): OverallAssessment {
     const summary = this.generateCategorySummary(analyses, isArabic)
 
     return {
       status: summary.overallStatus,
       score: this.calculateCategoryScore(summary.distribution),
-      strengths: analyses.filter((a) => a.status === "excellent").slice(0, 5),
+      strengths: analyses.filter((a) => a.status === "excellent").slice(0, 5) as AnalysisResult[],
       concerns: analyses.filter((a) => a.status === "critical" || a.status === "poor").slice(0, 5),
       recommendations: this.generateCategoryRecommendations(analyses, isArabic),
     }
   }
 
-  private static extractKeyInsights(analyses: AnalysisResult[], isArabic: boolean): string[] {
+  private static extractKeyInsights(analyses: (AnalysisResult | AdvancedAnalysisResult)[], isArabic: boolean): string[] {
     return analyses
       .filter((a) => a.status === "excellent" || a.status === "critical")
       .slice(0, 10)
@@ -649,7 +649,7 @@ export class ReportEngine {
     return Math.round((weightedSum / (total * 5)) * 100)
   }
 
-  private static generateCategoryRecommendations(analyses: AnalysisResult[], isArabic: boolean): string[] {
+  private static generateCategoryRecommendations(analyses: (AnalysisResult | AdvancedAnalysisResult)[], isArabic: boolean): string[] {
     const criticalAnalyses = analyses.filter((a) => a.status === "critical")
     const poorAnalyses = analyses.filter((a) => a.status === "poor")
 
@@ -691,7 +691,7 @@ export class ReportEngine {
     }
   }
 
-  private static calculateOverallRiskLevel(riskAnalyses: AnalysisResult[]): string {
+  private static calculateOverallRiskLevel(riskAnalyses: (AnalysisResult | AdvancedAnalysisResult)[]): string {
     const criticalRisks = riskAnalyses.filter((r) => r.status === "critical").length
     const poorRisks = riskAnalyses.filter((r) => r.status === "poor").length
     const totalRisks = riskAnalyses.length
@@ -703,7 +703,7 @@ export class ReportEngine {
     return "low"
   }
 
-  private static calculateRiskScore(riskAnalyses: AnalysisResult[]): number {
+  private static calculateRiskScore(riskAnalyses: (AnalysisResult | AdvancedAnalysisResult)[]): number {
     const weights = { excellent: 1, good: 2, average: 3, poor: 4, critical: 5 }
     const totalWeight = riskAnalyses.reduce((sum, risk) => {
       return sum + weights[risk.status]
@@ -712,7 +712,7 @@ export class ReportEngine {
     return Math.round((totalWeight / (riskAnalyses.length * 5)) * 100)
   }
 
-  private static calculateRiskDistribution(riskAnalyses: AnalysisResult[]): RiskDistribution {
+  private static calculateRiskDistribution(riskAnalyses: (AnalysisResult | AdvancedAnalysisResult)[]): RiskDistribution {
     const total = riskAnalyses.length
     return {
       low: (riskAnalyses.filter((r) => r.status === "excellent" || r.status === "good").length / total) * 100,
@@ -721,7 +721,7 @@ export class ReportEngine {
     }
   }
 
-  private static generateRiskMitigationStrategies(riskAnalyses: AnalysisResult[], isArabic: boolean): string[] {
+  private static generateRiskMitigationStrategies(riskAnalyses: (AnalysisResult | AdvancedAnalysisResult)[], isArabic: boolean): string[] {
     return [
       isArabic ? "تنويع مصادر الإيرادات لتقليل مخاطر التركز" : "Diversify revenue sources to reduce concentration risk",
       isArabic ? "تحسين إدارة السيولة والتدفق النقدي" : "Improve liquidity and cash flow management",
@@ -730,7 +730,7 @@ export class ReportEngine {
     ]
   }
 
-  private static generateMonitoringRecommendations(riskAnalyses: AnalysisResult[], isArabic: boolean): string[] {
+  private static generateMonitoringRecommendations(riskAnalyses: (AnalysisResult | AdvancedAnalysisResult)[], isArabic: boolean): string[] {
     return [
       isArabic ? "مراقبة شهرية للمؤشرات المالية الرئيسية" : "Monthly monitoring of key financial indicators",
       isArabic ? "تقييم ربع سنوي لمستوى المخاطر" : "Quarterly risk level assessment",
@@ -840,9 +840,9 @@ export class ReportEngine {
   }
 
   private static calculateModelAccuracy(analyses: AdvancedAnalysisResult[]): number {
-    const accuracies = analyses.filter((a) => a.modelAccuracy !== undefined).map((a) => a.modelAccuracy!)
-
-    return accuracies.length > 0 ? Math.round(accuracies.reduce((sum, acc) => sum + acc, 0) / accuracies.length) : 85
+    // استخدام مستوى الثقة كبديل لدقة النموذج
+    const confidenceLevels = analyses.map((a) => a.confidence)
+    return confidenceLevels.length > 0 ? Math.round(confidenceLevels.reduce((sum, conf) => sum + conf, 0) / confidenceLevels.length) : 85
   }
 
   private static calculateConfidenceLevel(analyses: AdvancedAnalysisResult[]): number {
@@ -929,8 +929,8 @@ export interface CategorySummary {
 export interface OverallAssessment {
   status: string
   score: number
-  strengths: AnalysisResult[]
-  concerns: AnalysisResult[]
+  strengths: (AnalysisResult | AdvancedAnalysisResult)[]
+  concerns: (AnalysisResult | AdvancedAnalysisResult)[]
   recommendations: string[]
 }
 

@@ -4,7 +4,7 @@
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import * as XLSX from 'xlsx'
-import { saveAs } from 'file-saver'
+// import { saveAs } from 'file-saver' // Removed - using browser native approach
 import mammoth from 'mammoth'
 import PptxGenJS from 'pptxgenjs'
 
@@ -367,7 +367,7 @@ class ReportGenerator {
       })
     }
 
-    return new Blob([await pptx.write('blob')], { 
+    return new Blob([await pptx.write({ outputType: 'blob' }) as BlobPart], { 
       type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' 
     })
   }
@@ -741,7 +741,15 @@ class ReportGenerator {
       const blob = await this.generateReport(data, options)
       const defaultFilename = `${data.companyName}_Analysis_${data.analysisDate.toISOString().split('T')[0]}.${this.getFileExtension(options.format)}`
       
-      saveAs(blob, filename || defaultFilename)
+      // Use browser-native download approach
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = filename || defaultFilename
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
     } catch (error) {
       console.error('Report download failed:', error)
       throw error
