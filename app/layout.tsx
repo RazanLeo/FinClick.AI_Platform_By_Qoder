@@ -6,6 +6,7 @@ import { Suspense } from "react"
 import { AuthProvider } from "@/components/auth/auth-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
+import { DirectionController } from "@/components/direction-controller"
 import "./globals.css"
 
 const inter = Inter({
@@ -120,6 +121,7 @@ export default function RootLayout({
         }} />
       </head>
       <body className={`${inter.variable} font-sans antialiased bg-black text-[#B48500] min-h-screen`}>
+        <DirectionController />
         {/* Loading Screen */}
         <div className="loading-screen">
           <div className="loading-spinner"></div>

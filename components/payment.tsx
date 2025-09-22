@@ -93,9 +93,7 @@ export function Payment() {
       
       if (data.success && data.paymentUrl) {
         // Redirect to PayTabs payment page
-        if (typeof window !== 'undefined') {
-          window.location.href = data.paymentUrl
-        }
+        router.push(data.paymentUrl)
       } else {
         throw new Error(data.message || 'فشل في إنشاء عملية الدفع')
       }

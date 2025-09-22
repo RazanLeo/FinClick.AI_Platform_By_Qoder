@@ -6,7 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { LanguageSwitcher } from "./language-switcher"
+import { useLanguage } from "@/components/language-provider"
 import { useAuth } from "@/components/auth/auth-provider"
 import {
   Search,
@@ -21,14 +21,18 @@ import {
   Phone,
   ChevronUp,
   ChevronDown,
+  Globe,
 } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { usePathname } from 'next/navigation'
 
 export function Header() {
+  const { language, setLanguage, t } = useLanguage()
   const { user, logout } = useAuth()
   const [searchQuery, setSearchQuery] = useState("")
   const router = useRouter()
+  const pathname = usePathname()
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -36,7 +40,7 @@ export function Header() {
       const searchTerm = searchQuery.toLowerCase()
       
       // Navigate to home page first if not already there
-      if (window.location.pathname !== "/") {
+      if (typeof window !== 'undefined' && !pathname.startsWith("/")) {
         router.push("/")
         // Wait for navigation to complete before scrolling
         setTimeout(() => {
@@ -205,7 +209,9 @@ export function Header() {
       // Show "no results" message
       const notification = document.createElement("div")
       notification.className = "fixed top-4 left-1/2 transform -translate-x-1/2 bg-yellow-600 text-white px-4 py-2 rounded-lg z-50 font-semibold"
-      notification.textContent = "لم يتم العثور على نتائج. جرب البحث عن: تحليل، مميزات، أسعار، أدوات"
+      notification.textContent = language === "ar" 
+        ? "لم يتم العثور على نتائج. جرب البحث عن: تحليل، مميزات، أسعار، أدوات" 
+        : "No results found. Try searching for: analysis, features, pricing, tools"
       document.body.appendChild(notification)
       
       setTimeout(() => {
@@ -215,10 +221,12 @@ export function Header() {
   }
 
   const goToHomePage = () => {
-    if (window.location.pathname !== "/") {
+    if (typeof window !== 'undefined' && !pathname.startsWith("/")) {
       router.push("/")
     } else {
-      window.scrollTo({ top: 0, behavior: "smooth" })
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+      }
     }
   }
 
@@ -240,8 +248,13 @@ export function Header() {
     }
   }
 
+  const toggleLanguage = () => {
+    const newLang = language === "ar" ? "en" : "ar"
+    setLanguage(newLang)
+  }
+
   return (
-    <header className="bg-black border-b border-[#B48500] sticky top-0 z-50">
+    <header className="bg-black border-b border-[#B48500] sticky top-0 z-50" dir={language === "ar" ? "rtl" : "ltr"}>
       <div className="container mx-auto px-4">
         {/* Top Header */}
         <div className="flex items-center justify-between py-4">
@@ -258,56 +271,72 @@ export function Header() {
               />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-[#B48500] cursor-pointer" onClick={goToHomePage}>
+              <h1 
+                className="text-2xl font-bold text-[#B48500] cursor-pointer" 
+                onClick={goToHomePage}
+              >
                 FinClick.AI
               </h1>
-              <p className="text-sm text-[#8B6914]">منصة التحليل المالي الذكية الثورية</p>
+              <p className="text-sm text-[#8B6914]">{t("hero.subtitle")}</p>
             </div>
           </div>
 
           {/* Search Bar */}
           <div className="flex-1 max-w-md mx-8">
             <form onSubmit={handleSearch} className="relative">
-              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#B48500] w-4 h-4" />
+              <Search className={`absolute ${language === "ar" ? "left-3" : "right-3"} top-1/2 transform -translate-y-1/2 text-[#B48500] w-4 h-4`} />
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="البحث في المنصة..."
-                className="bg-black border-[#B48500] text-[#B48500] placeholder:text-[#8B6914] pr-10"
+                placeholder={language === "ar" ? "البحث في المنصة..." : "Search platform..."}
+                className={`bg-black border-[#B48500] text-[#B48500] placeholder:text-[#8B6914] ${language === "ar" ? "pl-10 text-right" : "pr-10 text-left"}`}
               />
             </form>
           </div>
 
           {/* Right Side Controls */}
           <div className="flex items-center gap-4">
-            <LanguageSwitcher />
+            {/* Language Toggle */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[#B48500]/30 hover:border-[#B48500] bg-black/50 hover:bg-[#B48500]/10 transition-all duration-300"
+            >
+              <Globe className="w-4 h-4 text-[#B48500]" />
+              <span className="text-[#B48500] font-medium">
+                {language === "ar" ? "EN 🇺🇸" : "AR 🇸🇦"}
+              </span>
+            </button>
             <Button variant="ghost" size="sm" className="text-[#B48500] hover:bg-[#B48500] hover:text-black">
               <Bell className="w-4 h-4" />
             </Button>
 
             {user ? (
               <div className="flex items-center gap-4">
-                <span className="text-[#B48500]">مرحباً، {user.name}</span>
+                <span className="text-[#B48500]">
+                  {language === "ar" ? "مرحباً،" : "Welcome,"} {user.name}
+                </span>
                 <Button
                   onClick={logout}
                   variant="outline"
                   className="bg-black border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black"
                 >
-                  تسجيل الخروج
+                  {language === "ar" ? "تسجيل الخروج" : "Logout"}
                 </Button>
               </div>
             ) : (
               <>
-                <Link href="/auth">
+                <Link href="/auth?mode=register">
                   <Button
                     variant="outline"
                     className="bg-black border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black"
                   >
-                    إنشاء حساب
+                    {language === "ar" ? "إنشاء حساب" : "Create Account"}
                   </Button>
                 </Link>
-                <Link href="/auth">
-                  <Button className="bg-[#B48500] text-black hover:bg-[#8B6914]">تسجيل الدخول</Button>
+                <Link href="/auth?mode=login">
+                  <Button className="bg-[#B48500] text-black hover:bg-[#8B6914]">
+                    {language === "ar" ? "تسجيل الدخول" : "Login"}
+                  </Button>
                 </Link>
               </>
             )}
@@ -317,20 +346,20 @@ export function Header() {
         {/* Navigation Menu */}
         <nav className="border-t border-[#B48500] py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
+            <div className={`flex items-center gap-6 ${language === "ar" ? "flex-row-reverse" : "flex-row"}`}>
               <button
                 onClick={goToHomePage}
                 className="flex items-center gap-2 text-[#B48500] hover:text-[#8B6914] transition-colors"
               >
                 <Home className="w-4 h-4" />
-                الصفحة الرئيسية
+                {t("nav.home")}
               </button>
               <Link
                 href="/dashboard"
                 className="flex items-center gap-2 text-[#B48500] hover:text-[#8B6914] transition-colors font-semibold"
               >
                 <BarChart3 className="w-4 h-4" />
-                لوحة التحكم
+                {t("nav.dashboard")}
               </Link>
               <button
                 onClick={() => {
@@ -340,42 +369,42 @@ export function Header() {
                 className="flex items-center gap-2 text-[#B48500] hover:text-[#8B6914] transition-colors"
               >
                 <Building className="w-4 h-4" />
-                الشركة
+                {t("nav.company")}
               </button>
               <button
                 onClick={() => scrollToSection("analysis-types")}
                 className="flex items-center gap-2 text-[#B48500] hover:text-[#8B6914] transition-colors"
               >
                 <TrendingUp className="w-4 h-4" />
-                أنواع التحليل
+                {t("nav.analysisTypes")}
               </button>
               <button
                 onClick={() => scrollToSection("features")}
                 className="flex items-center gap-2 text-[#B48500] hover:text-[#8B6914] transition-colors"
               >
                 <Star className="w-4 h-4" />
-                مميزات المنصة
+                {t("nav.features")}
               </button>
               <button
                 onClick={() => scrollToSection("pricing")}
                 className="flex items-center gap-2 text-[#B48500] hover:text-[#8B6914] transition-colors"
               >
                 <CreditCard className="w-4 h-4" />
-                الاشتراكات والأسعار
+                {t("nav.pricing")}
               </button>
               <button
                 onClick={() => scrollToSection("steps")}
                 className="flex items-center gap-2 text-[#B48500] hover:text-[#8B6914] transition-colors"
               >
                 <PlayCircle className="w-4 h-4" />
-                خطوات المنصة
+                {t("nav.steps")}
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
                 className="flex items-center gap-2 text-[#B48500] hover:text-[#8B6914] transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                التواصل والدعم
+                {t("nav.contact")}
               </button>
             </div>
 

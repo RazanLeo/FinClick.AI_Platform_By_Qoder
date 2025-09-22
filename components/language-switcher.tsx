@@ -122,27 +122,8 @@ const content: LanguageContent = {
 
 export function LanguageSwitcher() {
   const [language, setLanguage] = useState<"ar" | "en">("ar")
-  const [isVisible, setIsVisible] = useState(true)
 
   const updateContent = (lang: "ar" | "en") => {
-    // Update all elements with data-translate attributes
-    const elements = document.querySelectorAll("[data-translate]")
-    elements.forEach((element) => {
-      const key = element.getAttribute("data-translate")
-      if (key && content[lang][key]) {
-        element.textContent = content[lang][key]
-      }
-    })
-
-    // Update placeholders for inputs
-    const inputs = document.querySelectorAll("input[placeholder]")
-    inputs.forEach((input) => {
-      const htmlInput = input as HTMLInputElement
-      if (htmlInput.placeholder.includes("البحث") || htmlInput.placeholder.includes("Search")) {
-        htmlInput.placeholder = content[lang].searchPlaceholder
-      }
-    })
-
     // Update page title
     document.title = lang === "ar"
       ? "FinClick.AI - منصة التحليل المالي الذكية"
@@ -164,8 +145,12 @@ export function LanguageSwitcher() {
     localStorage.setItem("preferred-language", lang)
     
     // Show notification
+    // Remove any existing notifications first
+    const existingNotifications = document.querySelectorAll('.language-notification');
+    existingNotifications.forEach(notification => notification.remove());
+    
     const notification = document.createElement("div")
-    notification.className = "fixed top-20 right-4 bg-[#B48500] text-black px-4 py-2 rounded-lg z-[60] font-semibold transition-all duration-300"
+    notification.className = "language-notification fixed top-20 right-4 bg-[#B48500] text-black px-4 py-2 rounded-lg z-[100] font-semibold transition-all duration-300"
     notification.textContent = lang === "ar" ? "تم تغيير اللغة إلى العربية" : "Language changed to English"
     document.body.appendChild(notification)
 
@@ -178,18 +163,9 @@ export function LanguageSwitcher() {
   }
 
   const toggleLanguage = () => {
-    // Prevent multiple rapid clicks
-    if (!isVisible) return
-    
-    setIsVisible(false)
     const newLang = language === "ar" ? "en" : "ar"
     setLanguage(newLang)
     updateContent(newLang)
-    
-    // Restore button visibility after content update
-    setTimeout(() => {
-      setIsVisible(true)
-    }, 100)
   }
 
   useEffect(() => {
@@ -203,20 +179,12 @@ export function LanguageSwitcher() {
     }
   }, [])
 
-  if (!isVisible) {
-    return (
-      <div className="w-[120px] h-[32px] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#B48500]"></div>
-      </div>
-    )
-  }
-
   return (
     <Button
       variant="outline"
       size="sm"
       onClick={toggleLanguage}
-      className="flex items-center gap-2 bg-black border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black transition-all duration-300 min-w-[120px]"
+      className="flex items-center gap-2 bg-black border-[#B48500] text-[#B48500] hover:bg-[#B48500] hover:text-black transition-all duration-300 min-w-[120px] z-50"
     >
       <Globe className="w-4 h-4" />
       {language === "ar" ? (
