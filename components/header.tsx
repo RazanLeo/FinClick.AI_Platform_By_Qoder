@@ -296,16 +296,6 @@ export function Header() {
 
           {/* Right Side Controls */}
           <div className="flex items-center gap-4">
-            {/* Language Toggle */}
-            <button
-              onClick={toggleLanguage}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[#B48500]/30 hover:border-[#B48500] bg-black/50 hover:bg-[#B48500]/10 transition-all duration-300"
-            >
-              <Globe className="w-4 h-4 text-[#B48500]" />
-              <span className="text-[#B48500] font-medium">
-                {language === "ar" ? "EN 🇺🇸" : "AR 🇸🇦"}
-              </span>
-            </button>
             <Button variant="ghost" size="sm" className="text-[#B48500] hover:bg-[#B48500] hover:text-black">
               <Bell className="w-4 h-4" />
             </Button>

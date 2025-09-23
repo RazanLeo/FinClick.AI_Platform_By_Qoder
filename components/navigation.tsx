@@ -3,8 +3,6 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { locales } from '@/lib/i18n'
-import { Button } from '@/components/ui/button'
-import { Globe } from 'lucide-react'
 
 export function Navigation() {
   const pathname = usePathname()

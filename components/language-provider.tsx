@@ -1,5 +1,7 @@
 "use client"
 
+// Language provider component for internationalization
+// Updated to fix module resolution issue
 import { createContext, useContext, useState, useEffect, ReactNode } from "react"
 import { usePathname, useRouter } from 'next/navigation'
 
@@ -52,6 +54,8 @@ export function LanguageProvider({ children, locale }: LanguageProviderProps) {
     if (typeof document !== 'undefined') {
       document.documentElement.dir = lang === "ar" ? "rtl" : "ltr"
       document.documentElement.lang = lang
+      document.body.dir = lang === "ar" ? "rtl" : "ltr"
+      document.body.lang = lang
     }
     
     // Update URL with new locale
@@ -61,7 +65,24 @@ export function LanguageProvider({ children, locale }: LanguageProviderProps) {
 
   const t = (key: string): string => {
     // Simple translation function - in a real app this would use the actual translation files
-    return key
+    const translations: Record<string, string> = {
+      "hero.subtitle": language === "ar" 
+        ? "منصة التحليل المالي الذكية الثورية" 
+        : "Revolutionary Intelligent Financial Analysis Platform",
+      "hero.description": language === "ar" 
+        ? "Revolutionary Intelligent Financial Analysis Platform" 
+        : "منصة التحليل المالي الذكية الثورية",
+      "nav.home": language === "ar" ? "الصفحة الرئيسية" : "Home",
+      "nav.dashboard": language === "ar" ? "لوحة التحكم" : "Dashboard",
+      "nav.company": language === "ar" ? "الشركة" : "Company",
+      "nav.analysisTypes": language === "ar" ? "أنواع التحليل" : "Analysis Types",
+      "nav.features": language === "ar" ? "المميزات" : "Features",
+      "nav.pricing": language === "ar" ? "الأسعار" : "Pricing",
+      "nav.steps": language === "ar" ? "الخطوات" : "Steps",
+      "nav.contact": language === "ar" ? "التواصل" : "Contact",
+    }
+    
+    return translations[key] || key
   }
 
   return (

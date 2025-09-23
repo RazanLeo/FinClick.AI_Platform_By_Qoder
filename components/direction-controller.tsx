@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 
+// Adding a default export as well to ensure compatibility
 export function DirectionController() {
   useEffect(() => {
     // Function to apply RTL/LTR styling based on localStorage or default
@@ -13,6 +14,10 @@ export function DirectionController() {
       // Set document attributes
       document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr"
       document.documentElement.lang = currentLang
+      
+      // Also update body attributes
+      document.body.dir = currentLang === "ar" ? "rtl" : "ltr"
+      document.body.lang = currentLang
       
       // Add/remove RTL classes
       if (currentLang === "ar") {
@@ -157,3 +162,6 @@ export function DirectionController() {
 
   return null
 }
+
+// Adding default export
+export default DirectionController
