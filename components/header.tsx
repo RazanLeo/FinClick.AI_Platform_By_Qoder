@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import Image from "next/image"
+// import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -261,7 +261,8 @@ export function Header() {
           {/* Logo and Brand */}
           <div className="flex items-center gap-4">
             <div className="relative">
-              <Image
+              {/* Replacing Next.js Image with regular img tag for debugging */}
+              <img
                 src="/images/finclick-logo.png"
                 alt="FinClick.AI Logo"
                 width={60}

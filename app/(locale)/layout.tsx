@@ -98,10 +98,10 @@ export default function LocaleLayout({
       </head>
       <body className="font-sans antialiased bg-black text-[#B48500] min-h-screen">
         <DirectionController />
-        {/* Loading Screen */}
-        <div className="loading-screen">
+        {/* Loading Screen - Removed for debugging */}
+        {/* <div className="loading-screen">
           <div className="loading-spinner"></div>
-        </div>
+        </div> */}
         
         <ThemeProvider
           attribute="class"
@@ -161,8 +161,8 @@ export default function LocaleLayout({
           </AuthProvider>
         </ThemeProvider>
         
-        {/* Page Load Script */}
-        <script dangerouslySetInnerHTML={{
+        {/* Page Load Script - Removed for debugging */}
+        {/* <script dangerouslySetInnerHTML={{
           __html: `
             window.addEventListener('load', function() {
               setTimeout(function() {
@@ -170,7 +170,7 @@ export default function LocaleLayout({
               }, 500);
             });
           `
-        }} />
+        }} /> */}
       </body>
     </html>
   )

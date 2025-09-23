@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.tsx');
 const nextConfig = {
   images: {
     domains: ['localhost'],
-    unoptimized: true,
+    unoptimized: true, // Disable image optimization
   },
   // Configure experimental features for large page data
   experimental: {
