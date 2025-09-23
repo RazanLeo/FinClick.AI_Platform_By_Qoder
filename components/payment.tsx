@@ -1,7 +1,5 @@
 "use client"
 
-"use client"
-
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -37,17 +35,28 @@ interface SubscriptionPlan {
 }
 
 export function Payment() {
-  const { user } = useAuth()
+  const { user, isLoading } = useAuth()
   const router = useRouter()
   const [selectedPlan, setSelectedPlan] = useState<string>('professional')
   const [isProcessing, setIsProcessing] = useState(false)
   const [paymentEnabled, setPaymentEnabled] = useState(false)
   const [plans, setPlans] = useState<SubscriptionPlan[]>([])
   const [customerInfo, setCustomerInfo] = useState({
-    name: user?.name || '',
-    email: user?.email || '',
+    name: '',
+    email: '',
     phone: ''
   })
+
+  useEffect(() => {
+    // Only update customer info when user is available
+    if (user) {
+      setCustomerInfo({
+        name: user.name || '',
+        email: user.email || '',
+        phone: ''
+      })
+    }
+  }, [user])
 
   useEffect(() => {
     fetchSubscriptionPlans()
@@ -130,6 +139,16 @@ export function Payment() {
     }
   }
 
+  // Show loading state while auth is initializing
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-[#B48500] text-xl">جاري التحميل...</div>
+      </div>
+    )
+  }
+
+  // Redirect to auth if user is not logged in
   if (!user) {
     router.push('/auth')
     return null
