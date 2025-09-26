@@ -277,10 +277,15 @@
   resolved "https://registry.npmjs.org/@next/env/-/env-14.2.32.tgz"
   integrity sha512-n9mQdigI6iZ/DF6pCTwMKeWgF2e8lg7qgt5M7HXMLtyhZYMnf/u905M18sSpPmHL9MKp9JHo56C6jrD2EvWxng==
 
-"@next/swc-darwin-x64@14.2.32":
+"@next/swc-linux-x64-gnu@14.2.32":
   version "14.2.32"
-  resolved "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-14.2.32.tgz"
-  integrity sha512-P9NpCAJuOiaHHpqtrCNncjqtSBi1f6QUdHK/+dNabBIXB2RUFWL19TY1Hkhu74OvyNQEYEzzMJCMQk5agjw1Qg==
+  resolved "https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-14.2.32.tgz"
+  integrity sha512-7S1GY4TdnlGVIdeXXKQdDkfDysoIVFMD0lJuVVMeb3eoVjrknQ0JNN7wFlhCvea0hEk0Sd4D1hedVChDKfV2jw==
+
+"@next/swc-linux-x64-musl@14.2.32":
+  version "14.2.32"
+  resolved "https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-14.2.32.tgz"
+  integrity sha512-OHHC81P4tirVa6Awk6eCQ6RBfWl8HpFsZtfEkMpJ5GjPsJ3nhPe6wKAJUZ/piC8sszUkAgv3fLflgzPStIwfWg==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -2172,11 +2177,6 @@ fs-constants@^1.0.0:
   resolved "https://registry.npmjs.org/fs-constants/-/fs-constants-1.0.0.tgz"
   integrity sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==
 
-fsevents@~2.3.2:
-  version "2.3.3"
-  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
-  integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
-
 function-bind@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz"
@@ -3627,6 +3627,11 @@ tailwindcss-animate@^1.0.7:
   version "1.0.7"
   resolved "https://registry.npmjs.org/tailwindcss-animate/-/tailwindcss-animate-1.0.7.tgz"
   integrity sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==
+
+tailwindcss-rtl@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.npmjs.org/tailwindcss-rtl/-/tailwindcss-rtl-0.9.0.tgz"
+  integrity sha512-y7yC8QXjluDBEFMSX33tV6xMYrf0B3sa+tOB5JSQb6/G6laBU313a+Z+qxu55M1Qyn8tDMttjomsA8IsJD+k+w==
 
 tailwindcss@^3.4.15:
   version "3.4.17"

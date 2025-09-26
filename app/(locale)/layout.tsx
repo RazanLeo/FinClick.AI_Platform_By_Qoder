@@ -4,7 +4,6 @@ import { Suspense } from "react"
 import { AuthProvider } from "@/components/auth/auth-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
-import { DirectionController } from "@/components/direction-controller"
 import "../globals.css"
 import { LanguageProvider } from "@/components/language-provider"
 
@@ -88,16 +87,10 @@ export default function LocaleLayout({
               from { text-shadow: 0 0 5px var(--finclick-gold), 0 0 10px var(--finclick-gold); }
               to { text-shadow: 0 0 10px var(--finclick-gold), 0 0 20px var(--finclick-gold); }
             }
-            
-            /* RTL specific styles */
-            html[dir="rtl"] .rtl-flip {
-              transform: scaleX(-1);
-            }
           `
         }} />
       </head>
       <body className="font-sans antialiased bg-black text-[#B48500] min-h-screen">
-        <DirectionController />
         {/* Loading Screen - Removed for debugging */}
         {/* <div className="loading-screen">
           <div className="loading-spinner"></div>
@@ -144,7 +137,7 @@ export default function LocaleLayout({
               </div>
               
               <Toaster 
-                position="bottom-left"
+                position={locale === 'ar' ? 'bottom-right' : 'bottom-left'}
                 theme="dark"
                 className="toaster"
                 toastOptions={{

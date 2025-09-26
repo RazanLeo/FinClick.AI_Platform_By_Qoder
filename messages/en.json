@@ -5,108 +5,145 @@
     "company": "Company",
     "analysisTypes": "Analysis Types",
     "features": "Platform Features",
-    "pricing": "Subscriptions & Pricing",
-    "steps": "Platform Steps",
-    "contact": "Contact & Support",
+    "pricing": "Subscriptions and Prices",
+    "steps": "Platform Usage Steps",
+    "contact": "Contact and Support",
     "login": "Login",
     "register": "Create Account"
   },
   "hero": {
     "title": "FinClick.AI",
-    "subtitle": "Revolutionary Intelligent Financial Analysis Platform",
-    "description": "Revolutionary AI-powered system providing all known quantitative financial analysis types worldwide - 180 financial analysis types"
+    "subtitle": "The Revolutionary Smart Financial Analysis Platform",
+    "description": "A revolutionary AI-based system that offers all known types of quantitative financial analysis in the world - 180 types of financial analysis"
   },
   "features": {
     "title": "Why FinClick.AI?",
     "revolutionary": {
-      "title": "Revolution and Paradigm Shift in Financial Analysis",
-      "description": "A system that turns the world upside down and changes all the rules. A revolution that amazes all global financial analysis specialists and experts."
+      "title": "A Revolution and a Quantum Leap in the World of Financial Analysis",
+      "description": "A system that turns the world upside down and changes all the rules. A revolution that all international financial analysis specialists and experts are helpless before."
     },
     "users": {
-      "title": "Serves All Financial Analysis Beneficiaries",
-      "description": "Serves all financial analysis purposes (individuals, institutions, companies, organizations)"
+      "title": "Serves all Beneficiaries of Financial Analysis",
+      "description": "Serves all purposes of financial analysis (individuals, institutions, companies, organizations)"
     },
     "ai": {
-      "title": "AI-Powered",
-      "description": "Advanced intelligent system using the latest artificial intelligence and machine learning technologies"
+      "title": "Based on Artificial Intelligence",
+      "description": "An advanced smart system that uses the latest artificial intelligence and machine learning technologies"
     },
     "comprehensive": {
-      "title": "All Quantitative Financial Analysis Types",
-      "description": "Provides all known quantitative financial analysis types worldwide - 180+ financial analyses"
+      "title": "All Types of Quantitative Financial Analysis",
+      "description": "Offers all known types of quantitative financial analysis in the world - 180+ financial analyses"
     },
     "cloud": {
       "title": "Cloud Environment",
-      "description": "Access from anywhere, anytime, from any browser, on any device"
+      "description": "You can access it from anywhere, at any time, from any browser, and on any device"
     },
     "interface": {
       "title": "Clear and Professional Interface",
-      "description": "Analysis presentation suitable for everyone, even without financial knowledge or background"
+      "description": "A way of displaying analytics that suits everyone, even if you don't have financial knowledge or background"
     },
     "speed": {
       "title": "Speed",
-      "description": "Get analysis in seconds with one click"
+      "description": "Get the analysis in a few seconds with the click of a button"
     },
     "simplicity": {
       "title": "Simplicity",
-      "description": "3 steps: Upload statements - Select analysis options - Click analyze"
+      "description": "3 steps: Attach your statements - Select analysis options - Press the analysis button"
     },
     "accuracy": {
-      "title": "Ultimate Precision and Efficiency",
+      "title": "Extreme Accuracy and Efficiency",
       "description": "99% accuracy"
     },
     "security": {
       "title": "High Security",
-      "description": "Advanced data protection and privacy"
+      "description": "Advanced data and privacy protection"
     },
     "analyst": {
       "title": "Super Financial Analyst",
-      "description": "Helps anyone make instant financial decisions"
+      "description": "Helps everyone make instant financial decisions"
     },
     "reports": {
       "title": "Detailed Reports and Presentations",
       "description": "Ready for presentation, discussion, and delivery"
     },
     "benchmarks": {
-      "title": "Benchmark Comparisons",
-      "description": "Industry average comparisons at all geographic levels"
+      "title": "Standard Benchmarks",
+      "description": "Industry average comparisons at all geographical levels"
     },
     "quality": {
       "title": "Global Quality",
-      "description": "International standards in analysis and reporting"
+      "description": "Global standards in analysis and reports"
     }
   },
   "beneficiaries": {
     "title": "Beneficiaries and Purposes",
-    "description": "This platform enables all financial analysis beneficiaries, whether individuals, entities, or organizations, to perform all known quantitative financial analysis types worldwide",
-    "owners": "Helps company owners understand their company's financial performance easily and quickly",
-    "analysts": "Helps financial managers or analysts complete their work in seconds",
-    "investors": "Helps any investor make instant decisions to buy shares of a specific company",
-    "banks": "Helps bank employees evaluate company performance for financing and lending decisions",
-    "valuers": "Helps evaluate feasibility of new projects or company valuations",
-    "general": "Helps all those interested in financial analysis, whether individual, organization, or entity"
+    "description": "This platform enables all beneficiaries of financial analysis, whether individuals, entities, or organizations, to perform all known types of quantitative financial analysis in the world.",
+    "owners": "Helps the company owner to understand his company's financial performance easily and quickly",
+    "analysts": "Helps the financial manager or financial analyst to complete his work in a few seconds",
+    "investors": "Helps any investor to make an immediate decision to buy shares of a particular company",
+    "banks": "Helps bank employees to evaluate the performance of companies to make financing and lending decisions",
+    "valuers": "Helps to assess the feasibility of new projects or evaluate companies",
+    "general": "Helps all those interested in financial analysis, whether an individual, organization, or entity"
   },
   "steps": {
     "title": "System Steps",
     "step1": {
-      "title": "Upload Your Statements",
-      "description": "Upload financial statements or trial balances in any format"
+      "title": "Attach Your Statements",
+      "description": "Attach financial statements or trial balances in any format"
     },
     "step2": {
       "title": "Select Analysis Options",
-      "description": "Choose language, sector, activity, and required analysis type"
+      "description": "Choose the language, sector, activity, and type of analysis required"
     },
     "step3": {
-      "title": "Click Analyze",
-      "description": "Get comprehensive and detailed analysis in seconds"
+      "title": "Press the Analysis Button",
+      "description": "Get a comprehensive and detailed analysis in a few seconds"
     }
+  },
+  "goals": {
+    "title": "Goals",
+    "items": [
+      {
+        "title": "Leading the Digital Transformation in Financial Analysis",
+        "content": "By building an advanced Saudi platform capable of global competition in the fields of FinTech and artificial intelligence, to be at the forefront of digital development in the financial analysis sector at the Kingdom and global levels, and to provide advanced smart tools based on artificial intelligence."
+      },
+      {
+        "title": "Making Deep Financial Analysis Available at the Click of a Button",
+        "content": "By enabling companies, investors, and financing entities to access comprehensive and rapid financial analyses without the need for specialized technical or financial expertise, which helps decision-makers to anticipate risks, increase returns, and make decisions based on live data."
+      },
+      {
+        "title": "Achieving Full Automation of the Analytical Process Stages",
+        "content": "From data collection to the preparation of professional reports, to ensure accuracy and speed in results."
+      },
+      {
+        "title": "Achieving Comprehensiveness and Depth in Analysis",
+        "content": "As the platform covers all types of quantitative financial analysis from traditional to advanced AI-based analysis, to provide accurate and reliable insights to users."
+      },
+      {
+        "title": "Ensuring Ease of Use",
+        "content": "By designing a simple interactive interface that facilitates the use of the platform's services for all users, regardless of their financial experience."
+      },
+      {
+        "title": "Accelerating the Process of Preparing Financial Reports and Analyses",
+        "content": "Which reduces time, cost, and effort for users."
+      },
+      {
+        "title": "Raising the Level of Accuracy and Reliability",
+        "content": "By relying on artificial intelligence technologies to bring updated and real-time data (market data, economic data, financial data, industry averages) and ensure the accuracy of calculations and analyses."
+      },
+      {
+        "title": "Achieving Sustainable Business Value for Companies and Institutions",
+        "content": "By supporting the making of strategic decisions based on accurate and reliable real-time data."
+      }
+    ]
   },
   "analysisTypes": {
     "title": "Analysis Types",
     "classical": {
-      "title": "Classical Foundational Analysis",
+      "title": "Classical Fundamental Analysis",
       "count": "106 analyses",
       "structural": "Structural Analysis of Financial Statements (13 types)",
-      "ratios": "Financial Ratios Analysis (75 ratios)",
+      "ratios": "Financial Ratio Analysis (75 ratios)",
       "flow": "Flow and Movement Analysis (18 types)"
     },
     "applied": {
@@ -121,7 +158,7 @@
       "count": "53 analyses",
       "modeling": "Modeling and Simulation (11 models)",
       "statistical": "Statistical and Quantitative Analysis (16 analyses)",
-      "forecasting": "Forecasting and Credit Scoring Models (10 models)",
+      "forecasting": "Forecasting and Credit Rating Models (10 models)",
       "risk": "Quantitative Risk Analysis (25 analyses)"
     }
   },
@@ -131,38 +168,40 @@
     "liveNews": "Live News",
     "calculators": {
       "title": "Automatic Financial Calculators",
-      "fairValue": "Fair Stock Price Calculator",
-      "roi": "Return on Investment Calculator",
-      "pe": "Price-to-Earnings Calculator"
+      "fairValue": "Fair Value Calculator for Stocks",
+      "roi": "Return on Investment (ROI) Calculator",
+      "pe": "Price-to-Earnings (P/E) Ratio Calculator"
     },
-    "marketSentiment": "Interactive Market Sentiment Indicator",
+    "marketSentiment": "Interactive Market Sentiment Index",
     "aiBot": "Financial GPT Bot"
   },
   "testimonials": {
     "title": "What Our Clients Say",
-    "client1": "Comprehensive and integrated system that helped me understand my company's performance quickly, accurately, and easily. It's an amazing system that provides all types of financial analysis.",
-    "client2": "As a financial manager and analyst, I no longer need to waste time on lengthy calculations, and all my work has become easier and my meetings more professional.",
-    "client3": "As an investor, I can now make instant investment decisions and identify company stocks I want to invest in with confidence.",
-    "client4": "In my role as an employee responsible for financing and lending operations, the system has helped me evaluate companies quickly and accurately."
+    "client1": "A comprehensive and integrated system that helped me understand my company's performance quickly, accurately, and easily. It is a wonderful system that provides all kinds of financial analysis.",
+    "client2": "As a manager and financial analyst, I no longer need to waste my time on long calculations, and all my work has become easier and my meetings more professional.",
+    "client3": "As an investor, I can now make instant investment decisions and confidently identify the stocks of companies I want to invest in.",
+    "client4": "By virtue of my work as an employee responsible for financing and lending operations, the system has benefited me in evaluating companies quickly and accurately."
   },
   "pricing": {
-    "title": "Pricing & Subscriptions",
+    "title": "Prices and Subscriptions",
     "monthly": {
       "title": "Monthly Plan",
-      "price": "5,000 SAR",
-      "period": "monthly"
+      "price": "5000 SAR",
+      "period": "per month"
     },
     "annual": {
       "title": "Annual Plan",
-      "price": "54,000 SAR",
-      "originalPrice": "60,000 SAR",
-      "period": "annual"
-    }
+      "price": "54000 SAR",
+      "originalPrice": "60000 SAR",
+      "discount": "10% discount",
+      "savings": "Save 6000 SAR"
+    },
+    "paymentMethods": "Payment Methods: Mada, Visa, MasterCard, PayPal, Apple Pay"
   },
   "footer": {
-    "description": "Revolutionary Intelligent Financial Analysis Platform",
-    "contactSupport": "Contact & Support",
-    "office": "Office: Jeddah, Kingdom of Saudi Arabia",
+    "description": "The Revolutionary Smart Financial Analysis Platform",
+    "contactSupport": "Contact and Support",
+    "office": "Office: Jeddah, Saudi Arabia",
     "email": "Email: finclick.ai@gmail.com",
     "phone": "Phone/WhatsApp/Telegram: 00966544827213",
     "legalPolicies": "Legal Policies",
@@ -170,22 +209,22 @@
     "termsOfUse": "Terms of Use",
     "security": "Security",
     "compliance": "Compliance",
-    "intellectualProperty": "Intellectual Property and Trademark",
-    "paymentPolicy": "Payment, Subscription and Refund",
+    "intellectualProperty": "Intellectual Property and Trademark Rights",
+    "paymentPolicy": "Payment, Subscription, and Refund",
     "system": "System",
     "features": "Features",
     "analysisTypes": "Analysis Types",
-    "pricing": "Subscriptions & Pricing",
+    "pricing": "Subscriptions and Prices",
     "userManual": "User Manual",
     "faq": "Frequently Asked Questions",
     "company": "Company",
-    "vision": "Vision, Mission, Goals and Services",
+    "vision": "Vision, Mission, Goals, and Services",
     "events": "Events",
     "blog": "Blog and News",
     "media": "Media",
     "careers": "Careers",
-    "rightsReserved": "All Rights Reserved",
-    "madeInSaudi": "Made ❤️ in Kingdom of Saudi Arabia"
+    "rightsReserved": "All rights reserved",
+    "madeInSaudi": "Made with ❤️ in Saudi Arabia"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -197,7 +236,7 @@
     "sector": "Sector",
     "activity": "Activity",
     "legalEntity": "Legal Entity",
-    "yearsOfAnalysis": "Years of Analysis",
+    "yearsOfAnalysis": "Number of Years for Analysis",
     "comparisonLevel": "Comparison Level",
     "analysisType": "Analysis Type"
   },
@@ -240,7 +279,7 @@
     "collapse": "Collapse",
     "maximize": "Maximize",
     "minimize": "Minimize",
-    "scrollToNavigate": "Navigate in page",
-    "clickToNavigate": "Click to navigate in page"
+    "scrollToNavigate": "Scroll to navigate",
+    "clickToNavigate": "Click to navigate"
   }
 }
