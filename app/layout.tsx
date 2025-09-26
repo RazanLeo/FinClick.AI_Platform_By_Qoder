@@ -6,7 +6,7 @@ import { Suspense } from "react"
 import { AuthProvider } from "@/components/auth/auth-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
-import { DirectionController } from "@/components/direction-controller"
+import DirectionController from "@/components/direction-controller"
 import "./globals.css"
 
 const inter = Inter({
@@ -151,7 +151,7 @@ export default function RootLayout({
                         <animate attributeName="opacity" values="0.2;0.6;0.2" dur="5s" repeatCount="indefinite" />
                       </circle>
                       <line x1="20" y1="20" x2="50" y2="50" stroke="#B48500" strokeWidth="0.5" opacity="0.1" />
-                      <line x1="50" y1="50" x2="80" y2="30" stroke="#B48500" strokeWidth="0.5" opacity="0.1" />
+                      <line x1="50" y1="50" x2="80" y2="30" stroke="#B45500" strokeWidth="0.5" opacity="0.1" />
                     </pattern>
                   </defs>
                   <rect x="0" y="0" width="100%" height="100%" fill="url(#neural-network)" />
